@@ -90,3 +90,15 @@ class Model:
             assert self.SapModel.SetUserComment(value) == 0
         except Exception as e:
             log.critical(str(e))
+            
+    def lock(self):
+        self._update_lock(lock=True)
+    
+    def unlock(self):
+        self._update_lock(lock=False)
+        
+    def _update_lock(self, lock: bool):
+        try:
+            assert self.SapModel.SetModelIsLocked(lock) == 0
+        except Exception as e:
+            log.critical(str(e))
