@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 
 from .constants import _UNITS, _UNIT_TYPES
-from ak_sap.utils.logger import log, ic
+from ak_sap.utils import log, ic
 ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
 
 class Model:
@@ -40,11 +40,12 @@ class Model:
         
     @property
     def merge_tol(self) -> float:
+        """Retrieves the value of the program auto merge tolerance"""
         return self.SapModel.GetMergeTol()[0]
     
     def set_merge_tol(self, value: float):
+        """Sets the program auto merge tolerance"""
         try:
             assert self.SapModel.SetMergeTol(value) == 0
         except Exception as e:
-            log.critical(f'Error in {Path(__file__).name} -> ')
             log.critical(str(e))

@@ -4,7 +4,7 @@ from unittest import mock
 import getpass
 import sys
 
-from ak_sap.credentials import getpwd
+from ak_sap.utils.credentials import getpwd
 
 @pytest.fixture(autouse=True)
 def mock_sys_platform(request):
