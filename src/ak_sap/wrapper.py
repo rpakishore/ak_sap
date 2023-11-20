@@ -78,6 +78,10 @@ class Sap2000Wrapper:
         except Exception as e:
             log.critical(str(e))
             return False
+    
+    @property
+    def version(self) -> str:
+        return self.SapModel.GetVersion()[0]
         
 def model(attach_to_instance: bool, program_path: str|Path|None = None):
     """Returns SapObject.
