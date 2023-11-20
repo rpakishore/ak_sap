@@ -2,8 +2,9 @@ import comtypes.client
 
 from pathlib import Path
 import sys
+import typing
 
-from .constants import _UNITS, _UNIT_TYPES
+from .constants import _UNITS, _UNITS_LITERALS, _PROJECT_INFO_KEYS
 from ak_sap.utils import log, ic
 ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
 
@@ -19,18 +20,18 @@ class Model:
         return self.__str__()
     
     @property
-    def units(self) -> _UNIT_TYPES:
+    def units(self) -> _UNITS_LITERALS:
         """Returns the units presently specified for the model"""
         return _UNITS[self.SapModel.GetPresentUnits() - 1]
     
     @property
-    def units_database(self) -> _UNIT_TYPES:
+    def units_database(self) -> _UNITS_LITERALS:
         """Returns the database units for the model. 
         All data is internally stored in the model in these units and 
         converted to the present units as needed."""
         return _UNITS[self.SapModel.GetDatabaseUnits() - 1]
     
-    def set_units(self, value: _UNIT_TYPES):
+    def set_units(self, value: _UNITS_LITERALS):
         """Updates the current units of model"""
         try:
             _unit_to_set = _UNITS.index(value) + 1
@@ -59,3 +60,21 @@ class Model:
     def is_locked(self) -> bool:
         """Returns True if the model is locked and False if it is unlocked."""
         return self.SapModel.GetModelIsLocked()
+    
+    @property
+    def project_info(self) -> dict:
+        """retrieves the project information data."""
+        info = {x: "" for x in typing.get_args(_PROJECT_INFO_KEYS)}
+        for k, v in zip(self.SapModel.GetProjectInfo()[1], self.SapModel.GetProjectInfo()[2]):
+            info[k] = v
+        return info
+    
+    def set_project_info(self, value: dict):
+        """sets the data for an item in the project information."""
+        allowable_keys = typing.get_args(_PROJECT_INFO_KEYS)
+        try:
+            for k, v in value.items():
+                assert k in allowable_keys
+                assert self.SapModel.SetProjectInfo(k, v) == 0
+        except Exception as e:
+            log.critical(str(e))
