@@ -49,3 +49,13 @@ class Model:
             assert self.SapModel.SetMergeTol(value) == 0
         except Exception as e:
             log.critical(str(e))
+    
+    @property
+    def filepath(self) -> Path:
+        """Returns full path where the file is located"""
+        return Path(self.SapModel.GetModelFilename())
+    
+    @property
+    def is_locked(self) -> bool:
+        """Returns True if the model is locked and False if it is unlocked."""
+        return self.SapModel.GetModelIsLocked()
