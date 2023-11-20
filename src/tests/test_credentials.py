@@ -1,10 +1,10 @@
-import sys
 import pytest
+
 from unittest import mock
 import getpass
+import sys
 
-# Import the module
-from template_python.credentials import *
+from ak_sap.credentials import getpwd
 
 @pytest.fixture(autouse=True)
 def mock_sys_platform(request):

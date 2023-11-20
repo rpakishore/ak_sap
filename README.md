@@ -1,38 +1,37 @@
 <!--- Heading --->
 <div align="center">
-  <h1>Template README</h1>
+  <h1>ak_sap</h1>
   <p>
-    An awesome README template for your projects! 
+    Python wrapper for SAP2000
   </p>
 <h4>
-    <a href="https://github.com/rpakishore/Template-Python/">View Demo</a>
+    <a href="https://github.com/rpakishore/ak_sap/">View Demo</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/Template-Python">Documentation</a>
+    <a href="https://github.com/rpakishore/ak_sap">Documentation</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/Template-Python/issues/">Report Bug</a>
+    <a href="https://github.com/rpakishore/ak_sap/issues/">Report Bug</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/Template-Python/issues/">Request Feature</a>
+    <a href="https://github.com/rpakishore/ak_sap/issues/">Request Feature</a>
   </h4>
 </div>
 <br />
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/Template-Python)
-![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/Template-Python)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/ak_sap)
+![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/ak_sap)
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>
 
 - [1. About the Project](#1-about-the-project)
   - [1.1. Screenshots](#11-screenshots)
   - [1.2. Features](#12-features)
-  - [1.3. Environment Variables](#13-environment-variables)
 - [2. Getting Started](#2-getting-started)
   - [2.1. Prerequisites](#21-prerequisites)
-  - [2.2. Dependencies](#22-dependencies)
-  - [2.3. Installation](#23-installation)
-    - [2.3.1. Production](#231-production)
-    - [2.3.2. Development](#232-development)
+  - [2.2. Installation](#22-installation)
+    - [2.2.1. Production](#221-production)
+      - [2.2.1.1. Install directly from repo](#2211-install-directly-from-repo)
+      - [2.2.1.2. Install from Pypi release](#2212-install-from-pypi-release)
+    - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
-  - [3.1. Development](#31-development)
 - [4. Roadmap](#4-roadmap)
 - [5. FAQ](#5-faq)
 - [6. License](#6-license)
@@ -55,75 +54,67 @@
 - Feature 2
 - Feature 3
 
-<!-- Env Variables -->
-### 1.3. Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
-
 <!-- Getting Started -->
 ## 2. Getting Started
 
 <!-- Prerequisites -->
 ### 2.1. Prerequisites
 
-Python 3.11 or above
-
-### 2.2. Dependencies
-
-Create the virutual environment and install dependencies
-
-```bash
-python -m venv .venv
-
-.venv\Scripts\activate.bat
-
-pip install flit
-```
+1. Python 3.11 or above
+2. SAP2000 v24 or higher
 
 <!-- Installation -->
-### 2.3. Installation
+### 2.2. Installation
 
-#### 2.3.1. Production
+#### 2.2.1. Production
 
-Install with flit
+##### 2.2.1.1. Install directly from repo
+
+Clone repo and Install with flit
 
 ```bash
-  flit install --deps production
+git clone git@github.com:rpakishore/ak_sap.git
+cd  ak_sap
+pip install flit
+flit install --deps production
 ```
 
-#### 2.3.2. Development
+##### 2.2.1.2. Install from Pypi release
+
+```bash
+pip install ak_sap
+```
+#### 2.2.2. Development
 
 Download the git and install via flit
 
 ```bash
-git clone https://github.com/rpakishore/ak_pdf.git
-cd ak_pdf
+git clone git@github.com:rpakishore/ak_sap.git
+cd  ak_sap
 pip install flit
-flit install
+flit install --pth-file
 ```
 
 <!-- Usage -->
 ## 3. Usage
 
 ```python
-from template_python import Reader, debug
-debug(True) #For debug messages, Can be skipped.
+from ak_sap import debug, Sap2000Wrapper
+debug(status=False)
 
-# Initialize
-pdf = Reader(filepath=r"textbook.pdf", password=None)
+#Initialize
+sap = Sap2000Wrapper(attach_to_exist=True)    #Attach to existing opened model
+sap = Sap2000Wrapper(attach_to_exist=False)   #Create new blank model from latest SAP2000
+## Create blank model from a custom version of SAP2000
+sap = Sap2000Wrapper(attach_to_exist=False, program_path=r'Path\to\SAP2000.exe')
+
+sap.hide()                                  #Hide the SAP2000 window
+sap.unhide()                                #Unhides SAP2000 window
+sap.api_version                             #Returns Sap0API version number
+
+sap.save(r'\Path\to\save\file.sdb')
+
 ```
-
-### 3.1. Development
-
-1. Open the project directory in vscode
-2. Update the app name under `pyproject.toml`
-3. Change the folder name from `src\template_python` to `src\<app_name>`, and propate the changes to the subfolders.
-4. Review the dependencies under `pyproject.toml` and remove as needed.
-5. Remove unneeded dependencies from `src\<app_name>\`
 
 <!-- Roadmap -->
 ## 4. Roadmap
@@ -150,10 +141,9 @@ See LICENSE for more information.
 
 Arun Kishore - [@rpakishore](mailto:pypi@rpakishore.co.in)
 
-Project Link: [https://github.com/rpakishore/Template-Python](https://github.com/rpakishore/Template-Python)
+Project Link: [https://github.com/rpakishore/ak_sap](https://github.com/rpakishore/ak_sap)
 
 <!-- Acknowledgments -->
 ## 8. Acknowledgements
 
-- [Awesome README Template](https://github.com/Louis3797/awesome-readme-template/blob/main/README-WITHOUT-EMOJI.md)
 - [Shields.io](https://shields.io/)

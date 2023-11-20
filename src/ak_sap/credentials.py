@@ -1,11 +1,13 @@
-import sys
-from pathlib import Path
 import getpass
+from pathlib import Path
+import sys
+
 from . import log, ic
 ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
 
 if sys.platform=="win32":
-    import keyring, getpass
+    import getpass
+    import keyring
 
 
 def getpwd(item, username):

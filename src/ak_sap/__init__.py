@@ -1,17 +1,16 @@
-"Placeholder module info"
+"Python wrapper for SAP2000 API"
 __version__ = "0.0.1"
 
-from template_python.logger import Log
-from icecream import ic
+from ak_sap.utils.logger import log, ic
+from ak_sap.wrapper import Sap2000Wrapper
 
-log = Log()
-log.info('Template Module Initialized')
+#log = Log()
 
 def debug(status=False):
     """Import this in a new module and enable debug to use debug
     example:
     ```python
-    from template_python import debug
+    from ak_sap import debug
     debug(True)
     ```
     """

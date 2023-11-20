@@ -1,7 +1,10 @@
+from icecream import ic
+
+import inspect
 import logging
 import getpass
-import time
 from pathlib import Path
+import time
 
 class Log(object):
     #class CALog(logging.Logger):
@@ -27,14 +30,28 @@ class Log(object):
     def info(self, msg):
         self.logger.info(msg)
     def warning(self, msg):
-        self.logger.warning(msg)
+        try:
+            suffix = f'Warning in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
+        except Exception:
+            suffix = f'Warning in {Path(inspect.stack()[1].filename).name}: '
+        self.logger.warning(suffix + msg)
     def error(self, msg):
-        self.logger.error(msg)
+        try:
+            suffix = f'Error in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
+        except Exception:
+            suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
+        self.logger.error(suffix + msg)
     def critical(self, msg):
-        self.logger.critical(msg)
+        try:
+            suffix = f'Critical in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
+        except Exception:
+            suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
+        self.logger.critical(suffix + msg)
     def log(self, level, msg):
         self.logger.log(level, msg)
     def setLevel(self, level):
         self.logger.setLevel(level)
     def disable(self):
         logging.disable(50)
+        
+log = Log()

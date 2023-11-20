@@ -1,7 +1,8 @@
-import typer
 from rich import print
-from typing import Optional
+import typer
+
 from pathlib import Path
+from typing import Optional
 
 from . import log, ic
 ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
