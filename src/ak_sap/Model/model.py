@@ -78,3 +78,15 @@ class Model:
                 assert self.SapModel.SetProjectInfo(k, v) == 0
         except Exception as e:
             log.critical(str(e))
+    
+    @property
+    def logs(self) -> str:
+        """retrieves the data in the user comments and log."""
+        return self.SapModel.GetUserComment()[0]
+    
+    def set_logs(self, value: str) -> None:
+        """sets the user comments and log data."""
+        try:
+            assert self.SapModel.SetUserComment(value) == 0
+        except Exception as e:
+            log.critical(str(e))
