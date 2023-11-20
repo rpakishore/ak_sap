@@ -1,0 +1,36 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "template_python"
+requires-python = ">=3.11.0"
+authors = [{name = "Arun Kishore", email = "pypi@rpakishore.co.in"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+dependencies = [
+    "pandas",
+    "typer[all]",   #cli_app.py
+    "icecream",     
+    "slack_sdk",    #Slack.py
+    "ak_requests",
+    "keyring"   #credentials.py
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest"
+]
+
+dev = [
+    "ipykernel",
+    "pandasgui"
+]
+
+[project.urls]
+Home = "https://github.com/rpakishore/Template-Python"
+
+[project.scripts]
+app="template_python.cli_app:app"
