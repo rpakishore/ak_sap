@@ -6,13 +6,13 @@ class Point:
         self.SapModel = self.mySapObject.SapModel
     
     def __str__(self) -> str:
-        return 'Instance of `Area` Element. Holds collection of model functions'
+        return 'Instance of `Point` Element. Holds collection of model functions'
     
     def __repr__(self) -> str:
         return self.__str__()
     
     def __len__(self) -> int:
-        """returns the total number of area elements in the analysis model."""
+        """returns the total number of point elements in the analysis model."""
         return self.SapModel.PointObj.Count()
     
     def add_by_coord(self, point: tuple[float, float, float], name: str='', coord_sys: str = 'Global') -> str:
@@ -32,3 +32,12 @@ class Point:
             return ret[0]
         except Exception as e:
             log.critical(str(e))
+            
+    def rename(self, current: str, new: str) -> str:
+        """Change name of point"""
+        try:
+            assert self.SapModel.PointObj.ChangeName(current, new) == 0
+            return new
+        except Exception as e:
+            log.critical(str(e))
+            return current
