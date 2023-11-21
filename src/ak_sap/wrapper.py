@@ -6,6 +6,7 @@ from typing import Any
 
 from ak_sap.Model import Model
 from ak_sap.Element import Element
+from ak_sap.Database import Table
 from ak_sap.utils.logger import log, ic
 ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
 
@@ -19,6 +20,7 @@ class Sap2000Wrapper:
         #Attach submodules and functions
         self.Model = Model(mySapObject=self.mySapObject)
         self.Element = Element(mySapObject=self.mySapObject)
+        self.Table = Table(mySapObject=self.mySapObject)
         
         log.info('Sap2000Wrapper Initialized')
     
