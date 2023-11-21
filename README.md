@@ -22,8 +22,6 @@
 <h2>Table of Contents</h2>
 
 - [1. About the Project](#1-about-the-project)
-  - [1.1. Screenshots](#11-screenshots)
-  - [1.2. Features](#12-features)
 - [2. Getting Started](#2-getting-started)
   - [2.1. Prerequisites](#21-prerequisites)
   - [2.2. Installation](#22-installation)
@@ -33,26 +31,12 @@
     - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
 - [4. Roadmap](#4-roadmap)
-- [5. FAQ](#5-faq)
 - [6. License](#6-license)
 - [7. Contact](#7-contact)
 - [8. Acknowledgements](#8-acknowledgements)
 
 <!-- About the Project -->
 ## 1. About the Project
-<!-- Screenshots -->
-### 1.1. Screenshots
-
-<div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
-</div>
-
-<!-- Features -->
-### 1.2. Features
-
-- Feature 1
-- Feature 2
-- Feature 3
 
 <!-- Getting Started -->
 ## 2. Getting Started
@@ -98,38 +82,39 @@ flit install --pth-file
 <!-- Usage -->
 ## 3. Usage
 
+Initialize the module as below
+
 ```python
 from ak_sap import debug, Sap2000Wrapper
 debug(status=False)
 
 #Initialize
-sap = Sap2000Wrapper(attach_to_exist=True)    #Attach to existing opened model
-sap = Sap2000Wrapper(attach_to_exist=False)   #Create new blank model from latest SAP2000
+sap = Sap2000Wrapper(attach_to_exist=True)      #Attach to existing opened model
+sap = Sap2000Wrapper(attach_to_exist=False)     #Create new blank model from latest SAP2000
+
 ## Create blank model from a custom version of SAP2000
 sap = Sap2000Wrapper(attach_to_exist=False, program_path=r'Path\to\SAP2000.exe')
 
+```
+
+Parent level methods and attributes
+
+```python
 sap.hide()                                  #Hide the SAP2000 window
 sap.unhide()                                #Unhides SAP2000 window
+sap.version                                 #Returns SAP2000 version number
 sap.api_version                             #Returns Sap0API version number
 
 sap.save(r'\Path\to\save\file.sdb')
 
 ```
 
+To see module level usage, check out the [`Layout.md`](/documentation/Layout.md) or [`Usage.ipynb`](/documentation/Usage.ipynb)
+
 <!-- Roadmap -->
 ## 4. Roadmap
 
-- [x] Set up a skeletal framework
-- [ ] Todo 2
-
-<!-- FAQ -->
-## 5. FAQ
-
-- Question 1
-  - Answer 1
-
-- Question 2
-  - Answer 2
+![Roadmap/Checklist](/documentation/assets/mindmap.png)
 
 <!-- License -->
 ## 6. License
