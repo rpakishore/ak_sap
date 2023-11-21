@@ -1,7 +1,4 @@
-import comtypes.client
-
 from pathlib import Path
-import sys
 import typing
 
 from .constants import _UNITS, _UNITS_LITERALS, _PROJECT_INFO_KEYS
@@ -92,13 +89,24 @@ class Model:
             log.critical(str(e))
             
     def lock(self):
+        """Lock Model"""
         self._update_lock(lock=True)
     
     def unlock(self):
+        """Unlock Model"""
         self._update_lock(lock=False)
         
     def _update_lock(self, lock: bool):
+        """Lock/Unlock Model"""
         try:
             assert self.SapModel.SetModelIsLocked(lock) == 0
         except Exception as e:
             log.critical(str(e))
+    
+    def refresh(self):
+        """ refreshes the view for the windows"""
+        try:
+            assert self.SapModel.View.RefreshView() == 0
+        except Exception as e:
+            log.critical(str(e))
+        
