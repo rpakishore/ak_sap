@@ -4,6 +4,11 @@ on:
   push:
     paths-ignore:
       - '**/README.md'
+      - '**/documentation/assets/mindmap.png'
+      - '**/documentation/Layout.md'
+      - '**/documentation/Usage.ipynb'
+      - '**/development.ipynb'
+      -'**/documentation'
 
 jobs:
   build:
