@@ -1,11 +1,5 @@
 from dataclasses import dataclass
-from typing import Literal
-
-ImportType_Literals = Literal['not importable',
-'importable, but not interactively importable',
-'importable and interactive importable when he model is unlocked',
-'importable and interactive importable when he model is unlocked and locked',]
-
+from .table_constants import ImportType_Literals
 
 @dataclass
 class DatabaseTable:

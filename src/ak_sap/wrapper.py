@@ -2,7 +2,6 @@ import comtypes.client
 
 from pathlib import Path
 import sys
-from typing import Any
 
 from ak_sap.Model import Model
 from ak_sap.Element import Element

@@ -3,7 +3,8 @@ import pandas as pd
 import typing
 
 from ak_sap.utils import log
-from .table_data import DatabaseTable, ImportType_Literals, FieldData
+from .table_structured_data import DatabaseTable, FieldData
+from .table_constants import ImportType_Literals
 
 class Table:
     def __init__(self, mySapObject) -> None:
