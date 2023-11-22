@@ -65,6 +65,6 @@ Control the database values
 
 ```python
 #Database
-sap.Table.list()                            #Lists available database tables
+sap.Table.list_available()                            #Lists available database tables
 sap.Table.list_all()                        #Lists all database tables
 ```

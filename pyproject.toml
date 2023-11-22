@@ -30,6 +30,7 @@ dev = [
     "ipykernel",
     "ipywidgets",
     "pandasgui",
+    "line-profiler"
 ]
 
 [project.urls]

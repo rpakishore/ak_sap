@@ -13,3 +13,11 @@ class DatabaseTable:
     TableName: str
     ImportType: ImportType_Literals
     IsEmpty: bool
+    
+@dataclass
+class FieldData:
+    FieldKey: str
+    FieldName: str
+    Description: str
+    UnitsStr: str
+    isImportable: bool
