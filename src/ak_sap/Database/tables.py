@@ -116,7 +116,7 @@ class Table:
         except Exception as e:
             log.critical(str(e) + f'Import Log: {ImportLog}')
         
-def _array_to_pandas(headers: tuple[str], array: tuple) -> pd.DataFrame:
+def _array_to_pandas(headers: tuple, array: tuple) -> pd.DataFrame:
     """Given the table headers as tuple and table data as a single tuple;
     Returns table as a dataframe."""
     num_fields = len(headers)
