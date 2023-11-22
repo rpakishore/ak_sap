@@ -115,6 +115,14 @@ class Table:
             assert ret == 0
         except Exception as e:
             log.critical(str(e) + f'Import Log: {ImportLog}')
+            
+    def discard(self):
+        """Clears all tables that were stored in the table list."""
+        log.info('Discarding all table changes that are not applied.')
+        try:
+            assert self.DatabaseTables.CancelTableEditing() == 0
+        except Exception as e:
+            log.critical(str(e))
         
 def _array_to_pandas(headers: tuple, array: tuple) -> pd.DataFrame:
     """Given the table headers as tuple and table data as a single tuple;
