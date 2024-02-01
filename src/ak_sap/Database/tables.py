@@ -84,7 +84,7 @@ class Table:
     
     def update(self, TableKey: str, data: pd.DataFrame, apply: bool=True):
         """Update the database table value"""
-        log.debug(f'Updating the values for TableKey: {TableKey}')
+        log.info(f'Updating the values for TableKey: {TableKey}')
         TableVersion: int = 1
         *_, ret = self.DatabaseTables.SetTableForEditingArray(TableKey,TableVersion,tuple(data.columns), len(data), flatten_dataframe(data))
         try:
@@ -101,7 +101,7 @@ class Table:
         If the model is locked at the time this command is called then only tables 
         that can be interactively imported when the model is locked will be imported. 
         """
-        log.debug('Applying changes to database')
+        log.info('Applying table changes to database')
         NumFatalErrors, NumErrorMsgs, NumWarnMsgs, NumInfoMsgs, ImportLog, ret = self.DatabaseTables.ApplyEditedTables(True)
         try:
             if NumFatalErrors != 0 or NumErrorMsgs != 0:
