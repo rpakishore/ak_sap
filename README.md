@@ -122,6 +122,13 @@ The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/docu
 
 ![Roadmap/Checklist](/documentation/assets/mindmap.png)
 
+- [ ] Generate Load Patterns
+- [ ] Generate Load Cases
+- [ ] Apply Loads
+  - [ ] Points
+  - [ ] Area
+  - [ ] Line
+
 <!-- License -->
 ## 6. License
 
