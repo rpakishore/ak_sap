@@ -2,8 +2,7 @@ from pathlib import Path
 import typing
 
 from .constants import _UNITS, _UNITS_LITERALS, _PROJECT_INFO_KEYS
-from ak_sap.utils import log, ic
-ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
+from ak_sap.utils import log
 
 class Model:
     def __init__(self, mySapObject) -> None:

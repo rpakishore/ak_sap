@@ -6,8 +6,7 @@ import sys
 from ak_sap.Model import Model
 from ak_sap.Element import Element
 from ak_sap.Database import Table
-from ak_sap.utils.logger import log, ic
-ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
+from ak_sap.utils.logger import log
 
 class Sap2000Wrapper:
     def __init__(self, attach_to_exist: bool = True, program_path: str|Path|None = None) -> None:
@@ -38,7 +37,7 @@ class Sap2000Wrapper:
             self.mySapObject = None
             
         except Exception as e:
-            log.error(e)
+            log.error(e.__str__())
     
     def save(self, savepath: str|Path|None = None) -> bool:
         """Saves SAP model to the `savepath`.

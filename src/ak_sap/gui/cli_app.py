@@ -4,8 +4,7 @@ import typer
 from pathlib import Path
 from typing import Optional
 
-from .utils import log, ic
-ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
+from ..utils import log
 
 app = typer.Typer()
 

@@ -2,8 +2,7 @@ import getpass
 from pathlib import Path
 import sys
 
-from . import log, ic
-ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
+from . import log
 
 if sys.platform=="win32":
     import getpass
