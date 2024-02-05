@@ -32,6 +32,7 @@
       - [2.2.1.2. Install from Pypi release](#2212-install-from-pypi-release)
     - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
+  - [GUI](#gui)
 - [4. Roadmap](#4-roadmap)
 - [6. License](#6-license)
 - [7. Contact](#7-contact)
@@ -108,10 +109,13 @@ sap.version                                 #Returns SAP2000 version number
 sap.api_version                             #Returns Sap0API version number
 
 sap.save(r'\Path\to\save\file.sdb')
-
 ```
 
 To see module level usage, check out the [`Layout.md`](/documentation/Layout.md) or [`Usage.ipynb`](/documentation/Usage.ipynb)
+
+### GUI
+
+The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for instructions.
 
 <!-- Roadmap -->
 ## 4. Roadmap
