@@ -37,12 +37,14 @@ class Log(object):
         except Exception:
             suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
         self.logger.error(suffix + str(msg))
+        self.logger.exception(msg)
     def critical(self, msg):
         try:
             suffix = f'Critical in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
         except Exception:
             suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
         self.logger.critical(suffix + str(msg))
+        self.logger.exception(msg)
     def log(self, level, msg):
         self.logger.log(level, msg)
     def setLevel(self, level):

@@ -1,0 +1,52 @@
+# Streamlit version: 1.30.0
+
+[logger]
+
+# Level of logging: 'error', 'warning', 'info', or 'debug'.
+# Default: 'info'
+level = "error"
+
+[client]
+
+# Change the visibility of items in the toolbar, options menu,
+# and settings dialog (top right of the app).
+# Allowed values:
+# * "auto"      : Show the developer options if the app is accessed through
+#                 localhost or through Streamlit Community Cloud as a developer.
+#                 Hide them otherwise.
+# * "developer" : Show the developer options.
+# * "viewer"    : Hide the developer options.
+# * "minimal"   : Show only options set externally (e.g. through
+#                 Streamlit Community Cloud) or through st.set_page_config.
+#                 If there are no options left, hide the menu.
+# Default: "auto"
+toolbarMode = "viewer"
+
+
+[server]
+
+# Change the type of file watcher used by Streamlit, or turn it off completely.
+# Allowed values: * "auto" : Streamlit will attempt to use the watchdog module, and falls back to polling if watchdog is not available. * "watchdog" : Force Streamlit to use the watchdog module. * "poll" : Force Streamlit to always use polling. * "none" : Streamlit will not watch files.
+# Default: "auto"
+fileWatcherType = "auto"
+
+# Max size, in megabytes, for files uploaded with the file_uploader.
+# Default: 200
+maxUploadSize = 1
+
+# Max size, in megabytes, of messages that can be sent via the WebSocket connection.
+# Default: 200
+maxMessageSize = 200
+
+runOnSave = true
+
+[browser]
+
+# Whether to send usage statistics to Streamlit.
+# Default: true
+gatherUsageStats = false
+
+[theme]
+
+# The preset Streamlit theme that your custom theme inherits from. One of "light" or "dark".
+base = "light"

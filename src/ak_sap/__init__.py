@@ -19,6 +19,6 @@ def debug(status=False):
     else:
         log.setLevel(20) #info
 
-    log.info(f'Debug status set to {status}')
+    #log.info(f'Debug status set to {status}')
     
 debug(status=False)

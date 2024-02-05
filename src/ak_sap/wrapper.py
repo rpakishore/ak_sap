@@ -32,10 +32,10 @@ class Sap2000Wrapper:
     
     def __del__(self) -> None:
         try:
-            assert self.mySapObject.ApplicationExit(False) == 0
-            self.SapModel = None
-            self.mySapObject = None
-            
+            # assert self.mySapObject.ApplicationExit(False) == 0
+            # self.SapModel = None
+            # self.mySapObject = None
+            pass
         except Exception as e:
             log.error(e.__str__())
     
