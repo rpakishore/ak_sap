@@ -8,7 +8,7 @@ on:
       - '**/documentation/Layout.md'
       - '**/documentation/Usage.ipynb'
       - '**/development.ipynb'
-      -'**/documentation'
+      - '**/documentation'
 
 jobs:
   build:
