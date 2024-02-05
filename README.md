@@ -32,11 +32,11 @@
       - [2.2.1.2. Install from Pypi release](#2212-install-from-pypi-release)
     - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
-  - [GUI](#gui)
+  - [3.1. GUI](#31-gui)
 - [4. Roadmap](#4-roadmap)
-- [6. License](#6-license)
-- [7. Contact](#7-contact)
-- [8. Acknowledgements](#8-acknowledgements)
+- [5. License](#5-license)
+- [6. Contact](#6-contact)
+- [7. Acknowledgements](#7-acknowledgements)
 
 <!-- About the Project -->
 ## 1. About the Project
@@ -113,7 +113,7 @@ sap.save(r'\Path\to\save\file.sdb')
 
 To see module level usage, check out the [`Layout.md`](/documentation/Layout.md) or [`Usage.ipynb`](/documentation/Usage.ipynb)
 
-### GUI
+### 3.1. GUI
 
 The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for instructions.
 
@@ -130,18 +130,18 @@ The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/docu
   - [ ] Line
 
 <!-- License -->
-## 6. License
+## 5. License
 
 See LICENSE for more information.
 
 <!-- Contact -->
-## 7. Contact
+## 6. Contact
 
 Arun Kishore - [@rpakishore](mailto:pypi@rpakishore.co.in)
 
 Project Link: [https://github.com/rpakishore/ak_sap](https://github.com/rpakishore/ak_sap)
 
 <!-- Acknowledgments -->
-## 8. Acknowledgements
+## 7. Acknowledgements
 
 - [Shields.io](https://shields.io/)
