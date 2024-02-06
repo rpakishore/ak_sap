@@ -40,3 +40,21 @@ LoadPatterns = Literal[
             'STREAMFLOW',
             'IMPACT',
             'CONSTRUCTION',]
+
+
+LoadCases = Literal[
+    'LINEAR_STATIC',
+    'NONLINEAR_STATIC',
+    'MODAL',
+    'RESPONSE_SPECTRUM',
+    'LINEAR_HISTORY',
+    'NONLINEAR_HISTORY',
+    'LINEAR_DYNAMIC',
+    'NONLINEAR_DYNAMIC',
+    'MOVING_LOAD',
+    'BUCKLING',
+    'STEADY_STATE',
+    'POWER_SPECTRAL_DENSITY',
+    'LINEAR_STATIC_MULTISTEP',
+    'HYPERSTATIC',
+    ]

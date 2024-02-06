@@ -1,3 +1,4 @@
+from .LoadCases import LoadCase
 from .LoadPatterns import LoadPattern
 
 class Load:
@@ -7,3 +8,4 @@ class Load:
         
         #Definition of Submodules
         self.Pattern = LoadPattern(mySapObject=mySapObject)
+        self.Case = LoadCase(mySapObject=mySapObject)
