@@ -1,5 +1,5 @@
 from ak_sap.utils import log
-
+from ak_sap.utils.decorators import smooth_sap_do
 class Point:
     def __init__(self, mySapObject) -> None:
         self.mySapObject = mySapObject
@@ -15,6 +15,7 @@ class Point:
         """returns the total number of point elements in the analysis model."""
         return self.SapModel.PointObj.Count()
     
+    @smooth_sap_do
     def add_by_coord(self, point: tuple[float, float, float], name: str='', coord_sys: str = 'Global') -> str:
         """Adds point to the model
 
@@ -26,12 +27,8 @@ class Point:
         Returns:
             str: Name of point
         """
-        try:
-            ret = self.SapModel.PointObj.AddCartesian(*point, '', name, coord_sys)
-            assert ret[-1] == 0
-            return ret[0]
-        except Exception as e:
-            log.critical(str(e))
+        return self.SapModel.PointObj.AddCartesian(*point, '', name, coord_sys)
+
             
     def rename(self, current: str, new: str) -> str:
         """Change name of point"""

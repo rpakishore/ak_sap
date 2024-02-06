@@ -21,16 +21,20 @@ class Log(object):
         filehandler=logging.FileHandler(logfile, encoding="utf-8")
         filehandler.setFormatter(formatter)
         self.logger.addHandler(filehandler)
+        
     def debug(self, msg):
         self.logger.debug(msg)
+        
     def info(self, msg):
         self.logger.info(msg)
+        
     def warning(self, msg):
         try:
             suffix = f'Warning in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
         except Exception:
             suffix = f'Warning in {Path(inspect.stack()[1].filename).name}: '
         self.logger.warning(suffix + msg)
+        
     def error(self, msg):
         try:
             suffix = f'Error in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
@@ -38,6 +42,7 @@ class Log(object):
             suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
         self.logger.error(suffix + str(msg))
         self.logger.exception(msg)
+        
     def critical(self, msg):
         try:
             suffix = f'Critical in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
@@ -45,13 +50,16 @@ class Log(object):
             suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
         self.logger.critical(suffix + str(msg))
         self.logger.exception(msg)
+        
     def log(self, level, msg):
         self.logger.log(level, msg)
+        
     def setLevel(self, level):
         self.logger.setLevel(level)
+        
     def disable(self):
         logging.disable(50)
-    
+        
     def contents(self, lines: int=9999) -> list[str]:
         with open(self.logfile, 'r') as f:
             data = f.readlines()
