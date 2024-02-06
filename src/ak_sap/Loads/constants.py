@@ -1,6 +1,6 @@
 from typing import Literal
 
-LoadPatterns = Literal[
+LoadPatternType = Literal[
             'DEAD',
             'SUPERDEAD',
             'LIVE',
@@ -42,7 +42,7 @@ LoadPatterns = Literal[
             'CONSTRUCTION',]
 
 
-LoadCases = Literal[
+LoadCaseType = Literal[
     'LINEAR_STATIC',
     'NONLINEAR_STATIC',
     'MODAL',
