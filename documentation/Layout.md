@@ -6,6 +6,9 @@
     - [1.2.3. Table](#123-table)
     - [1.2.4. Loads](#124-loads)
       - [1.2.4.1. Load Patterns](#1241-load-patterns)
+      - [1.2.4.2. Load Cases](#1242-load-cases)
+      - [1.2.4.3. Modal](#1243-modal)
+        - [1.2.4.3.1. Eigen](#12431-eigen)
 
 # 1. Layout
 
@@ -79,7 +82,7 @@ Usage Examples
 ```python
 pattern = sap.Load.Pattern
 len(pattern)                   # List the number of load patterns defined
-pattern.list()                 #List defined load patterns
+pattern.list_all()             #List defined load patterns
 pattern.rename('Dead', 'Live') #Rename previously defined pattern
 pattern.delete(name='Dead')    #Delete a load pattern
 
@@ -92,4 +95,49 @@ pattern.set_loadtype('DEAD', pattern_type='LIVE')   #Set the defined load type
 #Add a Live load case with name "Custom Live", a 1.15x self weight multiplier and also generate an accompanying load case
 pattern.add(name='Custom Live', pattern_type='LIVE', 
             selfwt_multiplier=1.15, add_case=True)
+```
+
+#### 1.2.4.2. Load Cases
+
+Usage Examples
+
+```python
+cases = sap.Load.Case
+len(cases)                      #returns total # of defined cases
+cases.total(casetype='MODAL')   #Get # of modal load cases
+cases.list_all()                #List all load cases
+cases.rename('DEAD','WATER')    #Rename existing load case
+cases.case_info(name='DEAD')    #Get the Case type information
+cases.set_type(name='DEAD', casetype='LINEAR_STATIC')   #Change the case type of existing load case
+```
+
+#### 1.2.4.3. Modal
+
+`sap.Load.Modal`
+
+##### 1.2.4.3.1. Eigen
+
+Usage Examples
+
+```python
+eigen = sap.Load.Modal.Eigen
+eigen.set_case(case_name="LCASE1")          #Set a Eigen Modal case
+
+eigen.set_initial_case(case_name='LCASE1', initial_case='DEAD')    #Set initial stiffness case
+eigen.get_initial_case(case_name="LCASE1")  #Get the Initial Case
+
+eigen.get_loads(case_name='LCASE1')         #Get the load data
+
+#Set Eigen parameters
+eigen.set_parameters(
+    case_name='LCASE1',
+    EigenShiftFreq=0.05,    #cyc/s
+    EigenCutOff=0.0001,     #cyc/s
+    EigenTolerance=0.00000001,
+    AllowAutoFreqShift=True
+)
+eigen.get_parameters(case_name='LCASE1')    #Get Parameters
+
+eigen.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
+eigen.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
