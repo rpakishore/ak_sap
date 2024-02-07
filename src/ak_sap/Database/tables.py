@@ -15,6 +15,13 @@ class Table:
 
     def __str__(self) -> str:
         return 'Instance of Database `Table`. Holds collection of model functions'
+    
+    def __del__(self):
+        try:
+            self.mySapObject = None
+            self.SapModel = None
+        except Exception as e:
+            log.warning(msg=f'Exception faced when deleting {self.__class__.__name__}\n{e}')
 
     def list_all(self) -> list[DatabaseTable]:
         """Returns all of the tables along with their import type and 

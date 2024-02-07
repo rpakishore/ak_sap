@@ -6,8 +6,8 @@ import sys
 from ak_sap.Model import Model
 from ak_sap.Element import Element
 from ak_sap.Database import Table
-from ak_sap.utils.logger import log, ic
-ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
+from ak_sap.Loads import Load
+from ak_sap.utils.logger import log
 
 class Sap2000Wrapper:
     def __init__(self, attach_to_exist: bool = True, program_path: str|Path|None = None) -> None:
@@ -20,6 +20,7 @@ class Sap2000Wrapper:
         self.Model = Model(mySapObject=self.mySapObject)
         self.Element = Element(mySapObject=self.mySapObject)
         self.Table = Table(mySapObject=self.mySapObject)
+        self.Load = Load(mySapObject=self.mySapObject)
         
         log.info('Sap2000Wrapper Initialized')
     
@@ -33,12 +34,12 @@ class Sap2000Wrapper:
     
     def __del__(self) -> None:
         try:
-            assert self.mySapObject.ApplicationExit(False) == 0
-            self.SapModel = None
-            self.mySapObject = None
-            
+            # assert self.mySapObject.ApplicationExit(False) == 0
+            # self.SapModel = None
+            # self.mySapObject = None
+            pass
         except Exception as e:
-            log.error(e)
+            log.error(e.__str__())
     
     def save(self, savepath: str|Path|None = None) -> bool:
         """Saves SAP model to the `savepath`.

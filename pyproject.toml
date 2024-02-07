@@ -19,6 +19,7 @@ dependencies = [
     "rich==13.7.0",
     "typer[all]==0.9.0",
     "pytest==7.4.3",
+    "streamlit==1.31.0"
 ]
 
 [project.optional-dependencies]
@@ -34,4 +35,4 @@ dev = [
 Home = "https://github.com/rpakishore/ak_sap"
 
 [project.scripts]
-app="ak_sap.cli_app:app"
+app="ak_sap.gui.cli_app:app"

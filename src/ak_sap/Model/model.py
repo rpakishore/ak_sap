@@ -2,13 +2,11 @@ from pathlib import Path
 import typing
 
 from .constants import _UNITS, _UNITS_LITERALS, _PROJECT_INFO_KEYS
-from ak_sap.utils import log, ic
-ic.configureOutput(prefix=f'{Path(__file__).name} -> ')
+from ak_sap.utils import log, MasterClass
 
-class Model:
+class Model(MasterClass):
     def __init__(self, mySapObject) -> None:
-        self.mySapObject = mySapObject
-        self.SapModel = self.mySapObject.SapModel
+        super().__init__(mySapObject=mySapObject)
     
     def __str__(self) -> str:
         return 'Instance of `Model`. Holds collection of model functions'
