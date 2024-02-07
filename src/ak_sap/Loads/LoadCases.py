@@ -1,7 +1,7 @@
 import typing
 
 from .constants import LoadCaseType, LoadPatternType
-from ak_sap.utils import MasterClass
+from ak_sap.utils import MasterClass, log
 from ak_sap.utils.decorators import smooth_sap_do
 
 class LoadCase(MasterClass):
@@ -21,10 +21,11 @@ class LoadCase(MasterClass):
         """returns the total number of defined load cases in the model. 
         If desired, counts can be returned for all load cases of a specified type in the model."""
         if casetype is None:
-            return self.LoadCases.Count()
+            _ret = self.LoadCases.Count()
         else:
             _value = typing.get_args(LoadCaseType).index(casetype) + 1
-            return self.LoadCases.Count(_value)
+            _ret = self.LoadCases.Count(_value)
+        return _ret
     
     @smooth_sap_do
     def rename(self, old_name: str, new_name: str):
