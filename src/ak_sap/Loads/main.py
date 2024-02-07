@@ -3,10 +3,7 @@ from .LoadPatterns import LoadPattern
 from .Modal import Modal
 
 class Load:
-    def __init__(self, mySapObject) -> None:
-        self.mySapObject = mySapObject
-        self.SapModel = self.mySapObject.SapModel
-        
+    def __init__(self, mySapObject) -> None:       
         #Definition of Submodules
         self.Pattern = LoadPattern(mySapObject=mySapObject)
         self.Case = LoadCase(mySapObject=mySapObject)

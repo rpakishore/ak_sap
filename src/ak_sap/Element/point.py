@@ -1,19 +1,18 @@
 from ak_sap.utils import log
 from ak_sap.utils.decorators import smooth_sap_do
-class Point:
+from ak_sap.utils import MasterClass
+
+class Point(MasterClass):
     def __init__(self, mySapObject) -> None:
-        self.mySapObject = mySapObject
-        self.SapModel = self.mySapObject.SapModel
+        super().__init__(mySapObject=mySapObject)
+        self.PointObj = self.SapModel.PointObj
     
     def __str__(self) -> str:
         return 'Instance of `Point` Element. Holds collection of model functions'
     
-    def __repr__(self) -> str:
-        return self.__str__()
-    
     def __len__(self) -> int:
         """returns the total number of point elements in the analysis model."""
-        return self.SapModel.PointObj.Count()
+        return self.PointObj.Count()
     
     @smooth_sap_do
     def add_by_coord(self, point: tuple[float, float, float], name: str='', coord_sys: str = 'Global') -> str:
@@ -27,13 +26,13 @@ class Point:
         Returns:
             str: Name of point
         """
-        return self.SapModel.PointObj.AddCartesian(*point, '', name, coord_sys)
+        return self.PointObj.AddCartesian(*point, '', name, coord_sys)
 
             
     def rename(self, current: str, new: str) -> str:
         """Change name of point"""
         try:
-            assert self.SapModel.PointObj.ChangeName(current, new) == 0
+            assert self.PointObj.ChangeName(current, new) == 0
             return new
         except Exception as e:
             log.critical(str(e))

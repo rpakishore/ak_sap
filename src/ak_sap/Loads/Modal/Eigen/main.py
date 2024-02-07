@@ -1,15 +1,12 @@
 from ak_sap.utils.decorators import smooth_sap_do
+from ak_sap.utils import MasterClass
 
-class Eigen:
+class Eigen(MasterClass):
     def __init__(self, mySapObject) -> None:
-        self.mySapObject = mySapObject
-        self.SapModel = self.mySapObject.SapModel
+        super().__init__(mySapObject=mySapObject)
     
     def __str__(self) -> str:
         return f'Instance of `Loads.Modal.{self.__class__.__name__}`. Holds collection of functions'
-    
-    def __repr__(self) -> str:
-        return self.__str__()
     
     @smooth_sap_do
     def get_initial_case(self, case_name: str) -> str:

@@ -5,9 +5,6 @@ from .TimeHistoryNonlinear.main import TimeHistoryNonlinear
 
 class Modal:
     def __init__(self, mySapObject) -> None:
-        self.mySapObject = mySapObject
-        self.SapModel = self.mySapObject.SapModel
-        
         #Subclasses
         self.Eigen = Eigen(mySapObject=mySapObject)
         self.Ritz = Ritz(mySapObject=mySapObject)
@@ -19,4 +16,3 @@ class Modal:
     
     def __repr__(self) -> str:
         return self.__str__()
-    
