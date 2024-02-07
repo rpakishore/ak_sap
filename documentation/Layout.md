@@ -9,6 +9,7 @@
       - [1.2.4.2. Load Cases](#1242-load-cases)
       - [1.2.4.3. Modal](#1243-modal)
         - [1.2.4.3.1. Eigen](#12431-eigen)
+        - [Ritz](#ritz)
 
 # 1. Layout
 
@@ -140,4 +141,21 @@ eigen.get_parameters(case_name='LCASE1')    #Get Parameters
 
 eigen.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 eigen.get_number_modes(case_name='LCASE1')                  #get number of modes
+```
+
+##### Ritz
+
+Usage Examples
+
+```python
+ritz = sap.Load.Modal.Ritz
+ritz.set_case(case_name="LCASE1")          #Set a Eigen Modal case
+
+ritz.set_initial_case(case_name='LCASE1', initial_case='DEAD')    #Set initial stiffness case
+ritz.get_initial_case(case_name="LCASE1")  #Get the Initial Case
+
+ritz.get_loads(case_name='LCASE1')         #Get the load data
+
+ritz.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
+ritz.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
