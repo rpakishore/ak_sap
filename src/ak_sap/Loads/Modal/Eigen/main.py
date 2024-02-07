@@ -4,6 +4,7 @@ from ak_sap.utils import MasterClass
 class Eigen(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
+        self.ModalEigen = self.SapModel.LoadCases.ModalEigen
     
     def __str__(self) -> str:
         return f'Instance of `Loads.Modal.{self.__class__.__name__}`. Holds collection of functions'
@@ -17,19 +18,19 @@ class Eigen(MasterClass):
         If the specified initial case is a nonlinear static or nonlinear direct integration time history load case, the stiffness at the end of that case is used. 
         If the initial case is anything else, zero initial conditions are assumed.
         """
-        return self.SapModel.LoadCases.ModalEigen.GetInitialCase(case_name)
+        return self.ModalEigen.GetInitialCase(case_name)
     
     @smooth_sap_do
     def set_initial_case(self, case_name: str, initial_case: str):
         """sets the initial condition for the specified load case.
         `initial_case` lets you use stiffness that occurs at the end of a nonlinear static or nonlinear direct integration time history load case.
         """
-        return self.SapModel.LoadCases.ModalEigen.SetInitialCase(case_name, initial_case)
+        return self.ModalEigen.SetInitialCase(case_name, initial_case)
     
     @smooth_sap_do
     def get_loads(self, case_name: str) -> dict:
         """ retrieves the load data for the specified load case."""
-        _ret: tuple = self.SapModel.LoadCases.ModalEigen.GetLoads(case_name)
+        _ret: tuple = self.ModalEigen.GetLoads(case_name)
         _values: dict = {
             'NumberOfLoads': _ret[0],
             'LoadType': _ret[1],
@@ -41,18 +42,18 @@ class Eigen(MasterClass):
     
     @smooth_sap_do
     def get_number_modes(self, case_name: str) -> tuple[int]:
-        """retrieves the number of modes requested for the specified load case."""
-        return self.SapModel.LoadCases.ModalEigen.GetNumberModes(case_name)
+        """retrieves the max and min number of modes requested for the specified load case."""
+        return self.ModalEigen.GetNumberModes(case_name)
     
     @smooth_sap_do
     def set_number_modes(self, case_name: str, max: int, min: int):
         """sets the number of modes requested for the specified load case."""
-        return self.SapModel.LoadCases.ModalEigen.SetNumberModes(case_name, max, min)
+        return self.ModalEigen.SetNumberModes(case_name, max, min)
     
     @smooth_sap_do
     def get_parameters(self, case_name: str):
         """retrieves various parameters for the specified load case."""
-        _ret: tuple = self.SapModel.LoadCases.ModalEigen.GetParameters(case_name)
+        _ret: tuple = self.ModalEigen.GetParameters(case_name)
         _values: dict = {
             'EigenShiftFreq': _ret[0],
             'EigenCutOff': _ret[1],
@@ -65,11 +66,11 @@ class Eigen(MasterClass):
     def set_parameters(self, case_name: str, EigenShiftFreq: float, EigenCutOff: float, 
                         EigenTolerance: float, AllowAutoFreqShift: bool):
         """sets various parameters for the specified modal eigen load case."""
-        return self.SapModel.LoadCases.ModalEigen.GetParameters(case_name, EigenShiftFreq, 
+        return self.ModalEigen.GetParameters(case_name, EigenShiftFreq, 
                                                                 EigenCutOff, EigenTolerance, int(AllowAutoFreqShift))
     
     @smooth_sap_do
     def set_case(self, case_name: str):
         """Initializes a modal eigen load case. 
         If this function is called for an existing load case, all items for the case are reset to their default value"""
-        return self.SapModel.LoadCases.ModalEigen.SetCase(case_name)
+        return self.ModalEigen.SetCase(case_name)
