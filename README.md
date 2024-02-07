@@ -18,7 +18,7 @@
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/ak_sap)
 ![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/ak_sap)
-[![tests](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg)](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml)
+[![tests](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml)
 
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>
