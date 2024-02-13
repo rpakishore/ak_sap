@@ -2,23 +2,25 @@
 <div align="center">
   <h1>ak_sap</h1>
   <p>
-    Python wrapper for SAP2000
+    Python wrapper for SAP2000. 
+    Generate/Analyze/Extract complex structural models using python. 
   </p>
 <h4>
-    <a href="https://github.com/rpakishore/ak_sap/">View Demo</a>
+    <a href="https://github.com/rpakishore/ak_sap/blob/main/documentation/Usage/GUI.md">GUI</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/ak_sap">Documentation</a>
+    <a href="https://github.com/rpakishore/ak_sap/tree/main?tab=readme-ov-file#2-getting-started">Getting Started</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/ak_sap/issues/">Report Bug</a>
+    <a href="https://github.com/rpakishore/ak_sap/blob/main/documentation/Layout.md">Layout Documentation</a>
   <span> · </span>
-    <a href="https://github.com/rpakishore/ak_sap/issues/">Request Feature</a>
+    <a href="https://github.com/rpakishore/ak_sap/issues/">Report Bug/Request Feature</a>
+
   </h4>
 </div>
 <br />
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/ak_sap)
 ![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/ak_sap)
-[![tests](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg)](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml)
+[![tests](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml)
 
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>
@@ -33,6 +35,7 @@
     - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
   - [3.1. GUI](#31-gui)
+  - [3.2. Layout Documentation](#32-layout-documentation)
 - [4. Roadmap](#4-roadmap)
 - [5. License](#5-license)
 - [6. Contact](#6-contact)
@@ -60,7 +63,7 @@
 Clone repo and Install with flit
 
 ```bash
-git clone git@github.com:rpakishore/ak_sap.git
+git clone https://github.com/rpakishore/ak_sap.git
 cd  ak_sap
 pip install flit
 flit install --deps production
@@ -71,12 +74,13 @@ flit install --deps production
 ```bash
 pip install ak_sap
 ```
+
 #### 2.2.2. Development
 
 Download the git and install via flit
 
 ```bash
-git clone git@github.com:rpakishore/ak_sap.git
+git clone https://github.com/rpakishore/ak_sap.git
 cd  ak_sap
 pip install flit
 flit install --pth-file
@@ -111,11 +115,13 @@ sap.api_version                             #Returns Sap0API version number
 sap.save(r'\Path\to\save\file.sdb')
 ```
 
-To see module level usage, check out the [`Layout.md`](/documentation/Layout.md) or [`Usage.ipynb`](/documentation/Usage.ipynb)
-
 ### 3.1. GUI
 
 The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for instructions.
+
+### 3.2. Layout Documentation
+
+To see module level usage, check out the [`Layout.md`](/documentation/Layout.md) or [`Usage.ipynb`](/documentation/Usage.ipynb)
 
 <!-- Roadmap -->
 ## 4. Roadmap
@@ -128,11 +134,13 @@ The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/docu
   - [ ] Points
   - [ ] Area
   - [ ] Line
+- [ ] Export joint reactions to Hilti-Profis file
+- [ ] Export Frame/Wall sections to S-Concrete
 
 <!-- License -->
 ## 5. License
 
-See LICENSE for more information.
+See [LICENSE](https://github.com/rpakishore/ak_sap/blob/main/LICENSE) for more information.
 
 <!-- Contact -->
 ## 6. Contact
