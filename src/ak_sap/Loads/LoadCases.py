@@ -7,7 +7,7 @@ from ak_sap.utils.decorators import smooth_sap_do
 class LoadCase(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
-        self.LoadCases = self.SapModel.LoadCases
+        self.LoadCases = mySapObject.SapModel.LoadCases
     
     def __str__(self) -> str:
         return 'Instance of `LoadCase`. Holds collection of functions'
@@ -36,8 +36,8 @@ class LoadCase(MasterClass):
     @smooth_sap_do
     def list_all(self) -> tuple[str]:
         """retrieves the names of all defined load cases of the specified type."""
-        _ret = self.LoadCases.GetNameList_1()
-        return _ret[1:]
+        _, loadcases, _ret = self.LoadCases.GetNameList_1()
+        return *loadcases, _ret
     
     @smooth_sap_do
     def delete(self, name: str):

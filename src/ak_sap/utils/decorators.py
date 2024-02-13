@@ -13,7 +13,9 @@ def smooth_sap_do(func):
             log.debug(f'Response received: {ret}')
             if isinstance(ret, list) or isinstance(ret, tuple):
                 assert ret[-1] == 0, f'{ret=} indicates failure to complete command'
-                return ret[0]
+                if len(ret) == 2:
+                    return ret[0]
+                return ret[:-1]
             else:
                 assert ret == 0, f'{ret=} indicates failure to complete command'
                 return ret

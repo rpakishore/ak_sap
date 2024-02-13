@@ -34,6 +34,6 @@ The package not comes pre-compiled with the streamlit package.
 
 ![GUI-Streamlit-Models.png](../assets/GUI-streamlit-Models.png)
 
-### Models
+### Tables
 
 ![GUI-Streamlit-Tables.png](../assets/GUI-streamlit-Tables.png)

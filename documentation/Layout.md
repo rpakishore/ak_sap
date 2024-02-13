@@ -3,13 +3,16 @@
   - [1.2. Sub-Modules](#12-sub-modules)
     - [1.2.1. Model](#121-model)
     - [1.2.2. Element](#122-element)
+      - [1.2.2.1. Point](#1221-point)
+      - [1.2.2.1. Frames](#1221-frames)
     - [1.2.3. Table](#123-table)
     - [1.2.4. Loads](#124-loads)
       - [1.2.4.1. Load Patterns](#1241-load-patterns)
       - [1.2.4.2. Load Cases](#1242-load-cases)
       - [1.2.4.3. Modal](#1243-modal)
         - [1.2.4.3.1. Eigen](#12431-eigen)
-        - [Ritz](#ritz)
+        - [1.2.4.3.2. Ritz](#12432-ritz)
+    - [Results](#results)
 
 # 1. Layout
 
@@ -52,12 +55,39 @@ sap.Model.set_logs('Add this comment')      #Adds user comments/logs
 
 Collection of methods and attributes that apply changes to elements in the model
 
+#### 1.2.2.1. Point
+
+Manipulate Point Elements
+
 Usage Examples
 
 ```python
-##Points
-len(sap.Element.Point)                      #list number of points in model
-sap.Element.Point.add_by_coord((1,2,3))     #Add point to model
+points = sap.Element.Point
+len(points)                                 #list number of points in model
+points.add_by_coord((1,2,3))                #Add point to model
+points.is_selected(name='1')                #Check if point is selected
+points.selected()                           #Yields selected points
+points.all()                                #Lists all defined points
+points.rename(old_name='1', new_name='1_1') #Rename point
+points.check_element_legal(name='1')        #Asserts point's existance
+```
+
+#### 1.2.2.1. Frames
+
+Manipulate Frame Elements
+
+Usage Examples
+
+```python
+frames = sap.Element.Frame
+len(frames)                                 #list number of frames in model
+frames.is_selected(name='1')                #Check if frame is selected
+frames.selected()                           #Yields selected frames
+frames.all()                                #Lists all defined frames
+frames.rename(old_name='1', new_name='1_1') #Rename frame
+frames.check_element_legal(name='1')        #Asserts frame's existance
+frames.section_name(frame_name='1')         #Get the assigned Section name
+frames.get_points(frame_name='1')           #Get points connected to frame
 ```
 
 ### 1.2.3. Table
@@ -143,7 +173,7 @@ eigen.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 eigen.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-##### Ritz
+##### 1.2.4.3.2. Ritz
 
 Usage Examples
 
@@ -158,4 +188,15 @@ ritz.get_loads(case_name='LCASE1')         #Get the load data
 
 ritz.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 ritz.get_number_modes(case_name='LCASE1')                  #get number of modes
+```
+
+### Results
+
+Manipulate Results from SAP2000
+
+Usage Examples
+
+```python
+results = sap.Results
+results.joint_reactions(jointname='1')      #Get Joint reactions as dict
 ```
