@@ -7,7 +7,7 @@ class Frame(MasterElem):
         super().__init__(mySapObject=mySapObject, ElemObj=mySapObject.SapModel.FrameObj)
     
     @smooth_sap_do
-    def section_name(self, frame_name: str) -> str:
+    def get_section(self, frame_name: str) -> str:
         self.check_element_legal(name=frame_name)
         _ret = self.ElemObj.GetSection(frame_name)
         return (_ret[0], _ret[-1]) # type: ignore

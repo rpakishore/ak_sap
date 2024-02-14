@@ -2,10 +2,14 @@
 from ak_sap.utils import log, MasterClass
 from ak_sap.utils.decorators import smooth_sap_do
 
+from .Setup import ResultsSetup
+
 class Results(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
         self.Results = mySapObject.SapModel.Results
+        
+        self.Setup = ResultsSetup(mySapObject=mySapObject)
     
     @smooth_sap_do
     def joint_reactions(self, jointname:str) -> dict:

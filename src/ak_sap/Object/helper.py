@@ -53,3 +53,8 @@ class MasterElem:
     def check_element_legal(self, name: str):
         """Confirms specified element exists in the model"""
         assert name in self.all(), f'`{name}` not found in the current list of elements: {self.all()}'
+    
+    @smooth_sap_do
+    def delete(self, name: str):
+        """Delete element from model"""
+        return self.ElemObj.Delete(name)

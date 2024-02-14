@@ -70,6 +70,7 @@ points.selected()                           #Yields selected points
 points.all()                                #Lists all defined points
 points.rename(old_name='1', new_name='1_1') #Rename point
 points.check_element_legal(name='1')        #Asserts point's existance
+points.delete(name='1')                     #Delete point
 ```
 
 #### 1.2.2.1. Frames
@@ -88,6 +89,7 @@ frames.rename(old_name='1', new_name='1_1') #Rename frame
 frames.check_element_legal(name='1')        #Asserts frame's existance
 frames.section_name(frame_name='1')         #Get the assigned Section name
 frames.get_points(frame_name='1')           #Get points connected to frame
+frames.delete(name='1')                     #Delete frame
 ```
 
 ### 1.2.3. Table
@@ -198,5 +200,15 @@ Usage Examples
 
 ```python
 results = sap.Results
+
+setup = sap.Results.Setup
+setup.clear_casecombo()                     #Deselect all Case&Combo for results
+setup.select_case(casename='DEAD')          #sets an load case selected for output flag.
+setup.is_selected_case(casename='DEAD')     #checks if an load case is selected for output.
+setup.select_combo(comboname='DEAD')        #sets an load combo selected for output flag.
+setup.is_selected_combo(comboname='COMB1')  #checks if an load combo is selected for output.
+setup.set_rxn_loc_get(x=0.5, y=0.5, z=5)    #sets coordinates of the locn at which the base reactions are reported.               
+setup.base_rxn_loc_get()                    #retrieves coordinates of the locn at which the base reactions are reported.
+
 results.joint_reactions(jointname='1')      #Get Joint reactions as dict
 ```
