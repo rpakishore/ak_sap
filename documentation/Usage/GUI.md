@@ -1,9 +1,15 @@
+- [1. Usage](#1-usage)
+  - [1.1. Attach an Instance](#11-attach-an-instance)
+  - [1.2. Models](#12-models)
+  - [1.3. Tables](#13-tables)
+  - [1.4. Export](#14-export)
+    - [1.4.1. Hilti-Profis](#141-hilti-profis)
 
-# Steamlit
+<h1> Steamlit </h1>
 
 The package not comes pre-compiled with the streamlit package.
 
-## Usage
+# 1. Usage
 
 - Download the Github Repo and `cd` inside
     ```bash
@@ -26,23 +32,23 @@ The package not comes pre-compiled with the streamlit package.
 
 - Open up the SAP2000 model of your choice and click `Attach to Model`
 
-### Attach an Instance
+## 1.1. Attach an Instance
 
 ![GUI-Streamlit-Start_Here.png](../assets/GUI-streamlit-Start_Here.png)
 
-### Models
+## 1.2. Models
 
 ![GUI-Streamlit-Models.png](../assets/GUI-streamlit-Models.png)
 
-### Tables
+## 1.3. Tables
 
 ![GUI-Streamlit-Tables.png](../assets/GUI-streamlit-Tables.png)
 
-### Export
+## 1.4. Export
 
 ![GUI-streamlit-Export.png](../assets/GUI-streamlit-Export.png)
 
-### Hilti-Profis
+### 1.4.1. Hilti-Profis
 
 ![GUI-streamlit-Export-Hilti.png](../assets/GUI-streamlit-Export-Hilti.png)
 
