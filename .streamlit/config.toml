@@ -47,6 +47,8 @@ runOnSave = true
 gatherUsageStats = false
 
 [theme]
-
-# The preset Streamlit theme that your custom theme inherits from. One of "light" or "dark".
-base = "light"
+base="light"
+primaryColor="#3ec32e"
+secondaryBackgroundColor="#d5dcdc"
+textColor="#000000"
+font="serif"

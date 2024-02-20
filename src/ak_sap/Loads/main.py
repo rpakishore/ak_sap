@@ -1,5 +1,6 @@
 from .LoadCases import LoadCase
 from .LoadPatterns import LoadPattern
+from .LoadCombos import LoadCombo
 from .Modal import Modal
 
 class Load:
@@ -7,4 +8,5 @@ class Load:
         #Definition of Submodules
         self.Pattern = LoadPattern(mySapObject=mySapObject)
         self.Case = LoadCase(mySapObject=mySapObject)
+        self.Combo = LoadCombo(mySapObject=mySapObject)
         self.Modal = Modal(mySapObject=mySapObject)
