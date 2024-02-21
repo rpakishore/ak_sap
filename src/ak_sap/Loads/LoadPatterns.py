@@ -7,7 +7,7 @@ from ak_sap.utils.decorators import smooth_sap_do
 class LoadPattern(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
-        self.LoadPatterns = self.SapModel.LoadPatterns
+        self.LoadPatterns = mySapObject.SapModel.LoadPatterns
     
     def __str__(self) -> str:
         return 'Instance of `LoadPattern`. Holds collection of functions'

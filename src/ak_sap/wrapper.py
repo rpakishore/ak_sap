@@ -3,10 +3,11 @@ import comtypes.client
 from pathlib import Path
 import sys
 
-from ak_sap.Model import Model
-from ak_sap.Object import Element
 from ak_sap.Database import Table
 from ak_sap.Loads import Load
+from ak_sap.Material.material import Material
+from ak_sap.Model import Model
+from ak_sap.Object import Element
 from ak_sap.Results import Results
 from ak_sap.utils.logger import log
 
@@ -23,6 +24,7 @@ class Sap2000Wrapper:
         self.Table = Table(mySapObject=self.mySapObject)
         self.Load = Load(mySapObject=self.mySapObject)
         self.Results = Results(mySapObject=self.mySapObject)
+        self.Material = Material(mySapObject=self.mySapObject)
         
         log.info('Sap2000Wrapper Initialized')
     

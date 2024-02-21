@@ -1,28 +1,30 @@
-- [1. Layout](#1-layout)
-  - [1.1. Roadmap/Checklist](#11-roadmapchecklist)
-  - [1.2. Sub-Modules](#12-sub-modules)
-    - [1.2.1. Model](#121-model)
-    - [1.2.2. Element](#122-element)
-      - [1.2.2.1. Point](#1221-point)
-      - [1.2.2.1. Frames](#1221-frames)
-    - [1.2.3. Table](#123-table)
-    - [1.2.4. Loads](#124-loads)
-      - [1.2.4.1. Load Patterns](#1241-load-patterns)
-      - [1.2.4.2. Load Cases](#1242-load-cases)
-      - [1.2.4.3. Modal](#1243-modal)
-        - [1.2.4.3.1. Eigen](#12431-eigen)
-        - [1.2.4.3.2. Ritz](#12432-ritz)
-    - [Results](#results)
+ <h1> Layout </h1>
 
-# 1. Layout
+- [1. Roadmap/Checklist](#1-roadmapchecklist)
+- [2. Sub-Modules](#2-sub-modules)
+  - [2.1. Model](#21-model)
+  - [2.2. Element](#22-element)
+    - [2.2.1. Point](#221-point)
+    - [2.2.2. Frames](#222-frames)
+  - [2.3. Table](#23-table)
+  - [2.4. Loads](#24-loads)
+    - [2.4.1. Load Patterns](#241-load-patterns)
+    - [2.4.2. Load Cases](#242-load-cases)
+    - [2.4.3. Modal](#243-modal)
+      - [2.4.3.1. Eigen](#2431-eigen)
+      - [2.4.3.2. Ritz](#2432-ritz)
+  - [2.5. Results](#25-results)
+  - [2.6. Material](#26-material)
 
-## 1.1. Roadmap/Checklist
+# 1. Roadmap/Checklist
 
 ![MindMap](assets/mindmap.png)
 
-## 1.2. Sub-Modules
+# 2. Sub-Modules
 
-### 1.2.1. Model
+![MindMap](assets/mindmap.svg)
+
+## 2.1. Model
 
 Collection of methods and attributes that control changes to the model as a whole
 
@@ -51,11 +53,11 @@ sap.Model.logs                              #Retrieve user comments and logs
 sap.Model.set_logs('Add this comment')      #Adds user comments/logs
 ```
 
-### 1.2.2. Element
+## 2.2. Element
 
 Collection of methods and attributes that apply changes to elements in the model
 
-#### 1.2.2.1. Point
+### 2.2.1. Point
 
 Manipulate Point Elements
 
@@ -73,7 +75,7 @@ points.check_element_legal(name='1')        #Asserts point's existance
 points.delete(name='1')                     #Delete point
 ```
 
-#### 1.2.2.1. Frames
+### 2.2.2. Frames
 
 Manipulate Frame Elements
 
@@ -87,12 +89,15 @@ frames.selected()                           #Yields selected frames
 frames.all()                                #Lists all defined frames
 frames.rename(old_name='1', new_name='1_1') #Rename frame
 frames.check_element_legal(name='1')        #Asserts frame's existance
-frames.section_name(frame_name='1')         #Get the assigned Section name
+frames.get_section(frame_name='1')          #Get the assigned Section name
 frames.get_points(frame_name='1')           #Get points connected to frame
 frames.delete(name='1')                     #Delete frame
+
+frames.Prop.rename(old_name="FSEC1", new_name="MySection")  #Rename frame property
+frames.Prop.total()                         #Total # of defined frame properties
 ```
 
-### 1.2.3. Table
+## 2.3. Table
 
 Control the database values
 
@@ -104,11 +109,11 @@ sap.Table.list_available()                            #Lists available database 
 sap.Table.list_all()                        #Lists all database tables
 ```
 
-### 1.2.4. Loads
+## 2.4. Loads
 
 Control the definition and assignments of loads.
 
-#### 1.2.4.1. Load Patterns
+### 2.4.1. Load Patterns
 
 Usage Examples
 
@@ -130,7 +135,7 @@ pattern.add(name='Custom Live', pattern_type='LIVE',
             selfwt_multiplier=1.15, add_case=True)
 ```
 
-#### 1.2.4.2. Load Cases
+### 2.4.2. Load Cases
 
 Usage Examples
 
@@ -144,11 +149,11 @@ cases.case_info(name='DEAD')    #Get the Case type information
 cases.set_type(name='DEAD', casetype='LINEAR_STATIC')   #Change the case type of existing load case
 ```
 
-#### 1.2.4.3. Modal
+### 2.4.3. Modal
 
 `sap.Load.Modal`
 
-##### 1.2.4.3.1. Eigen
+#### 2.4.3.1. Eigen
 
 Usage Examples
 
@@ -175,7 +180,7 @@ eigen.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 eigen.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-##### 1.2.4.3.2. Ritz
+#### 2.4.3.2. Ritz
 
 Usage Examples
 
@@ -192,7 +197,7 @@ ritz.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 ritz.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-### Results
+## 2.5. Results
 
 Manipulate Results from SAP2000
 
@@ -211,4 +216,20 @@ setup.set_rxn_loc_get(x=0.5, y=0.5, z=5)    #sets coordinates of the locn at whi
 setup.base_rxn_loc_get()                    #retrieves coordinates of the locn at which the base reactions are reported.
 
 results.joint_reactions(jointname='1')      #Get Joint reactions as dict
+```
+
+## 2.6. Material
+
+Usage Examples
+
+```python
+material = sap.Material
+material.rename(old="4000Psi", new="MatConc")   #Rename existing material
+material.total()                                #Total # of defined material properties
+material.delete(name='4000Psi')                 #Delete existing material property
+material.list_all()                             #List all defined Material Properties
+material.get_props(name='4000Psi')              #Returns basic material property data
+material.add(name='Steel', material_type='Steel')           #Initialze Material Property
+material.set_isotropic(name='Steel', E=29500, poisson=0.25, thermal_coeff=6e-06)    #Set isotropic material properties
+material.set_density(name='Steel', mass_per_vol=0.00029)    #set density
 ```
