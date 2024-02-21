@@ -71,7 +71,7 @@ class Sap2000Wrapper:
         When hidden it is not visible on the screen or on the Windows task bar.
         """
         try:
-            assert self.mySapObject.Hide == 0
+            self.mySapObject.Hide() 
             return True
         except Exception as e:
             log.critical(str(e))
@@ -82,7 +82,7 @@ class Sap2000Wrapper:
         When hidden it is not visible on the screen or on the Windows task bar.
         """
         try:
-            assert self.mySapObject.Unhide == 0
+            self.mySapObject.Unhide()
             return True
         except Exception as e:
             log.critical(str(e))
