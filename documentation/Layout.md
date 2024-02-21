@@ -15,6 +15,7 @@
       - [2.4.3.2. Ritz](#2432-ritz)
   - [2.5. Results](#25-results)
   - [2.6. Material](#26-material)
+    - [Rebar](#rebar)
 
 # 1. Roadmap/Checklist
 
@@ -232,4 +233,18 @@ material.get_props(name='4000Psi')              #Returns basic material property
 material.add(name='Steel', material_type='Steel')           #Initialze Material Property
 material.set_isotropic(name='Steel', E=29500, poisson=0.25, thermal_coeff=6e-06)    #Set isotropic material properties
 material.set_density(name='Steel', mass_per_vol=0.00029)    #set density
+```
+
+### Rebar
+
+Usage Examples
+
+```python
+rebar = sap.Material.Rebar
+rebar.rename(old='R1', new='MyRebar')           #Rename rebar
+rebar.total()                                   #Total # of defined rebar properties
+rebar.delete(name='R1')                         #Delete existing rebar property
+rebar.list_all()                                #List all defined rebar Properties
+rebar.set_prop(name='MyRebar2', area=1.05, dia=1.0) #Define a rebar property
+rebar.get_prop(name='MyRebar2')                 #Get rebar property
 ```

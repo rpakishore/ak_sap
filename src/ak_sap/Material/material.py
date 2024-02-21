@@ -4,11 +4,15 @@ from ak_sap.utils import MasterClass, log
 from ak_sap.utils.decorators import smooth_sap_do
 
 from .constants import MaterialTypesStr, SymmetryTypeStr
+from .Materials.rebar import Rebar
 
 class Material(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
         self.PropMaterial = mySapObject.SapModel.PropMaterial
+        
+        #Submodules
+        self.Rebar = Rebar(mySapObject=mySapObject)
     
     def __len__(self) -> int:
         return self.total()

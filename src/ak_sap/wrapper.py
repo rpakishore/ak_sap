@@ -89,6 +89,10 @@ class Sap2000Wrapper:
             return False
     
     @property
+    def ishidden(self) -> bool:
+        return self.mySapObject.Visible()
+    
+    @property
     def version(self) -> str:
         return self.SapModel.GetVersion()[0]
         
