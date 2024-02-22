@@ -26,7 +26,7 @@ The package not comes pre-compiled with the streamlit package.
   - Alternatively, In windows launch by executing the script
 
     ```cmd
-    cd scripts\win
+    cd scripts
     run.bat
     ```
 
