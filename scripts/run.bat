@@ -1,7 +1,7 @@
 @echo off
 
 cd /d %~dp0
-cd ..\..
+cd ..
 
 rem Check if Python is installed
 python --version > nul 2>&1
