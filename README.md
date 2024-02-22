@@ -62,20 +62,16 @@
 ##### 2.2.1.1. One line command
 
 1. Press `Win` + `R` to open the Run console
-2. Type "powershell" and press enter
-3. change directory to the desired install folder using the cd command.
+2. Type "cmd" and press enter
+3. Type the following and press `Enter`
 
-   Example:
+   ```cmd
+    curl -sSL https://links.struct.work/SAP2000 > %USERPROFILE%\Desktop\install.bat
 
-   ```powershell
-    cd "C:\Users\test-user\Desktop\Temp"
    ```
 
-4. Type the following and press `Enter`
-
-   ```powershell
-   irm https://links.struct.work/SAP2000 | iex
-   ```
+4. You should now have a `install.bat` file in your desktop
+5. Move this file to your desired installtion directory and run to install the `AK_SAP` module
 
 ##### 2.2.1.2. Install directly from repo
 
