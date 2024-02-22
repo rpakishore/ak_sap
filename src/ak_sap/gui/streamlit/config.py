@@ -9,6 +9,7 @@ DEFAULT_SESSION_STATES = {
 def set_session_state(values: dict=DEFAULT_SESSION_STATES, force: bool=False):
     for k, v in values.items():
         if force or st.session_state.get(k) is None:
+            log.debug(f'[STREAMLIT] setting session state variables: {k}={v}')
             st.session_state[k] = v
             
 def st_initialize():

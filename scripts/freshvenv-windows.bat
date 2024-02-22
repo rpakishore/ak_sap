@@ -1,5 +1,5 @@
 cd /d %~dp0
-cd ../..
+cd ..
 RD /S /Q .venv
 
 python -m venv .venv

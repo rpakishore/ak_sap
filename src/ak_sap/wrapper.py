@@ -3,10 +3,12 @@ import comtypes.client
 from pathlib import Path
 import sys
 
-from ak_sap.Model import Model
-from ak_sap.Element import Element
 from ak_sap.Database import Table
 from ak_sap.Loads import Load
+from ak_sap.Material.material import Material
+from ak_sap.Model import Model
+from ak_sap.Object import Element
+from ak_sap.Results import Results
 from ak_sap.utils.logger import log
 
 class Sap2000Wrapper:
@@ -21,6 +23,8 @@ class Sap2000Wrapper:
         self.Element = Element(mySapObject=self.mySapObject)
         self.Table = Table(mySapObject=self.mySapObject)
         self.Load = Load(mySapObject=self.mySapObject)
+        self.Results = Results(mySapObject=self.mySapObject)
+        self.Material = Material(mySapObject=self.mySapObject)
         
         log.info('Sap2000Wrapper Initialized')
     
@@ -67,7 +71,7 @@ class Sap2000Wrapper:
         When hidden it is not visible on the screen or on the Windows task bar.
         """
         try:
-            assert self.mySapObject.Hide == 0
+            self.mySapObject.Hide() 
             return True
         except Exception as e:
             log.critical(str(e))
@@ -78,11 +82,15 @@ class Sap2000Wrapper:
         When hidden it is not visible on the screen or on the Windows task bar.
         """
         try:
-            assert self.mySapObject.Unhide == 0
+            self.mySapObject.Unhide()
             return True
         except Exception as e:
             log.critical(str(e))
             return False
+    
+    @property
+    def ishidden(self) -> bool:
+        return self.mySapObject.Visible()
     
     @property
     def version(self) -> str:
