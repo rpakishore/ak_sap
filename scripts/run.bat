@@ -1,5 +1,7 @@
 @echo off
 
+mode con cols=40 lines=15
+
 cd /d %~dp0
 cd ..
 
