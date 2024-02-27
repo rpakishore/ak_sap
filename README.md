@@ -136,7 +136,7 @@ sap.save(r'\Path\to\save\file.sdb')
 
 ### 3.1. GUI
 
-The repo now supports a streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for instructions.
+The repo has an optional streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for installation and usage instructions.
 
 ### 3.2. Layout Documentation
 
