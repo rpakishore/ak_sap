@@ -21,7 +21,7 @@ class Sap2000Wrapper:
         #Attach submodules and functions
         self.Model = Model(mySapObject=self.mySapObject)
         self.Element = Element(mySapObject=self.mySapObject)
-        self.Table = Table(mySapObject=self.mySapObject)
+        self.Table = Table(mySapObject=self.mySapObject, Model=self.Model)
         self.Load = Load(mySapObject=self.mySapObject)
         self.Results = Results(mySapObject=self.mySapObject)
         self.Material = Material(mySapObject=self.mySapObject)

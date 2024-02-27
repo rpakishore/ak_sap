@@ -1,15 +1,17 @@
 import pandas as pd
 
 import typing
+from typing import Any
 
 from ak_sap.utils import log
 from .table_structured_data import DatabaseTable, FieldData
 from .table_constants import ImportType_Literals
 
 class Table:
-    def __init__(self, mySapObject) -> None:
+    def __init__(self, mySapObject, Model) -> None:
         self.mySapObject = mySapObject
         self.SapModel = self.mySapObject.SapModel
+        self.Model = Model
         self.DatabaseTables = self.SapModel.DatabaseTables
         log.debug('Instance of `Table` module initialized.')
 
@@ -73,21 +75,33 @@ class Table:
             log.critical(str(e) + f'Return data: {_table_data}')
         return tables
     
-    def data(self, TableKey: str) -> pd.DataFrame:
+    def get(self, TableKey: str, dataframe: bool=True) -> pd.DataFrame|list[dict[str, Any]]:
         """Extract Table Data. 
         See `.list_available()` for `TableKey`s.
         See `.get_table_fields()` for info on fields."""
         log.debug(f'Extracting data for TableKey: {TableKey}')
         _data: list = []
+        _current_units = self.Model.units
+        self.Model.set_units(value="N_m_C")
         try:
             _data = self.DatabaseTables.GetTableForDisplayArray(TableKey,'','')
             assert _data[-1] == 0
-            df = _array_to_pandas(headers=_data[2], array=_data[4])
-            log.debug(f'Info of retrieved dataframe: \n{df.info(verbose=True)}')
-            return df
+            if dataframe:
+                df = self.__array_to_pandas(headers=_data[2], array=_data[4])
+                log.debug(f'Info of retrieved dataframe: \n{df.info(verbose=True)}')
+                self.Model.set_units(value=_current_units)
+                return df
+            else:
+                data = self.__array_to_list_of_dicts(headers=_data[2], array=_data[4])
+                self.Model.set_units(value=_current_units)
+                return data
         except Exception as e:
+            self.Model.set_units(value=_current_units)
             log.critical(str(e) + f'\ndata: {_data}')
-            return pd.DataFrame()
+            if dataframe:
+                return pd.DataFrame()
+            else:
+                return []
     
     def update(self, TableKey: str, data: pd.DataFrame, apply: bool=True):
         """Update the database table value"""
@@ -131,17 +145,31 @@ class Table:
         except Exception as e:
             log.critical(str(e))
         
-def _array_to_pandas(headers: tuple, array: tuple) -> pd.DataFrame:
-    """Given the table headers as tuple and table data as a single tuple;
-    Returns table as a dataframe."""
-    num_fields = len(headers)
-    assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
-    
-    df_data:dict[str,list] = {header: [] for header in headers}
-    for array_idx, value in enumerate(array):
-        _header: str = headers[array_idx % num_fields]
-        df_data[_header].append(value)
-    return pd.DataFrame(df_data)
+    def __array_to_pandas(self, headers: tuple, array: tuple) -> pd.DataFrame:
+        """Given the table headers as tuple and table data as a single tuple;
+        Returns table as a dataframe."""
+        num_fields = len(headers)
+        assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
+        
+        df_data:dict[str,list] = {header: [] for header in headers}
+        for array_idx, value in enumerate(array):
+            _header: str = headers[array_idx % num_fields]
+            df_data[_header].append(value)
+        return pd.DataFrame(df_data)
+
+    def __array_to_list_of_dicts(self, headers: tuple, array: tuple) -> list[dict[str, Any]]:
+        """Given the table headers as tuple and table data as a single tuple;
+        Returns table as a list of dictionaries."""
+        num_fields = len(headers)
+        assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
+        
+        list_of_dicts = []
+        for i in range(len(array) // num_fields):
+            row_dict = {headers[j]: array[i * num_fields + j] for j in range(num_fields)}
+            list_of_dicts.append(row_dict)
+        
+        return list_of_dicts
+
 
 def flatten_dataframe(df: pd.DataFrame) -> tuple:
     """Convert values of a dataframe to single-dimension array for SapOAPI"""

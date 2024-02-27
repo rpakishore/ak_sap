@@ -105,9 +105,16 @@ Control the database values
 Usage Examples
 
 ```python
-#Database
-sap.Table.list_available()                            #Lists available database tables
-sap.Table.list_all()                        #Lists all database tables
+tables = sap.Table
+tables.list_available()                              #Lists available database tables
+tables.list_all()                                    #Lists all database tables
+tables.get_table_fields('Analysis Options')          #Get table Field Info
+tables.get(TableKey='Load Case Definitions', dataframe=False)     #Get Table data in `list[dict]` format
+df = tables.get('Material Properties 01 - General')                 #Get Table data in pandas dataframe
+
+# Update Table
+df.iloc[0,0] = 'New Value'
+tables.update(TableKey='Material Properties 01 - General', data=df, apply=True)
 ```
 
 ## 2.4. Loads
