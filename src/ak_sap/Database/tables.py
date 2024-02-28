@@ -87,12 +87,12 @@ class Table:
             _data = self.DatabaseTables.GetTableForDisplayArray(TableKey,'','')
             assert _data[-1] == 0
             if dataframe:
-                df = self.__array_to_pandas(headers=_data[2], array=_data[4])
+                df = _array_to_pandas(headers=_data[2], array=_data[4])
                 log.debug(f'Info of retrieved dataframe: \n{df.info(verbose=True)}')
                 self.Model.set_units(value=_current_units)
                 return df
             else:
-                data = self.__array_to_list_of_dicts(headers=_data[2], array=_data[4])
+                data = _array_to_list_of_dicts(headers=_data[2], array=_data[4])
                 self.Model.set_units(value=_current_units)
                 return data
         except Exception as e:
@@ -145,31 +145,6 @@ class Table:
         except Exception as e:
             log.critical(str(e))
         
-    def __array_to_pandas(self, headers: tuple, array: tuple) -> pd.DataFrame:
-        """Given the table headers as tuple and table data as a single tuple;
-        Returns table as a dataframe."""
-        num_fields = len(headers)
-        assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
-        
-        df_data:dict[str,list] = {header: [] for header in headers}
-        for array_idx, value in enumerate(array):
-            _header: str = headers[array_idx % num_fields]
-            df_data[_header].append(value)
-        return pd.DataFrame(df_data)
-
-    def __array_to_list_of_dicts(self, headers: tuple, array: tuple) -> list[dict[str, Any]]:
-        """Given the table headers as tuple and table data as a single tuple;
-        Returns table as a list of dictionaries."""
-        num_fields = len(headers)
-        assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
-        
-        list_of_dicts = []
-        for i in range(len(array) // num_fields):
-            row_dict = {headers[j]: array[i * num_fields + j] for j in range(num_fields)}
-            list_of_dicts.append(row_dict)
-        
-        return list_of_dicts
-
 
 def flatten_dataframe(df: pd.DataFrame) -> tuple:
     """Convert values of a dataframe to single-dimension array for SapOAPI"""
@@ -182,3 +157,28 @@ def flatten_dataframe(df: pd.DataFrame) -> tuple:
         
     modified_list = [value if value != '' else None for value in flattened_list]
     return tuple(modified_list)
+
+def _array_to_pandas(headers: tuple, array: tuple) -> pd.DataFrame:
+    """Given the table headers as tuple and table data as a single tuple;
+    Returns table as a dataframe."""
+    num_fields = len(headers)
+    assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
+    
+    df_data:dict[str,list] = {header: [] for header in headers}
+    for array_idx, value in enumerate(array):
+        _header: str = headers[array_idx % num_fields]
+        df_data[_header].append(value)
+    return pd.DataFrame(df_data)
+
+def _array_to_list_of_dicts(headers: tuple, array: tuple) -> list[dict[str, Any]]:
+    """Given the table headers as tuple and table data as a single tuple;
+    Returns table as a list of dictionaries."""
+    num_fields = len(headers)
+    assert len(array) % num_fields == 0, f'Array length ({len(array)}) is not divisible by header length ({num_fields})'
+    
+    list_of_dicts = []
+    for i in range(len(array) // num_fields):
+        row_dict = {headers[j]: array[i * num_fields + j] for j in range(num_fields)}
+        list_of_dicts.append(row_dict)
+    
+    return list_of_dicts

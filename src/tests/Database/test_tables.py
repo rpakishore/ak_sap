@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 import unittest
 
-from ak_sap.Database.tables import _array_to_pandas, flatten_dataframe
+from ak_sap.Database.tables import _array_to_pandas, flatten_dataframe, _array_to_list_of_dicts
 
 # Test case with a valid input
 def test_array_to_pandas_valid():
@@ -23,6 +23,24 @@ def test_array_to_pandas_invalid_length():
     with pytest.raises(AssertionError, match=r'Array length \(\d+\) is not divisible by header length \(\d+\)'):
         _array_to_pandas(headers, data)
 
+# Test case with a valid input
+def test_array_to_list_of_dicts_valid():
+    headers = ('Name', 'Age', 'City')
+    data = ('John', 25, 'New York', 'Alice', 30, 'San Francisco')
+    expected_list_of_dicts = [
+        {'Name': 'John', 'Age': 25, 'City': 'New York'},
+        {'Name': 'Alice', 'Age': 30, 'City': 'San Francisco'}
+    ]
+    result_list_of_dicts = _array_to_list_of_dicts(headers, data)
+    assert result_list_of_dicts == expected_list_of_dicts
+
+# Test case with an invalid input (array length is not divisible by header length)
+def test_array_to_list_of_dicts_invalid_length():
+    headers = ('Name', 'Age', 'City')
+    data = ('John', 25, 'New York', 'Alice', 30)  # Missing City for Alice
+    with pytest.raises(AssertionError, match=r'Array length \(\d+\) is not divisible by header length \(\d+\)'):
+        _array_to_list_of_dicts(headers, data)
+        
 class TestFlattenDataFrame(unittest.TestCase):
 
     def test_flatten_empty_dataframe(self):
