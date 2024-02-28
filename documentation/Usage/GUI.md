@@ -17,6 +17,12 @@ The package not comes pre-compiled with the streamlit package.
     cd ak_sap
     ```
 
+- Install dependencies
+
+    ```bash
+    pip install flit && flit install
+    ```
+
 - Launch the app run
 
     ```bash
@@ -26,7 +32,7 @@ The package not comes pre-compiled with the streamlit package.
   - Alternatively, In windows launch by executing the script
 
     ```cmd
-    cd scripts\win
+    cd scripts
     run.bat
     ```
 
@@ -64,6 +70,7 @@ Steps:
 8. The exported file will be of format "`SAP filename`-`Selected Node #`-`Selected Section Shape`-`MMDD`_`HHMM`.pe"
 
 To Implement:
+
 - [ ] Incorporate the section profile into the `.pe` file.
 - [ ] Replace the manual deletion of existing loadcase with inbuilt `delete_existing` method of Hilti-Profis Class in version `0.0.4`.
 - [ ] Defer data generation until the click of download button (Part of Streamlit roadmap for May-July 2024).
