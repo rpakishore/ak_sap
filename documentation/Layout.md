@@ -90,10 +90,19 @@ frames.selected()                           #Yields selected frames
 frames.all()                                #Lists all defined frames
 frames.rename(old_name='1', new_name='1_1') #Rename frame
 frames.check_obj_legal(name='1')            #Asserts frame's existance
-frames.get_section(frame_name='1')          #Get the assigned Section name
-frames.get_points(frame_name='1')           #Get points connected to frame
-frames.delete(name='1')                     #Delete frame
+frames.get_section(name='1')          #Get the assigned Section name
+frames.get_points(name='1')           #Get points connected to frame
 
+#Manipulation
+frames.delete(name='1')                     #Delete frame
+frames.divide_by_distance(name='1',
+    dist=0.5,Iend=True)                     #Divide frame by distance
+frames.divide_by_intersection(name='2')   #Divide at selected intersections
+frames.divide_by_ratio(name='3',ratio=0.3)#Divide at selected ratio
+frames.join('2','3')                  #Join Colinear frames
+frames.change_points(name='1', point1='1', point2='3')  #Change connected points of frame
+
+# Get frame properties
 frames.Prop.rename(old_name="FSEC1", new_name="MySection")  #Rename frame property
 frames.Prop.total()                         #Total # of defined frame properties
 ```
