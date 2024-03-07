@@ -24,13 +24,16 @@ dev = [
     "ipykernel",
     "ipywidgets",
     "pandasgui",
-    "line-profiler",
-    "pytest==7.4.3"
+    "line-profiler"
 ]
 
 gui = [
     "streamlit==1.31.0",
     "hilti_profis==0.0.3"
+]
+
+test = [
+    "pytest==7.4.3"
 ]
 
 [project.urls]
