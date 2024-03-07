@@ -1,8 +1,8 @@
 from ak_sap.utils import log
 from ak_sap.utils.decorators import smooth_sap_do
-from .helper import MasterElem
+from .helper import MasterObj
 
-class Point(MasterElem):
+class Point(MasterObj):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject, ElemObj=mySapObject.SapModel.PointObj)
     

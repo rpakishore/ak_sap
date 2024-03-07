@@ -3,7 +3,7 @@ from typing import Any, Generator
 from ak_sap.utils.logger import log
 from ak_sap.utils.decorators import smooth_sap_do
 
-class MasterElem:
+class MasterObj:
     def __init__(self, mySapObject, ElemObj) -> None:
         self.mySapObject = mySapObject
         self.SapModel = self.mySapObject.SapModel
@@ -35,7 +35,7 @@ class MasterElem:
                 yield elem
     
     def is_selected(self, name:str) -> bool:
-        self.check_element_legal(name)
+        self.check_obj_legal(name)
         return self.ElemObj.GetSelected(name)[0]
     
     @smooth_sap_do
@@ -47,10 +47,10 @@ class MasterElem:
     @smooth_sap_do
     def rename(self, old_name: str, new_name: str):
         """Change the name of the element"""
-        self.check_element_legal(name=old_name)
+        self.check_obj_legal(name=old_name)
         return self.ElemObj.ChangeName(old_name, new_name)
     
-    def check_element_legal(self, name: str):
+    def check_obj_legal(self, name: str):
         """Confirms specified element exists in the model"""
         assert name in self.all(), f'`{name}` not found in the current list of elements: {self.all()}'
     

@@ -65,14 +65,14 @@ Manipulate Point Elements
 Usage Examples
 
 ```python
-points = sap.Element.Point
+points = sap.Object.Point
 len(points)                                 #list number of points in model
 points.add_by_coord((1,2,3))                #Add point to model
 points.is_selected(name='1')                #Check if point is selected
 points.selected()                           #Yields selected points
 points.all()                                #Lists all defined points
 points.rename(old_name='1', new_name='1_1') #Rename point
-points.check_element_legal(name='1')        #Asserts point's existance
+points.check_obj_legal(name='1')            #Asserts point's existance
 points.delete(name='1')                     #Delete point
 ```
 
@@ -83,13 +83,13 @@ Manipulate Frame Elements
 Usage Examples
 
 ```python
-frames = sap.Element.Frame
+frames = sap.Object.Frame
 len(frames)                                 #list number of frames in model
 frames.is_selected(name='1')                #Check if frame is selected
 frames.selected()                           #Yields selected frames
 frames.all()                                #Lists all defined frames
 frames.rename(old_name='1', new_name='1_1') #Rename frame
-frames.check_element_legal(name='1')        #Asserts frame's existance
+frames.check_obj_legal(name='1')            #Asserts frame's existance
 frames.get_section(frame_name='1')          #Get the assigned Section name
 frames.get_points(frame_name='1')           #Get points connected to frame
 frames.delete(name='1')                     #Delete frame
