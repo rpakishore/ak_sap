@@ -1,38 +1,66 @@
  <h1> Layout </h1>
 
-- [1. Roadmap/Checklist](#1-roadmapchecklist)
-- [2. Sub-Modules](#2-sub-modules)
-  - [2.1. Model](#21-model)
-  - [2.2. Element](#22-element)
-    - [2.2.1. Point](#221-point)
-    - [2.2.2. Frames](#222-frames)
-  - [2.3. Table](#23-table)
-  - [2.4. Loads](#24-loads)
-    - [2.4.1. Load Patterns](#241-load-patterns)
-    - [2.4.2. Load Cases](#242-load-cases)
-    - [2.4.3. Modal](#243-modal)
-      - [2.4.3.1. Eigen](#2431-eigen)
-      - [2.4.3.2. Ritz](#2432-ritz)
-  - [2.5. Results](#25-results)
-  - [2.6. Material](#26-material)
+- [Layout Map](#layout-map)
+- [Initialize](#initialize)
+- [Parent Level](#parent-level)
+- [Sub-Modules](#sub-modules)
+  - [Model](#model)
+  - [Element](#element)
+    - [Point](#point)
+    - [Frame](#frame)
+  - [Database](#database)
+  - [Loads](#loads)
+    - [Load Patterns](#load-patterns)
+    - [Load Cases](#load-cases)
+    - [Modal](#modal)
+      - [Eigen](#eigen)
+      - [Ritz](#ritz)
+  - [Analyze](#analyze)
+  - [Results](#results)
+  - [Material](#material)
     - [Rebar](#rebar)
 
-# 1. Roadmap/Checklist
-
-![MindMap](assets/mindmap.png)
-
-# 2. Sub-Modules
+# Layout Map
 
 ![MindMap](assets/mindmap.svg)
 
-## 2.1. Model
+# Initialize
+
+Usage Examples:
+
+```python
+from ak_sap import debug, Sap2000Wrapper
+debug(status=False)
+
+#Initialize
+sap = Sap2000Wrapper(attach_to_exist=True)      #Attach to existing opened model
+sap = Sap2000Wrapper(attach_to_exist=False)     #Create new blank model from latest SAP2000
+## Create blank model from a custom version of SAP2000
+sap = Sap2000Wrapper(attach_to_exist=False, program_path=r'Path\to\SAP2000.exe')
+```
+
+# Parent Level
+
+Usage Examples:
+
+```python
+sap.hide()                                  #Hide the SAP2000 window
+sap.unhide()                                #Unhides SAP2000 window
+sap.ishidden                                #Check if window is hidden
+sap.version                                 #Returns SAP2000 version number
+sap.api_version                             #Returns Sap0API version number
+
+sap.save(r'\Path\to\save\file.sdb')
+```
+
+# Sub-Modules
+## Model
 
 Collection of methods and attributes that control changes to the model as a whole
 
-Usage Examples
+Usage Examples:
 
 ```python
-#Model
 sap.Model.units                             #Returns current model units
 sap.Model.units_database                    #Returns Internal Database units
 sap.Model.set_units(value='N_m_C')          #Changes the present units of model
@@ -54,55 +82,87 @@ sap.Model.logs                              #Retrieve user comments and logs
 sap.Model.set_logs('Add this comment')      #Adds user comments/logs
 ```
 
-## 2.2. Element
+## Element
 
 Collection of methods and attributes that apply changes to elements in the model
 
-### 2.2.1. Point
+Usage Examples:
+
+```python
+object = sap.Object
+object.move_selected(dx=0.5, dy=0, dz=1.0)  #Move selected object
+object.copy(dx=0.5, dy=0, dz=0, num=10)#copy selected object
+
+#Mirror and create object
+from ak_sap import Coord
+pt1 = Coord(x=10, y=20, z=0)
+p2 = Coord(x=10, y=30, z=0)
+object.mirror(plane='Z', coord1=pt1, coord2=pt2)    #Mirror replicate selected obj.
+```
+
+### Point
 
 Manipulate Point Elements
 
-Usage Examples
+Usage Examples:
 
 ```python
-points = sap.Element.Point
+points = sap.Object.Point
 len(points)                                 #list number of points in model
 points.add_by_coord((1,2,3))                #Add point to model
 points.is_selected(name='1')                #Check if point is selected
 points.selected()                           #Yields selected points
 points.all()                                #Lists all defined points
 points.rename(old_name='1', new_name='1_1') #Rename point
-points.check_element_legal(name='1')        #Asserts point's existance
+points.check_obj_legal(name='1')            #Asserts point's existance
 points.delete(name='1')                     #Delete point
+
+#Manipilate
+points.deselect_all()                       #Deselect all points
+points.select(name='1')                     #Select a single point
+points.align(axis='Z', ordinate = 100)      #Align selected points
+points.deselect(name='1')                   #Deselect a single point
+
+points.merge(tolerance=2)                   #Merge points that are within tol
+points.change_coord(name='1', x=0, y=0, z=0)#Change point coordinate
 ```
 
-### 2.2.2. Frames
+### Frame
 
 Manipulate Frame Elements
 
-Usage Examples
+Usage Examples:
 
 ```python
-frames = sap.Element.Frame
+frames = sap.Object.Frame
 len(frames)                                 #list number of frames in model
 frames.is_selected(name='1')                #Check if frame is selected
 frames.selected()                           #Yields selected frames
 frames.all()                                #Lists all defined frames
 frames.rename(old_name='1', new_name='1_1') #Rename frame
-frames.check_element_legal(name='1')        #Asserts frame's existance
-frames.get_section(frame_name='1')          #Get the assigned Section name
-frames.get_points(frame_name='1')           #Get points connected to frame
-frames.delete(name='1')                     #Delete frame
+frames.check_obj_legal(name='1')            #Asserts frame's existance
+frames.get_section(name='1')          #Get the assigned Section name
+frames.get_points(name='1')           #Get points connected to frame
 
+#Manipulation
+frames.delete(name='1')                     #Delete frame
+frames.divide_by_distance(name='1',
+    dist=0.5,Iend=True)                     #Divide frame by distance
+frames.divide_by_intersection(name='2')   #Divide at selected intersections
+frames.divide_by_ratio(name='3',ratio=0.3)#Divide at selected ratio
+frames.join('2','3')                  #Join Colinear frames
+frames.change_points(name='1', point1='1', point2='3')  #Change connected points of frame
+
+# Get frame properties
 frames.Prop.rename(old_name="FSEC1", new_name="MySection")  #Rename frame property
 frames.Prop.total()                         #Total # of defined frame properties
 ```
 
-## 2.3. Table
+## Database
 
 Control the database values
 
-Usage Examples
+Usage Examples:
 
 ```python
 tables = sap.Table
@@ -117,13 +177,37 @@ df.iloc[0,0] = 'New Value'
 tables.update(TableKey='Material Properties 01 - General', data=df, apply=True)
 ```
 
-## 2.4. Loads
+## Select
+elect = sap.Select
+
+select.all()                    #Select all objects
+select.clear()                  #Deselect all objects
+
+select.constraint(name='Diaph1')#Select points in constraint
+select.constraint(name='Diaph1', reverse=True)  #Deselect points in constraint
+
+select.invert()                 #Invert selections
+select.selected                 #Returns list of selected objects
+select.previous()               #restores the previous selection
+
+#Selection based on plane
+select.in_plane(pointname='1', plane='XY')  #Select in XY plane
+select.in_plane(pointname='2', plane='YZ', reverse=False)   #Deselect
+
+#Select by property
+select.property(type='Area', name='ASEC1')
+select.property(type='Cable', name='CAB1', reverse=True)
+select.property(type='Frame', name='FSEC1')
+select.property(type='Link', name='GAP1', reverse=True)
+select.property(type='Material', name='A992Fy50')
+select.property(type='Solid', name='SOLID1', reverse=True)
+select.property(type='Tendon', name='TEN1')
+## Loads
 
 Control the definition and assignments of loads.
+### Load Patterns
 
-### 2.4.1. Load Patterns
-
-Usage Examples
+Usage Examples:
 
 ```python
 pattern = sap.Load.Pattern
@@ -143,9 +227,9 @@ pattern.add(name='Custom Live', pattern_type='LIVE',
             selfwt_multiplier=1.15, add_case=True)
 ```
 
-### 2.4.2. Load Cases
+### Load Cases
 
-Usage Examples
+Usage Examples:
 
 ```python
 cases = sap.Load.Case
@@ -157,13 +241,12 @@ cases.case_info(name='DEAD')    #Get the Case type information
 cases.set_type(name='DEAD', casetype='LINEAR_STATIC')   #Change the case type of existing load case
 ```
 
-### 2.4.3. Modal
+### Modal
 
 `sap.Load.Modal`
+#### Eigen
 
-#### 2.4.3.1. Eigen
-
-Usage Examples
+Usage Examples:
 
 ```python
 eigen = sap.Load.Modal.Eigen
@@ -188,9 +271,9 @@ eigen.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 eigen.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-#### 2.4.3.2. Ritz
+#### Ritz
 
-Usage Examples
+Usage Examples:
 
 ```python
 ritz = sap.Load.Modal.Ritz
@@ -205,11 +288,33 @@ ritz.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 ritz.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-## 2.5. Results
+## Analyze
+
+Usage Examples:
+
+```python
+analyze = sap.Analyze
+analyze.create_model()                      #Create analysis model
+analyze.run()                               #Runs the analysis
+analyze.case_status()                       #retrieves the status for all load cases.
+analyze.get_run_status()                    #retrieves the run flags for all cases
+analyze.set_run_flag(case='MODAL', status=True) # Set case to run
+analyze.get_solver()                        #Get solver info
+
+#Set solver options
+analyze.set_solver(
+    SolverType='Standard',
+    SolverProcessType='Auto',
+    NumberParallelRuns=0,
+    StiffCase=''
+)                    
+```
+
+## Results
 
 Manipulate Results from SAP2000
 
-Usage Examples
+Usage Examples:
 
 ```python
 results = sap.Results
@@ -223,12 +328,18 @@ setup.is_selected_combo(comboname='COMB1')  #checks if an load combo is selected
 setup.set_rxn_loc_get(x=0.5, y=0.5, z=5)    #sets coordinates of the locn at which the base reactions are reported.               
 setup.base_rxn_loc_get()                    #retrieves coordinates of the locn at which the base reactions are reported.
 
-results.joint_reactions(jointname='1')      #Get Joint reactions as dict
+results.joint_reactions(jointname='1')      #Get Joint reactions as list of dict
+results.joint_displacements(jointname='1')      #Get Joint displacements as list of dict
+results.joint_accelerations(jointname='1')  #Get joint accelerations
+results.joint_velocities(jointname='1')     #Get joint velocities
+
+results.delete('MODAL')                     #Delete results of `MODAL` case
+results.delete('All')                       #Delete results of all cases
 ```
 
-## 2.6. Material
+## Material
 
-Usage Examples
+Usage Examples:
 
 ```python
 material = sap.Material
@@ -244,7 +355,7 @@ material.set_density(name='Steel', mass_per_vol=0.00029)    #set density
 
 ### Rebar
 
-Usage Examples
+Usage Examples:
 
 ```python
 rebar = sap.Material.Rebar

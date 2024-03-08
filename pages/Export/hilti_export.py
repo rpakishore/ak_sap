@@ -22,7 +22,7 @@ def main():
         
     def _hilti_extract_values():
         try:
-            st.session_state['_hilti_values_extracted'] = sap.Element.Point.selected().__next__()
+            st.session_state['_hilti_values_extracted'] = sap.Object.Point.selected().__next__()
         except StopIteration:
             st.session_state['_hilti_values_extracted'] = None
             st.warning('Make sure the node is selected.')
@@ -35,7 +35,7 @@ def main():
     
     if st.session_state['_hilti_values_extracted']:
         try:
-            selected_section = sap.Element.Frame.get_section(frame_name=sap.Element.Frame.selected().__next__())
+            selected_section = sap.Object.Frame.get_section(frame_name=sap.Object.Frame.selected().__next__())
         except StopIteration:
             selected_section = None
 

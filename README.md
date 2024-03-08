@@ -81,14 +81,27 @@ Clone repo and Install with flit
 git clone https://github.com/rpakishore/ak_sap.git
 cd  ak_sap
 pip install flit
-flit install --deps production
 ```
+
+- If you want just the base package:
+  
+  ```bash
+  flit install --deps production
+  ```
+
+- Alternatively, if you also want to include the optional streamlit gui:
+  
+  ```bash
+  flit install --deps production --extras gui
+  ```
 
 ##### 2.2.1.3. Install from Pypi release
 
 ```bash
 pip install ak_sap
 ```
+
+Note: The Pypi version does not ship with the optional streamlit gui
 
 #### 2.2.2. Development
 
