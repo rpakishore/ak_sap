@@ -7,7 +7,7 @@ from ak_sap.utils.decorators import smooth_sap_do
 class LoadCase(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
-        self.LoadCases = mySapObject.SapModel.LoadCases
+        self.__LoadCases = mySapObject.SapModel.LoadCases
     
     def __str__(self) -> str:
         return 'Instance of `LoadCase`. Holds collection of functions'
@@ -21,32 +21,32 @@ class LoadCase(MasterClass):
         """returns the total number of defined load cases in the model. 
         If desired, counts can be returned for all load cases of a specified type in the model."""
         if casetype is None:
-            _ret = self.LoadCases.Count()
+            _ret = self.__LoadCases.Count()
         else:
             _value = typing.get_args(LoadCaseType).index(casetype) + 1
-            _ret = self.LoadCases.Count(_value)
+            _ret = self.__LoadCases.Count(_value)
         return _ret
     
     @smooth_sap_do
     def rename(self, old_name: str, new_name: str):
         """changes the name of an existing load case."""
         assert old_name in self.list_all(), f'"{old_name}" is not in list of defined load cases {self.list_all()}'
-        return self.LoadCases.ChangeName(old_name, new_name)
+        return self.__LoadCases.ChangeName(old_name, new_name)
     
     @smooth_sap_do
     def list_all(self) -> tuple[str]:
         """retrieves the names of all defined load cases of the specified type."""
-        _, loadcases, _ret = self.LoadCases.GetNameList_1()
+        _, loadcases, _ret = self.__LoadCases.GetNameList_1()
         return *loadcases, _ret
     
     @smooth_sap_do
     def delete(self, name: str):
         assert name in self.list_all(), f'"{name}" is not in list of defined load cases {self.list_all()}'
-        return self.LoadCases.Delete(name)
+        return self.__LoadCases.Delete(name)
     
     @smooth_sap_do
     def case_info(self, name: str) -> dict:
-        _ret = self.LoadCases.GetTypeOAPI_2(name)
+        _ret = self.__LoadCases.GetTypeOAPI_2(name)
         _value = {
             'CaseType': typing.get_args(LoadCaseType)[_ret[0]-1],
             'DesignType': typing.get_args(LoadPatternType)[_ret[2]-1],
@@ -66,4 +66,4 @@ class LoadCase(MasterClass):
     def set_type(self, name: str, casetype: LoadCaseType):
         assert name in self.list_all(), f'"{name}" is not in list of defined load cases {self.list_all()}'
         _value = typing.get_args(LoadCaseType).index(casetype) + 1
-        return self.LoadCases.SetDesignType(name, 1, _value)
+        return self.__LoadCases.SetDesignType(name, 1, _value)

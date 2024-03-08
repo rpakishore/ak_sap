@@ -7,14 +7,14 @@ from .Setup import ResultsSetup
 class Results(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
-        self.Results = mySapObject.SapModel.Results
+        self.__Results = mySapObject.SapModel.Results
         
         self.Setup = ResultsSetup(mySapObject=mySapObject)
     
     @smooth_sap_do
     def joint_reactions(self, jointname:str) -> dict:
         loads: list[dict] = []
-        _, Obj, Elm, LoadCase,StepType, StepNum, F1, F2, F3, M1, M2, M3, ret = self.Results.JointReact(jointname, 1)
+        _, Obj, Elm, LoadCase,StepType, StepNum, F1, F2, F3, M1, M2, M3, ret = self.__Results.JointReact(jointname, 1)
         
         for _Obj, _Elm, _LoadCase, _StepType, _StepNum, _F1, _F2, _F3, _M1, _M2, _M3 in zip(Obj, Elm, LoadCase, StepType, StepNum, F1, F2, F3, M1, M2, M3):
             loads.append(

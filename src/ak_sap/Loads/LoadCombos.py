@@ -4,7 +4,7 @@ from ak_sap.utils.decorators import smooth_sap_do
 class LoadCombo(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
-        self.RespCombo = mySapObject.SapModel.RespCombo
+        self.__RespCombo = mySapObject.SapModel.RespCombo
     
     def __str__(self) -> str:
         return 'Instance of `LoadCombo`'
@@ -12,4 +12,4 @@ class LoadCombo(MasterClass):
     @smooth_sap_do
     def list_all(self) -> tuple[str]:
         """retrieves the names of all defined response combinations"""
-        return self.RespCombo.GetNameList()[1:]
+        return self.__RespCombo.GetNameList()[1:]
