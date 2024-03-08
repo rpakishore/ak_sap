@@ -61,7 +61,7 @@ class Point(MasterObj):
         return self.__EditPoint.Merge(tolerance)
     
     @smooth_sap_do
-    def change_coordinate(self, name: str, x: float, y: float, z: float) -> bool:
+    def change_coord(self, name: str, x: float, y: float, z: float) -> bool:
         """changes the coordinates of a specified point object.
 
         Args:

@@ -58,6 +58,18 @@ sap.Model.set_logs('Add this comment')      #Adds user comments/logs
 
 Collection of methods and attributes that apply changes to elements in the model
 
+```python
+object = sap.Object
+object.move_selected(dx=0.5, dy=0, dz=1.0)  #Move selected object
+object.copy(dx=0.5, dy=0, dz=0, num=10)#copy selected object
+
+#Mirror and create object
+from ak_sap import Coord
+pt1 = Coord(x=10, y=20, z=0)
+p2 = Coord(x=10, y=30, z=0)
+object.mirror(plane='Z', coord1=pt1, coord2=pt2)    #Mirror replicate selected obj.
+```
+
 ### 2.2.1. Point
 
 Manipulate Point Elements
@@ -74,6 +86,15 @@ points.all()                                #Lists all defined points
 points.rename(old_name='1', new_name='1_1') #Rename point
 points.check_obj_legal(name='1')            #Asserts point's existance
 points.delete(name='1')                     #Delete point
+
+#Manipilate
+points.deselect_all()                       #Deselect all points
+points.select(name='1')                     #Select a single point
+points.align(axis='Z', ordinate = 100)      #Align selected points
+points.deselect(name='1')                   #Deselect a single point
+
+points.merge(tolerance=2)                   #Merge points that are within tol
+points.change_coord(name='1', x=0, y=0, z=0)#Change point coordinate
 ```
 
 ### 2.2.2. Frames

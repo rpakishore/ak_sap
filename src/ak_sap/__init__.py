@@ -3,6 +3,7 @@ __version__ = "0.0.1"
 
 from ak_sap.utils.logger import log
 from ak_sap.wrapper import Sap2000Wrapper
+from ak_sap.misc import Coord
 
 #log = Log()
 
