@@ -1,3 +1,4 @@
+from typing import Literal
 
 from ak_sap.utils import log, MasterClass
 from ak_sap.utils.decorators import smooth_sap_do
@@ -10,6 +11,15 @@ class Results(MasterClass):
         self.__Results = mySapObject.SapModel.Results
         
         self.Setup = ResultsSetup(mySapObject=mySapObject)
+        
+    @smooth_sap_do
+    def delete(self, casename: str|Literal['All']) -> bool:
+        """deletes results for load cases.
+
+        Args:
+            casename (str | Literal['All']): name of an existing load case that is to have its results deleted.
+        """
+        return self.mySapObject.SapModel.Analyze.DeleteResykts(casename, casename.casefold() == 'all')
     
     @smooth_sap_do
     def joint_reactions(self, jointname:str) -> dict:

@@ -3,6 +3,7 @@ import comtypes.client
 from pathlib import Path
 import sys
 
+from ak_sap.Analyze import Analyze
 from ak_sap.Database import Table
 from ak_sap.Loads import Load
 from ak_sap.Material.material import Material
@@ -19,6 +20,7 @@ class Sap2000Wrapper:
         self.SapModel = self.mySapObject.SapModel
         
         #Attach submodules and functions
+        self.Analyze = Analyze(mySapObject=self.mySapObject)
         self.Model = Model(mySapObject=self.mySapObject)
         self.Object = Object(mySapObject=self.mySapObject)
         self.Table = Table(mySapObject=self.mySapObject, Model=self.Model)
