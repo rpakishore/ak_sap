@@ -274,6 +274,15 @@ analyze.run()                               #Runs the analysis
 analyze.case_status()                       #retrieves the status for all load cases.
 analyze.get_run_status()                    #retrieves the run flags for all cases
 analyze.set_run_flag(case='MODAL', status=True) # Set case to run
+analyze.get_solver()                        #Get solver info
+
+#Set solver options
+analyze.set_solver(
+    SolverType='Standard',
+    SolverProcessType='Auto',
+    NumberParallelRuns=0,
+    StiffCase=''
+)                    
 ```
 
 ## Results
@@ -294,7 +303,10 @@ setup.is_selected_combo(comboname='COMB1')  #checks if an load combo is selected
 setup.set_rxn_loc_get(x=0.5, y=0.5, z=5)    #sets coordinates of the locn at which the base reactions are reported.               
 setup.base_rxn_loc_get()                    #retrieves coordinates of the locn at which the base reactions are reported.
 
-results.joint_reactions(jointname='1')      #Get Joint reactions as dict
+results.joint_reactions(jointname='1')      #Get Joint reactions as list of dict
+results.joint_displacements(jointname='1')      #Get Joint displacements as list of dict
+results.joint_accelerations(jointname='1')  #Get joint accelerations
+results.joint_velocities(jointname='1')     #Get joint velocities
 
 results.delete('MODAL')                     #Delete results of `MODAL` case
 results.delete('All')                       #Delete results of all cases
