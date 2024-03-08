@@ -10,6 +10,7 @@ from ak_sap.Material.material import Material
 from ak_sap.Model import Model
 from ak_sap.Object import Object
 from ak_sap.Results import Results
+from ak_sap.Select import Select
 from ak_sap.utils.logger import log
 
 class Sap2000Wrapper:
@@ -27,6 +28,7 @@ class Sap2000Wrapper:
         self.Load = Load(mySapObject=self.mySapObject)
         self.Results = Results(mySapObject=self.mySapObject)
         self.Material = Material(mySapObject=self.mySapObject)
+        self.Select = Select(mySapObject=self.mySapObject)
         
         log.info('Sap2000Wrapper Initialized')
     
