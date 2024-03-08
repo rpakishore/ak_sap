@@ -6,7 +6,7 @@ class Frame(MasterObj):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject, ElemObj=mySapObject.SapModel.FrameObj)
         
-        self.EditFrame = mySapObject.SapModel.EditFrame
+        self.__EditFrame = mySapObject.SapModel.EditFrame
         self.Prop = Prop(mySapObject=mySapObject)
     
     @smooth_sap_do
@@ -26,7 +26,7 @@ class Frame(MasterObj):
         """divides straight frame objects into two objects at a location defined by the Dist and IEnd items. 
         Curved frame objects are not divided.
         """
-        return self.EditFrame.DivideAtDistance(name, dist, Iend)
+        return self.__EditFrame.DivideAtDistance(name, dist, Iend)
 
     @smooth_sap_do
     def divide_by_intersection(self, name: str) -> tuple[str]:
@@ -39,7 +39,7 @@ class Frame(MasterObj):
         Returns:
             tuple[str]: array that includes the names of the new frame objects.
         """
-        return self.EditFrame.DivideAtIntersections(name)[1:]
+        return self.__EditFrame.DivideAtIntersections(name)[1:]
     
     @smooth_sap_do
     def divide_by_ratio(self,name: str, ratio: float, num_frames: int=1) -> tuple[str]:
@@ -54,7 +54,7 @@ class Frame(MasterObj):
         Returns:
             tuple[str]: array that includes the names of the new frame objects.
         """
-        return self.EditFrame.DivideByRatio(name, num_frames, ratio)
+        return self.__EditFrame.DivideByRatio(name, num_frames, ratio)
         
     @smooth_sap_do
     def join(self, frame1: str, frame2: str) -> bool:
@@ -64,7 +64,7 @@ class Frame(MasterObj):
             frame1 (str): name of an existing frame object to be joined. The new, joined frame object keeps this name.
             frame2 (_type_): name of an existing frame object to be joined.
         """
-        return self.EditFrame.Join(frame1, frame2)
+        return self.__EditFrame.Join(frame1, frame2)
 
     @smooth_sap_do
     def change_points(self, name: str, point1: str, point2: str) -> bool:
@@ -75,11 +75,11 @@ class Frame(MasterObj):
             point1 (str): name of the point object at the I-End of the frame object.
             point2 (str): name of the point object at the J-End of the frame object.
         """
-        return self.EditFrame.ChangeConnectivity(name, point1, point2)
+        return self.__EditFrame.ChangeConnectivity(name, point1, point2)
     
 class Prop:
     def __init__(self, mySapObject) -> None:
-        self.SapModel=mySapObject.SapModel
+        self.__mySapObject=mySapObject.SapModel
     
     def __len__(self) -> int:
         return self.total()
@@ -87,9 +87,9 @@ class Prop:
     @smooth_sap_do
     def rename(self, old_name: str, new_name: str):
         """changes the name of an existing frame section property."""
-        return self.SapModel.PropFrame.ChangeName(old_name, new_name)
+        return self.__mySapObject.PropFrame.ChangeName(old_name, new_name)
     
     @smooth_sap_do
     def total(self) -> int:
         """returns the total number of defined frame section properties in the model"""
-        return self.SapModel.PropFrame.Count()
+        return self.__mySapObject.PropFrame.Count()

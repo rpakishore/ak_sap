@@ -7,8 +7,8 @@ from .helper import MasterObj
 class Point(MasterObj):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject, ElemObj=mySapObject.SapModel.PointObj)
-        self.EditPoint = mySapObject.SapModel.EditPoint
-        self.PointObj = mySapObject.SapModel.PointObj
+        self.__EditPoint = mySapObject.SapModel.EditPoint
+        self.__PointObj = mySapObject.SapModel.PointObj
     
     @smooth_sap_do
     def add_by_coord(self, point: tuple[float, float, float], name: str='', coord_sys: str = 'Global') -> str:
@@ -33,19 +33,19 @@ class Point(MasterObj):
             array of the name of each point object that is in a new location after the alignment is complete.)
         """
         _axis = ['X','Y','Z'].index(axis.upper().strip()) + 1
-        return self.EditPoint.Align(_axis, ordinate)
+        return self.__EditPoint.Align(_axis, ordinate)
 
     @smooth_sap_do
     def select(self, name: str) -> bool:
-        return self.PointObj.SetSelected(name, True)
+        return self.__PointObj.SetSelected(name, True)
     
     @smooth_sap_do
     def deselect(self, name: str) -> bool:
-        return self.PointObj.SetSelected(name, False)
+        return self.__PointObj.SetSelected(name, False)
     
     @smooth_sap_do
     def deselect_all(self) -> bool:
-        return self.PointObj.ClearSelection()
+        return self.__PointObj.ClearSelection()
     
     @smooth_sap_do
     def merge(self, tolerance: float) -> tuple:
@@ -58,7 +58,7 @@ class Point(MasterObj):
             tuple: (number of the selected point objects that still exist after the merge is complete.,
             array of the name of each selected point object that still exists after the merge is complete.)
         """
-        return self.EditPoint.Merge(tolerance)
+        return self.__EditPoint.Merge(tolerance)
     
     @smooth_sap_do
     def change_coordinate(self, name: str, x: float, y: float, z: float) -> bool:
@@ -73,4 +73,4 @@ class Point(MasterObj):
         Returns:
             bool: Success
         """
-        return self.EditPoint.ChangeCoordinates_1(name, x, y, z)
+        return self.__EditPoint.ChangeCoordinates_1(name, x, y, z)
