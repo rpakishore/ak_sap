@@ -5,8 +5,6 @@ from ak_sap.utils.logger import log
 from ak_sap.wrapper import Sap2000Wrapper
 from ak_sap.misc import Coord
 
-#log = Log()
-
 def debug(status=False):
     """Import this in a new module and enable debug to use debug
     example:

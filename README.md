@@ -114,6 +114,15 @@ pip install flit
 flit install --pth-file
 ```
 
+Updating Docs:
+
+- Update the [Usage.ipynb](./documentation/Usage.ipynb).
+- Open `cmd.exe` to run
+
+  ```bash
+  update-doc
+  ```
+
 <!-- Usage -->
 ## 3. Usage
 
@@ -154,16 +163,13 @@ To see module level usage, check out the [`Layout.md`](/documentation/Layout.md)
 <!-- Roadmap -->
 ## 4. Roadmap
 
-![Roadmap/Checklist](/documentation/assets/mindmap.png)
-
-- [ ] Generate Load Patterns
-- [ ] Generate Load Cases
+- [x] Generate Load Patterns
+- [x] Generate Load Cases
 - [ ] Apply Loads
   - [ ] Points
   - [ ] Area
   - [ ] Line
-- [ ] Export joint reactions to Hilti-Profis file
-- [ ] Export Frame/Wall sections to S-Concrete
+- [x] Export joint reactions to Hilti-Profis file
 
 <!-- License -->
 ## 5. License

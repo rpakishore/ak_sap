@@ -9,6 +9,7 @@
     - [Point](#point)
     - [Frame](#frame)
   - [Database](#database)
+  - [Select](#select)
   - [Loads](#loads)
     - [Load Patterns](#load-patterns)
     - [Load Cases](#load-cases)
@@ -49,6 +50,7 @@ sap.unhide()                                #Unhides SAP2000 window
 sap.ishidden                                #Check if window is hidden
 sap.version                                 #Returns SAP2000 version number
 sap.api_version                             #Returns Sap0API version number
+sap.exit(save=False)                        #Exit the application
 
 sap.save(r'\Path\to\save\file.sdb')
 ```
@@ -178,12 +180,16 @@ tables.update(TableKey='Material Properties 01 - General', data=df, apply=True)
 ```
 
 ## Select
-elect = sap.Select
 
-select.all()                    #Select all objects
-select.clear()                  #Deselect all objects
+Usage Examples:
 
-select.constraint(name='Diaph1')#Select points in constraint
+```python
+select = sap.Select
+
+select.all()                                    #Select all objects
+select.clear()                                  #Deselect all objects
+
+select.constraint(name='Diaph1')                #Select points in constraint
 select.constraint(name='Diaph1', reverse=True)  #Deselect points in constraint
 
 select.invert()                 #Invert selections
@@ -191,7 +197,7 @@ select.selected                 #Returns list of selected objects
 select.previous()               #restores the previous selection
 
 #Selection based on plane
-select.in_plane(pointname='1', plane='XY')  #Select in XY plane
+select.in_plane(pointname='1', plane='XY')                  #Select in XY plane
 select.in_plane(pointname='2', plane='YZ', reverse=False)   #Deselect
 
 #Select by property
@@ -202,6 +208,8 @@ select.property(type='Link', name='GAP1', reverse=True)
 select.property(type='Material', name='A992Fy50')
 select.property(type='Solid', name='SOLID1', reverse=True)
 select.property(type='Tendon', name='TEN1')
+```
+
 ## Loads
 
 Control the definition and assignments of loads.
