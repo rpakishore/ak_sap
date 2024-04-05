@@ -9,6 +9,7 @@ class Point(MasterObj):
         super().__init__(mySapObject=mySapObject, ElemObj=mySapObject.SapModel.PointObj)
         self.__EditPoint = mySapObject.SapModel.EditPoint
         self.__PointObj = mySapObject.SapModel.PointObj
+        self.__EditGeneral = mySapObject.SapModel.EditGeneral
     
     @smooth_sap_do
     def add_by_coord(self, point: tuple[float, float, float], name: str='', coord_sys: str = 'Global') -> str:
@@ -74,3 +75,20 @@ class Point(MasterObj):
             bool: Success
         """
         return self.__EditPoint.ChangeCoordinates_1(name, x, y, z)
+    
+    @smooth_sap_do
+    def extrude(self, point_name: str, dx: float, dy: float, dz: float, num_frames: int, property_name: str|None = None) -> str:
+        """Creates new frame objects by linearly extruding a specified point obj. into frame objects.
+
+        Args:
+            point_name (str): Name of existing point to extrude
+            dx (float): x offset.
+            dy (float): y offset.
+            dz (float): z offset.
+            num_frames (int): number of frame objects to create
+            property_name (str | None, optional): Name of a defined frame section property to be used for the new frame obj. Defaults to None.
+
+        Returns:
+            str: array of the name of each frame object created
+        """
+        return self.__EditGeneral.ExtrudePointToFrameLinear(point_name, property_name, dx, dy, dz, num_frames)

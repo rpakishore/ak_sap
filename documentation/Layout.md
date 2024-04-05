@@ -125,6 +125,13 @@ points.select(name='1')                     #Select a single point
 points.align(axis='Z', ordinate = 100)      #Align selected points
 points.deselect(name='1')                   #Deselect a single point
 
+# Extrude point to frame
+points.extrude(
+    point_name='3',
+    property_name='FSec1',
+    dx=0, dy=144, dz=0,
+    num_frames=3
+)
 points.merge(tolerance=2)                   #Merge points that are within tol
 points.change_coord(name='1', x=0, y=0, z=0)#Change point coordinate
 ```
@@ -305,7 +312,7 @@ analyze = sap.Analyze
 analyze.create_model()                      #Create analysis model
 analyze.run()                               #Runs the analysis
 analyze.case_status()                       #retrieves the status for all load cases.
-analyze.get_run_status()                    #retrieves the run flags for all cases
+analyze.get_run_flag()                      #retrieves the run flags for all cases
 analyze.set_run_flag(case='MODAL', status=True) # Set case to run
 analyze.get_solver()                        #Get solver info
 
