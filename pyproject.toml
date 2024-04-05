@@ -43,5 +43,5 @@ test = [
 Home = "https://github.com/rpakishore/ak_sap"
 
 [project.scripts]
-app="ak_sap.gui.cli_app:app"
+gui="ak_sap.gui.gui_app:app"
 update-doc="ak_sap.cli.update_doc:app"

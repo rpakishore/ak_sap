@@ -20,20 +20,19 @@ The package not comes pre-compiled with the streamlit package.
 - Install dependencies
 
     ```bash
-    pip install flit && flit install
+    pip install flit && flit install --extras gui
     ```
 
 - Launch the app run
 
     ```bash
-    python -m streamlit run Start_Here.py
+    gui
     ```
 
   - Alternatively, In windows launch by executing the script
 
     ```cmd
-    cd scripts
-    run.bat
+    python -m streamlit run Start_Here.py
     ```
 
 - Open up the SAP2000 model of your choice and click `Attach to Model`

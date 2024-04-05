@@ -30,9 +30,8 @@
   - [2.1. Prerequisites](#21-prerequisites)
   - [2.2. Installation](#22-installation)
     - [2.2.1. Production](#221-production)
-      - [2.2.1.1. One line command](#2211-one-line-command)
-      - [2.2.1.2. Install directly from repo](#2212-install-directly-from-repo)
-      - [2.2.1.3. Install from Pypi release](#2213-install-from-pypi-release)
+      - [2.2.1.1. Install directly from repo](#2211-install-directly-from-repo)
+      - [2.2.1.2. Install from Pypi release](#2212-install-from-pypi-release)
     - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
   - [3.1. GUI](#31-gui)
@@ -59,21 +58,7 @@
 
 #### 2.2.1. Production
 
-##### 2.2.1.1. One line command
-
-1. Press `Win` + `R` to open the Run console
-2. Type "cmd" and press enter
-3. Type the following and press `Enter`
-
-   ```cmd
-    curl -sSL https://links.struct.work/SAP2000 > %USERPROFILE%\Desktop\install.bat
-
-   ```
-
-4. You should now have a `install.bat` file in your desktop
-5. Move this file to your desired installtion directory and run to install the `AK_SAP` module
-
-##### 2.2.1.2. Install directly from repo
+##### 2.2.1.1. Install directly from repo
 
 Clone repo and Install with flit
 
@@ -95,7 +80,7 @@ pip install flit
   flit install --deps production --extras gui
   ```
 
-##### 2.2.1.3. Install from Pypi release
+##### 2.2.1.2. Install from Pypi release
 
 ```bash
 pip install ak_sap
