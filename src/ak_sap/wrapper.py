@@ -43,9 +43,8 @@ class Sap2000Wrapper:
     def __del__(self) -> None:
         try:
             # assert self.mySapObject.ApplicationExit(False) == 0
-            # self.SapModel = None
-            # self.mySapObject = None
-            pass
+            self.SapModel = None
+            self.mySapObject = None
         except Exception as e:
             log.error(e.__str__())
     
@@ -99,6 +98,9 @@ class Sap2000Wrapper:
     @property
     def version(self) -> str:
         return self.SapModel.GetVersion()[0]
+    
+    def exit(self, save: bool=False):
+        self.mySapObject.ApplicationExit(False)
         
 def model(attach_to_instance: bool, program_path: str|Path|None = None):
     """Returns SapObject.
