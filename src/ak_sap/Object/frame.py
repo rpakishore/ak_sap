@@ -8,20 +8,21 @@ class Frame(MasterObj):
         
         self.__EditFrame = mySapObject.SapModel.EditFrame
         self.__EditGeneral = mySapObject.SapModel.EditGeneral
+        self.__FrameObj = mySapObject.SapModel.FrameObj
         
         self.Prop = Prop(mySapObject=mySapObject)
     
     @smooth_sap_do
     def get_section(self, name: str) -> str:
         self.check_obj_legal(name=name)
-        _ret = self.ElemObj.GetSection(name)
+        _ret = self.__FrameObj.GetSection(name)
         return (_ret[0], _ret[-1]) # type: ignore
     
     @smooth_sap_do
     def get_points(self, name: str) -> tuple[str]:
         """retrieves the names of the point objects at each end of a specified frame object."""
         #self.check_obj_legal(name=name)
-        return self.ElemObj.GetPoints(name)
+        return self.__FrameObj.GetPoints(name)
     
     @smooth_sap_do
     def divide_by_distance(self, name: str, dist: float, Iend: bool=True) -> tuple[str]:

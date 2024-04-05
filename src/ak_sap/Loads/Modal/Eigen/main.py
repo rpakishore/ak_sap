@@ -4,6 +4,7 @@ from ak_sap.utils import MasterClass
 class Eigen(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
+        assert self.SapModel is not None
         self.ModalEigen = self.SapModel.LoadCases.ModalEigen
     
     def __str__(self) -> str:

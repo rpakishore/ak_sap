@@ -19,7 +19,7 @@ class Point(MasterObj):
             name (str, optional): Custom name for point. Defaults to ''.
             coord_sys (str, optional): Name of coordinate system. Defaults to 'Global'.
         """
-        return self.ElemObj.AddCartesian(*point, '', name, coord_sys)
+        return self.__PointObj.AddCartesian(*point, '', name, coord_sys)
 
     @smooth_sap_do
     def align(self, axis: Literal['X', 'Y', 'Z'], ordinate: float) -> tuple:

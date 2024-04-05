@@ -18,7 +18,7 @@ class Results(MasterClass):
         Args:
             casename (str | Literal['All']): name of an existing load case that is to have its results deleted.
         """
-        return self.mySapObject.SapModel.Analyze.DeleteResykts(casename, casename.casefold() == 'all')
+        return self.mySapObject.SapModel.Analyze.DeleteResykts(casename, casename.casefold() == 'all') # type: ignore
     
     @smooth_sap_do
     def joint_reactions(self, jointname:str) -> list[dict]:
@@ -27,7 +27,7 @@ class Results(MasterClass):
         Args:
             jointname (str): name of an existing point object
         """
-        return joint_reactions_parse(ret=self.__Results.JointReact(jointname, 1)), 0
+        return joint_reactions_parse(ret=self.__Results.JointReact(jointname, 1)), 0 # type: ignore
 
 
     @smooth_sap_do
@@ -37,7 +37,7 @@ class Results(MasterClass):
         Args:
             jointname (str): name of an existing point object
         """
-        return joint_displacements_parse(ret=self.__Results.JointDispl(jointname, 1)), 0
+        return joint_displacements_parse(ret=self.__Results.JointDispl(jointname, 1)), 0 # type: ignore
     
     @smooth_sap_do
     def joint_accelerations(self, jointname:str) ->  list[dict]:
@@ -46,7 +46,7 @@ class Results(MasterClass):
         Args:
             jointname (str): name of an existing point object
         """
-        return joint_displacements_parse(ret=self.__Results.JointAcc(jointname, 1)), 0
+        return joint_displacements_parse(ret=self.__Results.JointAcc(jointname, 1)), 0 # type: ignore
             
     @smooth_sap_do
     def joint_velocities(self, jointname:str, format: Literal['Pandas', 'List']= 'List') ->  list[dict]:
@@ -55,7 +55,7 @@ class Results(MasterClass):
         Args:
             jointname (str): name of an existing point object
         """
-        return joint_displacements_parse(ret=self.__Results.JointVel(jointname, 1)), 0
+        return joint_displacements_parse(ret=self.__Results.JointVel(jointname, 1)), 0 # type: ignore
             
 def joint_displacements_parse(ret: list) -> list[dict]:
     assert ret[-1] == 0

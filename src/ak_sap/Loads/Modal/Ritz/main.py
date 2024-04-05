@@ -4,6 +4,7 @@ from ak_sap.utils import MasterClass
 class Ritz(MasterClass):
     def __init__(self, mySapObject) -> None:
         super().__init__(mySapObject=mySapObject)
+        assert self.SapModel is not None
         self.ModalRitz = self.SapModel.LoadCases.ModalRitz
     
     def __str__(self) -> str:

@@ -21,7 +21,7 @@ class Object:
             dy (float): y offsets
             dz (float): z offsets
         """
-        self.__EditGeneral.Move(dx, dy, dz)
+        return self.__EditGeneral.Move(dx, dy, dz)
         
     @smooth_sap_do
     def copy(self, dx: float, dy: float, dz: float, num: int) -> tuple:
