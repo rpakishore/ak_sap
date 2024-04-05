@@ -162,6 +162,15 @@ frames.divide_by_ratio(name='3',ratio=0.3)#Divide at selected ratio
 frames.join('2','3')                  #Join Colinear frames
 frames.change_points(name='1', point1='1', point2='3')  #Change connected points of frame
 
+# Extrude frames to area
+frames.extrude(
+    frame_name='8',
+    property_name='Default',
+    dx=0, dy=144, dz=0,
+    num_areas=3,
+    del_frame=True
+)
+
 # Get frame properties
 frames.Prop.rename(old_name="FSEC1", new_name="MySection")  #Rename frame property
 frames.Prop.total()                         #Total # of defined frame properties

@@ -77,7 +77,7 @@ class Point(MasterObj):
         return self.__EditPoint.ChangeCoordinates_1(name, x, y, z)
     
     @smooth_sap_do
-    def extrude(self, point_name: str, dx: float, dy: float, dz: float, num_frames: int, property_name: str|None = None) -> str:
+    def extrude(self, point_name: str, dx: float, dy: float, dz: float, num_frames: int, property_name: str|None = None) -> list[str]:
         """Creates new frame objects by linearly extruding a specified point obj. into frame objects.
 
         Args:
@@ -89,6 +89,6 @@ class Point(MasterObj):
             property_name (str | None, optional): Name of a defined frame section property to be used for the new frame obj. Defaults to None.
 
         Returns:
-            str: array of the name of each frame object created
+            list[str]: array of the name of each frame object created
         """
         return self.__EditGeneral.ExtrudePointToFrameLinear(point_name, property_name, dx, dy, dz, num_frames)
