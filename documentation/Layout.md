@@ -9,6 +9,7 @@
     - [Point](#point)
     - [Frame](#frame)
   - [Database](#database)
+  - [Select](#select)
   - [Loads](#loads)
     - [Load Patterns](#load-patterns)
     - [Load Cases](#load-cases)
@@ -49,6 +50,7 @@ sap.unhide()                                #Unhides SAP2000 window
 sap.ishidden                                #Check if window is hidden
 sap.version                                 #Returns SAP2000 version number
 sap.api_version                             #Returns Sap0API version number
+sap.exit(save=False)                        #Exit the application
 
 sap.save(r'\Path\to\save\file.sdb')
 ```
@@ -123,6 +125,13 @@ points.select(name='1')                     #Select a single point
 points.align(axis='Z', ordinate = 100)      #Align selected points
 points.deselect(name='1')                   #Deselect a single point
 
+# Extrude point to frame
+points.extrude(
+    point_name='3',
+    property_name='FSec1',
+    dx=0, dy=144, dz=0,
+    num_frames=3
+)
 points.merge(tolerance=2)                   #Merge points that are within tol
 points.change_coord(name='1', x=0, y=0, z=0)#Change point coordinate
 ```
@@ -153,6 +162,15 @@ frames.divide_by_ratio(name='3',ratio=0.3)#Divide at selected ratio
 frames.join('2','3')                  #Join Colinear frames
 frames.change_points(name='1', point1='1', point2='3')  #Change connected points of frame
 
+# Extrude frames to area
+frames.extrude(
+    frame_name='8',
+    property_name='Default',
+    dx=0, dy=144, dz=0,
+    num_areas=3,
+    del_frame=True
+)
+
 # Get frame properties
 frames.Prop.rename(old_name="FSEC1", new_name="MySection")  #Rename frame property
 frames.Prop.total()                         #Total # of defined frame properties
@@ -178,12 +196,16 @@ tables.update(TableKey='Material Properties 01 - General', data=df, apply=True)
 ```
 
 ## Select
-elect = sap.Select
 
-select.all()                    #Select all objects
-select.clear()                  #Deselect all objects
+Usage Examples:
 
-select.constraint(name='Diaph1')#Select points in constraint
+```python
+select = sap.Select
+
+select.all()                                    #Select all objects
+select.clear()                                  #Deselect all objects
+
+select.constraint(name='Diaph1')                #Select points in constraint
 select.constraint(name='Diaph1', reverse=True)  #Deselect points in constraint
 
 select.invert()                 #Invert selections
@@ -191,7 +213,7 @@ select.selected                 #Returns list of selected objects
 select.previous()               #restores the previous selection
 
 #Selection based on plane
-select.in_plane(pointname='1', plane='XY')  #Select in XY plane
+select.in_plane(pointname='1', plane='XY')                  #Select in XY plane
 select.in_plane(pointname='2', plane='YZ', reverse=False)   #Deselect
 
 #Select by property
@@ -202,6 +224,8 @@ select.property(type='Link', name='GAP1', reverse=True)
 select.property(type='Material', name='A992Fy50')
 select.property(type='Solid', name='SOLID1', reverse=True)
 select.property(type='Tendon', name='TEN1')
+```
+
 ## Loads
 
 Control the definition and assignments of loads.
@@ -297,7 +321,7 @@ analyze = sap.Analyze
 analyze.create_model()                      #Create analysis model
 analyze.run()                               #Runs the analysis
 analyze.case_status()                       #retrieves the status for all load cases.
-analyze.get_run_status()                    #retrieves the run flags for all cases
+analyze.get_run_flag()                      #retrieves the run flags for all cases
 analyze.set_run_flag(case='MODAL', status=True) # Set case to run
 analyze.get_solver()                        #Get solver info
 

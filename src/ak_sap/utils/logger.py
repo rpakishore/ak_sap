@@ -30,14 +30,14 @@ class Log(object):
         
     def warning(self, msg):
         try:
-            suffix = f'Warning in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
+            suffix = f'Warning in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: ' # type: ignore
         except Exception:
             suffix = f'Warning in {Path(inspect.stack()[1].filename).name}: '
         self.logger.warning(suffix + msg)
         
     def error(self, msg):
         try:
-            suffix = f'Error in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
+            suffix = f'Error in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: ' # type: ignore
         except Exception:
             suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
         self.logger.error(suffix + str(msg))
@@ -45,7 +45,7 @@ class Log(object):
         
     def critical(self, msg):
         try:
-            suffix = f'Critical in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: '
+            suffix = f'Critical in {Path(inspect.stack()[1].filename).name} -> {inspect.currentframe().f_back.f_code.co_name}: ' # type: ignore
         except Exception:
             suffix = f'Error in {Path(inspect.stack()[1].filename).name}: '
         self.logger.critical(suffix + str(msg))

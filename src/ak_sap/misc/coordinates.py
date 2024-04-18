@@ -6,5 +6,5 @@ class Coord:
     y: float
     z: float
     
-    def as_tuple(self) -> tuple[float]:
+    def as_tuple(self) -> tuple[float, float, float]:
         return (self.x, self.y, self.z)

@@ -29,7 +29,7 @@ class Analyze(MasterClass):
         Returns:
             list[dict]: Cases and their current status.
         """
-        return case_status(ret=self.__Analyze.GetCaseStatus()), 0
+        return case_status(ret=self.__Analyze.GetCaseStatus()), 0 # type: ignore
 
     @smooth_sap_do
     def get_run_flag(self) -> dict:
@@ -38,7 +38,7 @@ class Analyze(MasterClass):
         Returns:
             dict: Loadcases and their run flags
         """
-        return get_run_flag(ret=self.__Analyze.GetRunCaseFlag()), 0
+        return get_run_flag(ret=self.__Analyze.GetRunCaseFlag()), 0 # type: ignore
 
     @smooth_sap_do
     def set_run_flag(self, case: str, status: bool):
@@ -57,7 +57,7 @@ class Analyze(MasterClass):
         Returns:
             dict: Solver Info
         """
-        return get_solver(ret = self.__Analyze.GetSolverOption_3()), 0
+        return get_solver(ret = self.__Analyze.GetSolverOption_3()), 0 # type: ignore
     
     @smooth_sap_do
     def set_solver(self, 

@@ -31,7 +31,7 @@ class Select(MasterClass):
     
     @property
     def selected(self) -> list[dict]:
-        return selected_parse(ret=self.__SelectObj.GetSelected()), 0
+        return selected_parse(ret=self.__SelectObj.GetSelected()), 0 # type: ignore
     
     @smooth_sap_do
     def in_plane(self, pointname: str, plane: Literal['XY', 'YZ', 'XZ'], reverse: bool=False) -> bool:

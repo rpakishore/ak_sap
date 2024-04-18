@@ -7,19 +7,22 @@ class Frame(MasterObj):
         super().__init__(mySapObject=mySapObject, ElemObj=mySapObject.SapModel.FrameObj)
         
         self.__EditFrame = mySapObject.SapModel.EditFrame
+        self.__EditGeneral = mySapObject.SapModel.EditGeneral
+        self.__FrameObj = mySapObject.SapModel.FrameObj
+        
         self.Prop = Prop(mySapObject=mySapObject)
     
     @smooth_sap_do
     def get_section(self, name: str) -> str:
         self.check_obj_legal(name=name)
-        _ret = self.ElemObj.GetSection(name)
+        _ret = self.__FrameObj.GetSection(name)
         return (_ret[0], _ret[-1]) # type: ignore
     
     @smooth_sap_do
     def get_points(self, name: str) -> tuple[str]:
         """retrieves the names of the point objects at each end of a specified frame object."""
         #self.check_obj_legal(name=name)
-        return self.ElemObj.GetPoints(name)
+        return self.__FrameObj.GetPoints(name)
     
     @smooth_sap_do
     def divide_by_distance(self, name: str, dist: float, Iend: bool=True) -> tuple[str]:
@@ -76,6 +79,24 @@ class Frame(MasterObj):
             point2 (str): name of the point object at the J-End of the frame object.
         """
         return self.__EditFrame.ChangeConnectivity(name, point1, point2)
+    
+    @smooth_sap_do
+    def extrude(self, frame_name: str, dx: float, dy: float, dz: float, num_areas: int, property_name: str|None = None, del_frame: bool=False) -> list[str]:
+        """Creates new area objects by linearly extruding a specified frame obj.
+
+        Args:
+            frame_name (str): Name of existing frame to extrude
+            dx (float): x offset.
+            dy (float): y offset.
+            dz (float): z offset.
+            num_areas (int): number of area objects to create
+            property_name (str | None, optional): Name of a defined area section property to be used for the new obj. Defaults to None.
+            del_frame(bool, optional): If this item is True, the straight frame object indicated by the Name item is deleted after the extrusion is complete. Defaults to False.
+
+        Returns:
+            list[str]: array of the name of each area object created
+        """
+        return self.__EditGeneral.ExtrudeFrameToAreaLinear(frame_name, property_name, dx, dy, dz, num_areas, del_frame)
     
 class Prop:
     def __init__(self, mySapObject) -> None:
