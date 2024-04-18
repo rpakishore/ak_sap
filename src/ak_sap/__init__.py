@@ -1,5 +1,5 @@
 "Python wrapper for SAP2000 API"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 from ak_sap.utils.logger import log
 from ak_sap.wrapper import Sap2000Wrapper
