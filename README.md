@@ -164,7 +164,7 @@ The repo has an optional streamlit GUI for the wrapper. Checkout [`GUI.md`](/doc
 <!-- Layout START -->
 #### Layout Map
 
-![MindMap](assets/mindmap.svg)
+![MindMap](./documentation/assets/mindmap.svg)
 
 #### Initialize
 
