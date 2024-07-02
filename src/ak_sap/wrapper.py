@@ -13,6 +13,11 @@ from ak_sap.Results import Results
 from ak_sap.Select import Select
 from ak_sap.utils.logger import log
 
+_known_program_paths: list[str] = [
+    r"C:\Program Files\Computers and Structures\SAP2000 24\SAP2000.exe",
+    r"C:\Program Files\Computers and Structures\SAP2000 21\SAP2000.exe"
+]
+
 class Sap2000Wrapper:
     def __init__(self, attach_to_exist: bool = True, program_path: str|Path|None = None) -> None:
         self.attach_to_exist: bool = attach_to_exist
@@ -102,7 +107,8 @@ class Sap2000Wrapper:
     def exit(self, save: bool=False):
         self.mySapObject.ApplicationExit(False)
         
-def model(attach_to_instance: bool, program_path: str|Path|None = None):
+def model(attach_to_instance: bool, program_path: str|Path|None = None,
+            known_program_paths: list[str] = _known_program_paths):
     """Returns SapObject.
     If `attach_to_instance` is True, returns the current opened model
     If `program_path` is NOT set, Creates a model from latest installed version of SAP2000
@@ -124,28 +130,19 @@ def model(attach_to_instance: bool, program_path: str|Path|None = None):
         except Exception as e:
             log.error(str(e))
             sys.exit(-1)
-    elif program_path:
+    else:
+        if program_path is None:
+            for filepath in known_program_paths:
+                if Path(filepath).is_file():
+                    program_path = filepath
+                    break
+        assert program_path is not None, 'SAP2000.exe file not found. Please pass the program_path to initialize instance'
+
         try:
             mySapObject = helper.CreateObject(program_path)
-            mySapObject.ApplicationStart
+            mySapObject.ApplicationStart()
             mySapObject.SapModel.InitializeNewModel()   #initialize model
-            mySapObject.SapModel.File.NewBlank()        #Create new blank model
-            log.debug(f'Created model from {program_path}. Initialized and created new blank model')
-            return mySapObject
-        except (OSError, comtypes.COMError):
-            log.error("Cannot start a new instance of the program.")
-            sys.exit(-1)
-        except Exception as e:
-            log.error(str(e))
-            sys.exit(-1)
-    else:
-        try:
-            #create an instance of the SAPObject from the latest installed SAP2000
-            mySapObject = helper.CreateObjectProgID("CSI.SAP2000.API.SapObject")
-            mySapObject.ApplicationStart
-            mySapObject.SapModel.InitializeNewModel()   #initialize model
-            mySapObject.SapModel.File.NewBlank()        #Create new blank model
-            log.debug('Initialized and created new blank model')
+            log.debug(f'Created model from {program_path}.')
             return mySapObject
         except (OSError, comtypes.COMError):
             log.error("Cannot start a new instance of the program.")
