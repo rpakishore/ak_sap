@@ -31,7 +31,7 @@
   - [2.2. Installation](#22-installation)
     - [2.2.1. Production](#221-production)
       - [2.2.1.1. Install directly from repo](#2211-install-directly-from-repo)
-      - [2.2.1.2. Install from Pypi release](#2212-install-from-pypi-release)
+      - [2.2.1.2. Install from Pypi release (preferred)](#2212-install-from-pypi-release-preferred)
     - [2.2.2. Development](#222-development)
 - [3. Usage](#3-usage)
   - [3.1. GUI](#31-gui)
@@ -57,7 +57,6 @@
 - [4. Roadmap](#4-roadmap)
 - [5. License](#5-license)
 - [6. Contact](#6-contact)
-- [7. Acknowledgements](#7-acknowledgements)
 
 <!-- About the Project -->
 ## 1. About the Project
@@ -98,7 +97,7 @@ pip install flit
   flit install --deps production --extras gui
   ```
 
-##### 2.2.1.2. Install from Pypi release
+##### 2.2.1.2. Install from Pypi release (preferred)
 
 ```bash
 pip install ak_sap
@@ -556,8 +555,3 @@ See [LICENSE](https://github.com/rpakishore/ak_sap/blob/main/LICENSE) for more i
 Arun Kishore - [@rpakishore](mailto:pypi@rpakishore.co.in)
 
 Project Link: [https://github.com/rpakishore/ak_sap](https://github.com/rpakishore/ak_sap)
-
-<!-- Acknowledgments -->
-## 7. Acknowledgements
-
-- [Shields.io](https://shields.io/)
