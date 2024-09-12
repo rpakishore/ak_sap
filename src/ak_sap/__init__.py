@@ -1,9 +1,10 @@
 "Python wrapper for SAP2000 API"
 __version__ = "0.0.3"
 
+from ak_sap.misc import Coord
 from ak_sap.utils.logger import log
 from ak_sap.wrapper import Sap2000Wrapper
-from ak_sap.misc import Coord
+
 
 def debug(status=False):
     """Import this in a new module and enable debug to use debug
@@ -14,8 +15,9 @@ def debug(status=False):
     ```
     """
     if status:
-        log.setLevel(10) #debug
+        log.setLevel(10)  # debug
     else:
-        log.setLevel(20) #info
-    
+        log.setLevel(20)  # info
+
+
 debug(status=False)

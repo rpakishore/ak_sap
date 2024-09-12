@@ -2,7 +2,9 @@ from typing import Literal
 
 from ak_sap.utils import log
 from ak_sap.utils.decorators import smooth_sap_do
+
 from .helper import MasterObj
+
 
 class Point(MasterObj):
     def __init__(self, mySapObject) -> None:
@@ -10,19 +12,24 @@ class Point(MasterObj):
         self.__EditPoint = mySapObject.SapModel.EditPoint
         self.__PointObj = mySapObject.SapModel.PointObj
         self.__EditGeneral = mySapObject.SapModel.EditGeneral
-    
+
     @smooth_sap_do
-    def add_by_coord(self, point: tuple[float, float, float], name: str='', coord_sys: str = 'Global') -> str:
+    def add_by_coord(
+        self,
+        point: tuple[float, float, float],
+        name: str = "",
+        coord_sys: str = "Global",
+    ) -> str:
         """Adds point to the model
         Args:
             point (tuple[float, float, float]): x, y, z coordinates
             name (str, optional): Custom name for point. Defaults to ''.
             coord_sys (str, optional): Name of coordinate system. Defaults to 'Global'.
         """
-        return self.__PointObj.AddCartesian(*point, '', name, coord_sys)
+        return self.__PointObj.AddCartesian(*point, "", name, coord_sys)
 
     @smooth_sap_do
-    def align(self, axis: Literal['X', 'Y', 'Z'], ordinate: float) -> tuple:
+    def align(self, axis: Literal["X", "Y", "Z"], ordinate: float) -> tuple:
         """aligns selected point objects.
 
         Args:
@@ -33,21 +40,21 @@ class Point(MasterObj):
             tuple: (number of point objects that are in a new location after the alignment is complete.,
             array of the name of each point object that is in a new location after the alignment is complete.)
         """
-        _axis = ['X','Y','Z'].index(axis.upper().strip()) + 1
+        _axis = ["X", "Y", "Z"].index(axis.upper().strip()) + 1
         return self.__EditPoint.Align(_axis, ordinate)
 
     @smooth_sap_do
     def select(self, name: str) -> bool:
         return self.__PointObj.SetSelected(name, True)
-    
+
     @smooth_sap_do
     def deselect(self, name: str) -> bool:
         return self.__PointObj.SetSelected(name, False)
-    
+
     @smooth_sap_do
     def deselect_all(self) -> bool:
         return self.__PointObj.ClearSelection()
-    
+
     @smooth_sap_do
     def merge(self, tolerance: float) -> tuple:
         """merges selected point objects that are within a specified distance of one another.
@@ -60,7 +67,7 @@ class Point(MasterObj):
             array of the name of each selected point object that still exists after the merge is complete.)
         """
         return self.__EditPoint.Merge(tolerance)
-    
+
     @smooth_sap_do
     def change_coord(self, name: str, x: float, y: float, z: float) -> bool:
         """changes the coordinates of a specified point object.
@@ -75,9 +82,17 @@ class Point(MasterObj):
             bool: Success
         """
         return self.__EditPoint.ChangeCoordinates_1(name, x, y, z)
-    
+
     @smooth_sap_do
-    def extrude(self, point_name: str, dx: float, dy: float, dz: float, num_frames: int, property_name: str|None = None) -> list[str]:
+    def extrude(
+        self,
+        point_name: str,
+        dx: float,
+        dy: float,
+        dz: float,
+        num_frames: int,
+        property_name: str | None = None,
+    ) -> list[str]:
         """Creates new frame objects by linearly extruding a specified point obj. into frame objects.
 
         Args:
@@ -91,4 +106,6 @@ class Point(MasterObj):
         Returns:
             list[str]: array of the name of each frame object created
         """
-        return self.__EditGeneral.ExtrudePointToFrameLinear(point_name, property_name, dx, dy, dz, num_frames)
+        return self.__EditGeneral.ExtrudePointToFrameLinear(
+            point_name, property_name, dx, dy, dz, num_frames
+        )
