@@ -10,9 +10,9 @@ app = typer.Typer()
 
 
 @app.command()
-def template_fn():
+def update_layout():
     """This is a sample function to be executed through the cli app"""
-    log.info("Called the `template_fn` function")
+    log.info("Called the `update_layout` function")
     doc_path: Path = Path(__file__).parent.parent.parent.parent / "documentation"
 
     replace_keyword = "# Initialize"
