@@ -1,7 +1,7 @@
-import comtypes.client
-
-from pathlib import Path
 import sys
+from pathlib import Path
+
+import comtypes.client
 
 from ak_sap.Analyze import Analyze
 from ak_sap.Database import Table
@@ -13,14 +13,21 @@ from ak_sap.Results import Results
 from ak_sap.Select import Select
 from ak_sap.utils.logger import log
 
+
 class Sap2000Wrapper:
-    def __init__(self, attach_to_exist: bool = True, program_path: str|Path|None = None) -> None:
+    def __init__(
+        self, attach_to_exist: bool = True, program_path: str | Path | None = None
+    ) -> None:
         self.attach_to_exist: bool = attach_to_exist
-        self.program_path: str|None=  str(Path(str(program_path)).absolute()) if program_path else None
-        self.mySapObject = model(attach_to_instance=attach_to_exist, program_path=program_path)
+        self.program_path: str | None = (
+            str(Path(str(program_path)).absolute()) if program_path else None
+        )
+        self.mySapObject = model(
+            attach_to_instance=attach_to_exist, program_path=program_path
+        )
         self.SapModel = self.mySapObject.SapModel
-        
-        #Attach submodules and functions
+
+        # Attach submodules and functions
         self.Analyze = Analyze(mySapObject=self.mySapObject)
         self.Model = Model(mySapObject=self.mySapObject)
         self.Object = Object(mySapObject=self.mySapObject)
@@ -29,17 +36,19 @@ class Sap2000Wrapper:
         self.Results = Results(mySapObject=self.mySapObject)
         self.Material = Material(mySapObject=self.mySapObject)
         self.Select = Select(mySapObject=self.mySapObject)
-        
-        log.info('Sap2000Wrapper Initialized')
-    
+
+        log.info("Sap2000Wrapper Initialized")
+
     def __str__(self) -> str:
-        _attachment_str = 'Attached to existing Model' if self.attach_to_exist else 'New Model'
+        _attachment_str = (
+            "Attached to existing Model" if self.attach_to_exist else "New Model"
+        )
         return f'Instance of SAP2000Wrapper. Model type: "{_attachment_str}".'
-    
+
     def __repr__(self) -> str:
         attach_to_exist = self.attach_to_exist
-        return f'Sap2000Wrapper({attach_to_exist=})'
-    
+        return f"Sap2000Wrapper({attach_to_exist=})"
+
     def __del__(self) -> None:
         try:
             # assert self.mySapObject.ApplicationExit(False) == 0
@@ -47,41 +56,41 @@ class Sap2000Wrapper:
             self.mySapObject = None
         except Exception as e:
             log.error(e.__str__())
-    
-    def save(self, savepath: str|Path|None = None) -> bool:
+
+    def save(self, savepath: str | Path | None = None) -> bool:
         """Saves SAP model to the `savepath`.
         If no save path is provided, saves to the default path
         """
         try:
             if savepath:
                 assert self.SapModel.File.Save(savepath) == 0
-                log.info(f'Save success. Saved to {savepath}')
+                log.info(f"Save success. Saved to {savepath}")
             else:
                 assert self.SapModel.File.Save() == 0
-                log.info('Save success. Saved to defaultpath')
+                log.info("Save success. Saved to defaultpath")
             return True
         except Exception as e:
             log.critical(e)
             return False
-    
+
     @property
     def api_version(self) -> str:
         """Retrieves the API version implemented by SAP2000."""
         return self.mySapObject.GetOAPIVersionNumber()
-    
+
     def hide(self) -> bool:
-        """Hides the Sap2000 application. 
+        """Hides the Sap2000 application.
         When hidden it is not visible on the screen or on the Windows task bar.
         """
         try:
-            self.mySapObject.Hide() 
+            self.mySapObject.Hide()
             return True
         except Exception as e:
             log.critical(str(e))
             return False
-    
+
     def unhide(self) -> bool:
-        """Unhides the Sap2000 application. 
+        """Unhides the Sap2000 application.
         When hidden it is not visible on the screen or on the Windows task bar.
         """
         try:
@@ -90,33 +99,37 @@ class Sap2000Wrapper:
         except Exception as e:
             log.critical(str(e))
             return False
-    
+
     @property
     def ishidden(self) -> bool:
         return self.mySapObject.Visible()
-    
+
     @property
     def version(self) -> str:
         return self.SapModel.GetVersion()[0]
-    
-    def exit(self, save: bool=False):
+
+    def exit(self, save: bool = False):
         self.mySapObject.ApplicationExit(False)
-        
-def model(attach_to_instance: bool, program_path: str|Path|None = None):
+
+
+def model(
+    attach_to_instance: bool,
+    program_path: str | Path | None = None,
+):
     """Returns SapObject.
     If `attach_to_instance` is True, returns the current opened model
     If `program_path` is NOT set, Creates a model from latest installed version of SAP2000
     `program_path`, allows lauch of older versions of SAP2000"""
-    #create API helper object
-    helper = comtypes.client.CreateObject('SAP2000v1.Helper')
+    # create API helper object
+    helper = comtypes.client.CreateObject("SAP2000v1.Helper")
     helper = helper.QueryInterface(comtypes.gen.SAP2000v1.cHelper)
-    
+
     if attach_to_instance:
-        #attach to a running instance of SAP2000
+        # attach to a running instance of SAP2000
         try:
-            #get the active SapObject
-            mySapObject = helper.GetObject("CSI.SAP2000.API.SapObject") 
-            log.debug('Attached to existing Instance.')
+            # get the active SapObject
+            mySapObject = helper.GetObject("CSI.SAP2000.API.SapObject")
+            log.debug("Attached to existing Instance.")
             return mySapObject
         except (OSError, comtypes.COMError):
             log.error("No running instance of the program found or failed to attach.")
@@ -124,28 +137,25 @@ def model(attach_to_instance: bool, program_path: str|Path|None = None):
         except Exception as e:
             log.error(str(e))
             sys.exit(-1)
-    elif program_path:
+    else:
+        if program_path is None:
+            try:
+                log.debug(
+                    r"Program path not set - Looking for SAP2000.exe in C:\Program Files"
+                )
+                program_path = (
+                    Path(r"C:\Program Files").glob("**/SAP2000.exe").__next__()
+                )
+            except:
+                _error = r"Could not locate `SAP2000.exe` in C:\Program Files"
+                log.error(_error)
+                raise Exception(_error + "\nTry specifying the path to SAP2000.exe")
+
         try:
             mySapObject = helper.CreateObject(program_path)
-            mySapObject.ApplicationStart
-            mySapObject.SapModel.InitializeNewModel()   #initialize model
-            mySapObject.SapModel.File.NewBlank()        #Create new blank model
-            log.debug(f'Created model from {program_path}. Initialized and created new blank model')
-            return mySapObject
-        except (OSError, comtypes.COMError):
-            log.error("Cannot start a new instance of the program.")
-            sys.exit(-1)
-        except Exception as e:
-            log.error(str(e))
-            sys.exit(-1)
-    else:
-        try:
-            #create an instance of the SAPObject from the latest installed SAP2000
-            mySapObject = helper.CreateObjectProgID("CSI.SAP2000.API.SapObject")
-            mySapObject.ApplicationStart
-            mySapObject.SapModel.InitializeNewModel()   #initialize model
-            mySapObject.SapModel.File.NewBlank()        #Create new blank model
-            log.debug('Initialized and created new blank model')
+            mySapObject.ApplicationStart()
+            mySapObject.SapModel.InitializeNewModel()  # initialize model
+            log.debug(f"Created model from {program_path}.")
             return mySapObject
         except (OSError, comtypes.COMError):
             log.error("Cannot start a new instance of the program.")

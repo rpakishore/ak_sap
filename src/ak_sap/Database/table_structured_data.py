@@ -1,5 +1,7 @@
 from dataclasses import dataclass
+
 from .table_constants import ImportType_Literals
+
 
 @dataclass
 class DatabaseTable:
@@ -7,7 +9,8 @@ class DatabaseTable:
     TableName: str
     ImportType: ImportType_Literals
     IsEmpty: bool
-    
+
+
 @dataclass
 class FieldData:
     FieldKey: str
