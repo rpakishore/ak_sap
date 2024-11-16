@@ -130,3 +130,4 @@ dmypy.json
 .vscode/settings.json
 WebDriver/chromedriver.exe
 nosync*
+uv.lock
