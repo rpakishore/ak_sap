@@ -13,11 +13,6 @@ from ak_sap.Results import Results
 from ak_sap.Select import Select
 from ak_sap.utils.logger import log
 
-_known_program_paths: list[str] = [
-    r"C:\Program Files\Computers and Structures\SAP2000 24\SAP2000.exe",
-    r"C:\Program Files\Computers and Structures\SAP2000 21\SAP2000.exe",
-]
-
 
 class Sap2000Wrapper:
     def __init__(
@@ -120,7 +115,6 @@ class Sap2000Wrapper:
 def model(
     attach_to_instance: bool,
     program_path: str | Path | None = None,
-    known_program_paths: list[str] = _known_program_paths,
 ):
     """Returns SapObject.
     If `attach_to_instance` is True, returns the current opened model
@@ -145,13 +139,17 @@ def model(
             sys.exit(-1)
     else:
         if program_path is None:
-            for filepath in known_program_paths:
-                if Path(filepath).is_file():
-                    program_path = filepath
-                    break
-        assert (
-            program_path is not None
-        ), "SAP2000.exe file not found. Please pass the program_path to initialize instance"
+            try:
+                log.debug(
+                    r"Program path not set - Looking for SAP2000.exe in C:\Program Files"
+                )
+                program_path = (
+                    Path(r"C:\Program Files").glob("**/SAP2000.exe").__next__()
+                )
+            except:
+                _error = r"Could not locate `SAP2000.exe` in C:\Program Files"
+                log.error(_error)
+                raise Exception(_error + "\nTry specifying the path to SAP2000.exe")
 
         try:
             mySapObject = helper.CreateObject(program_path)
