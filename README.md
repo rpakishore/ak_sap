@@ -25,17 +25,14 @@
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>
 
-- [1. About the Project](#1-about-the-project)
-- [2. Getting Started](#2-getting-started)
-  - [2.1. Prerequisites](#21-prerequisites)
-  - [2.2. Installation](#22-installation)
-    - [2.2.1. Production](#221-production)
-      - [2.2.1.1. Install directly from repo](#2211-install-directly-from-repo)
-      - [2.2.1.2. Install from Pypi release (preferred)](#2212-install-from-pypi-release-preferred)
-    - [2.2.2. Development](#222-development)
-- [3. Usage](#3-usage)
-  - [3.1. GUI](#31-gui)
-  - [3.2. Layout Documentation](#32-layout-documentation)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Production](#production)
+      - [Install directly from repo](#install-directly-from-repo)
+- [Usage](#usage)
+  - [GUI](#gui)
+  - [Layout Documentation](#layout-documentation)
     - [Layout Map](#layout-map)
     - [Initialize](#initialize)
     - [Parent Level](#parent-level)
@@ -54,79 +51,42 @@
       - [Results](#results)
       - [Material](#material)
         - [Rebar](#rebar)
-- [4. Roadmap](#4-roadmap)
-- [5. License](#5-license)
-- [6. Contact](#6-contact)
-
-<!-- About the Project -->
-## 1. About the Project
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Contact](#contact)
 
 <!-- Getting Started -->
-## 2. Getting Started
+## Getting Started
 
 <!-- Prerequisites -->
-### 2.1. Prerequisites
+### Prerequisites
 
-1. Python 3.11 or above
+1. Python 3.12 or above
 2. SAP2000 v24 or higher
 
 <!-- Installation -->
-### 2.2. Installation
+### Installation
 
-#### 2.2.1. Production
+#### Production
 
-##### 2.2.1.1. Install directly from repo
+##### Install directly from repo
 
 Clone repo and Install with flit
 
 ```bash
-git clone https://github.com/rpakishore/ak_sap.git
-cd  ak_sap
-pip install flit
+git clone https://github.com/rpakishore/ak_sap.git && cd  ak_sap
+pip install uv
+uv venv && uv pip install -r pyproject.toml --extra gui
 ```
 
-- If you want just the base package:
+- Alternatively, if you only want the base package, replace the last line above with following:
   
   ```bash
-  flit install --deps production
-  ```
-
-- Alternatively, if you also want to include the optional streamlit gui:
-  
-  ```bash
-  flit install --deps production --extras gui
-  ```
-
-##### 2.2.1.2. Install from Pypi release (preferred)
-
-```bash
-pip install ak_sap
-```
-
-Note: The Pypi version does not ship with the optional streamlit gui
-
-#### 2.2.2. Development
-
-Download the git and install via flit
-
-```bash
-git clone https://github.com/rpakishore/ak_sap.git
-cd  ak_sap
-pip install flit
-flit install --pth-file
-```
-
-Updating Docs:
-
-- Update the [Usage.ipynb](./documentation/Usage.ipynb).
-- Open `cmd.exe` to run
-
-  ```bash
-  update-doc
+  uv venv && uv pip install -r pyproject.toml
   ```
 
 <!-- Usage -->
-## 3. Usage
+## Usage
 
 Initialize the module as below
 
@@ -154,11 +114,11 @@ sap.api_version                             #Returns Sap0API version number
 sap.save(r'\Path\to\save\file.sdb')
 ```
 
-### 3.1. GUI
+### GUI
 
 The repo has an optional streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for installation and usage instructions.
 
-### 3.2. Layout Documentation
+### Layout Documentation
 
 <!-- Layout START -->
 #### Layout Map
@@ -408,7 +368,8 @@ cases.set_type(name='DEAD', casetype='LINEAR_STATIC')   #Change the case type of
 ###### Modal
 
 `sap.Load.Modal`
-####### Eigen
+
+**Eigen**
 
 Usage Examples:
 
@@ -435,7 +396,7 @@ eigen.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 eigen.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-####### Ritz
+**Ritz**
 
 Usage Examples:
 
@@ -534,7 +495,7 @@ rebar.get_prop(name='MyRebar2')                 #Get rebar property
 <!-- Layout END -->
 
 <!-- Roadmap -->
-## 4. Roadmap
+## Roadmap
 
 - [x] Generate Load Patterns
 - [x] Generate Load Cases
@@ -545,12 +506,12 @@ rebar.get_prop(name='MyRebar2')                 #Get rebar property
 - [x] Export joint reactions to Hilti-Profis file
 
 <!-- License -->
-## 5. License
+## License
 
 See [LICENSE](https://github.com/rpakishore/ak_sap/blob/main/LICENSE) for more information.
 
 <!-- Contact -->
-## 6. Contact
+## Contact
 
 Arun Kishore - [@rpakishore](mailto:pypi@rpakishore.co.in)
 

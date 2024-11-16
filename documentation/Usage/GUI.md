@@ -1,59 +1,54 @@
-- [1. Usage](#1-usage)
-  - [1.1. Attach an Instance](#11-attach-an-instance)
-  - [1.2. Models](#12-models)
-  - [1.3. Tables](#13-tables)
-  - [1.4. Export](#14-export)
-    - [1.4.1. Hilti-Profis](#141-hilti-profis)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Attach an Instance](#attach-an-instance)
+  - [Models](#models)
+  - [Tables](#tables)
+  - [Export](#export)
+    - [Hilti-Profis](#hilti-profis)
 
 <h1> Steamlit </h1>
 
-The package not comes pre-compiled with the streamlit package.
+**Please note, the GUI is currently heavily limited in functionality and only serves to showcase the possibilities with the ak_sap module.**
 
-# 1. Usage
+The base `ak_sap` does not comes pre-compiled with the streamlit package.
 
-- Download the Github Repo and `cd` inside
-    ```bash
-    git clone https://github.com/rpakishore/ak_sap.git
-    cd ak_sap
-    ```
+You will need to use the `--extra gui` command during install to add the streamlit package.
 
-- Install dependencies
+# Installation
 
-    ```bash
-    pip install flit && flit install --extras gui
-    ```
+```cmd
+git clone https://github.com/rpakishore/ak_sap.git && cd ak_sap
+pip install uv
+uv venv && uv pip install -r pyproject.toml --extra gui
+```
 
-- Launch the app run
+# Usage
 
-    ```bash
-    gui
-    ```
+- Make sure the SAP Model you want to control is open. (Current version of gui does not support creating new SAP files)
 
-  - Alternatively, In windows launch by executing the script
-
-    ```cmd
-    python -m streamlit run Start_Here.py
-    ```
+```cmd
+uv run streamlit run Start_Here.py
+```
 
 - Open up the SAP2000 model of your choice and click `Attach to Model`
 
-## 1.1. Attach an Instance
+## Attach an Instance
 
 ![GUI-Streamlit-Start_Here.png](../assets/GUI-streamlit-Start_Here.png)
 
-## 1.2. Models
+## Models
 
 ![GUI-Streamlit-Models.png](../assets/GUI-streamlit-Models.png)
 
-## 1.3. Tables
+## Tables
 
 ![GUI-Streamlit-Tables.png](../assets/GUI-streamlit-Tables.png)
 
-## 1.4. Export
+## Export
 
 ![GUI-streamlit-Export.png](../assets/GUI-streamlit-Export.png)
 
-### 1.4.1. Hilti-Profis
+### Hilti-Profis
 
 ![GUI-streamlit-Export-Hilti.png](../assets/GUI-streamlit-Export-Hilti.png)
 
