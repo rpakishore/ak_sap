@@ -28,29 +28,31 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-    - [Production](#production)
-      - [Install directly from repo](#install-directly-from-repo)
 - [Usage](#usage)
-  - [GUI](#gui)
-  - [Layout Documentation](#layout-documentation)
-    - [Layout Map](#layout-map)
-    - [Initialize](#initialize)
-    - [Parent Level](#parent-level)
-    - [Sub-Modules](#sub-modules)
-      - [Model](#model)
-      - [Element](#element)
-        - [Point](#point)
-        - [Frame](#frame)
-      - [Database](#database)
-      - [Select](#select)
-      - [Loads](#loads)
-        - [Load Patterns](#load-patterns)
-        - [Load Cases](#load-cases)
-        - [Modal](#modal)
-      - [Analyze](#analyze)
-      - [Results](#results)
-      - [Material](#material)
-        - [Rebar](#rebar)
+  - [Initialization](#initialization)
+    - [Example Code](#example-code)
+  - [Working with SAP2000](#working-with-sap2000)
+    - [Basic Operations](#basic-operations)
+  - [Streamlit GUI](#streamlit-gui)
+- [Module Overview](#module-overview)
+  - [Layout Map](#layout-map)
+  - [Initialize](#initialize)
+  - [Parent Level](#parent-level)
+  - [Sub-Modules](#sub-modules)
+    - [Model](#model)
+    - [Element](#element)
+      - [Point](#point)
+      - [Frame](#frame)
+    - [Database](#database)
+    - [Select](#select)
+    - [Loads](#loads)
+      - [Load Patterns](#load-patterns)
+      - [Load Cases](#load-cases)
+      - [Modal](#modal)
+    - [Analyze](#analyze)
+    - [Results](#results)
+    - [Material](#material)
+      - [Rebar](#rebar)
 - [Roadmap](#roadmap)
 - [License](#license)
 - [Contact](#contact)
@@ -58,74 +60,202 @@
 <!-- Getting Started -->
 ## Getting Started
 
+This section will guide you through the basic setup and first steps with `ak_sap`.
+
 <!-- Prerequisites -->
 ### Prerequisites
 
-1. Python 3.12 or above
-2. SAP2000 v24 or higher
+Before you begin, ensure you have the following software installed:
+
+1. [**UV**](https://docs.astral.sh/uv/getting-started/installation/): An extremely fast Python package and project manager, written in Rust.
+2. **SAP2000**: Version 24 or higher
 
 <!-- Installation -->
 ### Installation
 
-#### Production
+To install the `ak_sap` package, you can clone the repository and set it up locally:
 
-##### Install directly from repo
+0. Make sure uv is [installed](https://docs.astral.sh/uv/getting-started/installation/) or install it using pypi as below:
+   ```bash
+   pip install uv
+   ```
 
-Clone repo and Install with flit
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rpakishore/ak_sap.git
+   cd ak_sap
+   ```
 
-```bash
-git clone https://github.com/rpakishore/ak_sap.git && cd  ak_sap
-pip install uv
-uv venv && uv pip install -r pyproject.toml --extra gui
-```
+2. Install the necessary dependencies. The package requires `uv` to manage virtual environments:
+   ```bash
+   uv sync
+   ```
 
-- Alternatively, if you only want the base package, replace the last line above with following:
-  
-  ```bash
-  uv venv && uv pip install -r pyproject.toml
-  ```
+   - Alternatively, If you want the basic package without the GUI, run:
+     
+     ```bash
+     uv sync --no-group gui
+     ```
 
 <!-- Usage -->
 ## Usage
 
-Initialize the module as below
+This section covers how to use `ak_sap`.
+
+### Initialization
+
+To start using `ak_sap`, initialize the SAP2000 wrapper as follows:
+
+#### Example Code
 
 ```python
 from ak_sap import debug, Sap2000Wrapper
-debug(status=False)
 
-#Initialize
-sap = Sap2000Wrapper(attach_to_exist=True)      #Attach to existing opened model
-sap = Sap2000Wrapper(attach_to_exist=False)     #Create new blank model from latest SAP2000
+debug(status=False)  # Turn off debug mode
 
-## Create blank model from a custom version of SAP2000
-sap = Sap2000Wrapper(attach_to_exist=False, program_path=r'Path\to\SAP2000.exe')
-
+# Initialize SAP2000 connection
+sap = Sap2000Wrapper(attach_to_exist=True)  # Attach to an existing model
+# For a new model, set attach_to_exist=False
 ```
 
-Parent level methods and attributes
+### Working with SAP2000
 
-```python
-sap.hide()                                  #Hide the SAP2000 window
-sap.unhide()                                #Unhides SAP2000 window
-sap.version                                 #Returns SAP2000 version number
-sap.api_version                             #Returns Sap0API version number
+Once you have set up the SAP2000 wrapper, you can interact with it through various functionalities:
 
-sap.save(r'\Path\to\save\file.sdb')
-```
+#### Basic Operations
 
-### GUI
+- To hide or unhide the SAP2000 application:
+    ```python
+    sap.hide()  # Hides the SAP2000 window
+    sap.unhide()  # Unhides the SAP2000 window
+    ```
 
-The repo has an optional streamlit GUI for the wrapper. Checkout [`GUI.md`](/documentation/Usage/GUI.md) for installation and usage instructions.
+- To get the version of SAP2000:
+    ```python
+    version = sap.version
+    api_version = sap.api_version
+    ```
 
-### Layout Documentation
+- To save your current model:
+    ```python
+    sap.save(r'path\to\save\file.sdb')
+    ```
+
+### Streamlit GUI
+
+`ak_sap` provides a Streamlit GUI as an optional feature for ease of access. To use it:
+
+1. Make sure your SAP Model is open.
+2. Run the Streamlit application:
+   ```bash
+   uv run streamlit run Start_Here.py
+   ```
+
+3. Click on "Attach to Model" after opening the SAP2000 model you want to control.
+
+For detailed usage instructions with the GUI, refer to the [GUI Documentation](./documentation/Usage/GUI.md).
+
+
+## Module Overview
+
+Here’s an outline of the core modules within `ak_sap`:
+
+- **Model**: Control changes applied to the overall model.
+- **Object**: Manipulate various structural elements (points, frames, etc.).
+- **Database**: Access and modify database values.
+- **Load**: Manage loads and load cases.
+- **Analyze**: Run analyses and control analysis settings.
+- **Results**: Extract and manipulate results from the analyses.
+- **Material**: Define and manage material properties.
+
+For comprehensive details about each module and their methods, please check the [Layout Documentation](./documentation/Layout.md).
 
 <!-- Layout START -->
-#### Layout Map
+### Layout Map
 
-![MindMap](./documentation/assets/mindmap.svg)
+<!-- Layout START -->[MindMap](./documentation/assets/mindmap.svg)
+```mermaid
+graph TB
+    %% Styles and classes
+    classDef interface fill:#3498db,stroke:#2980b9,color:white
+    classDef core fill:#2ecc71,stroke:#27ae60,color:white
+    classDef module fill:#f1c40f,stroke:#f39c12,color:black
+    classDef processing fill:#e67e22,stroke:#d35400,color:white
+    classDef utility fill:#95a5a6,stroke:#7f8c8d,color:white
+    classDef api fill:#9b59b6,stroke:#8e44ad,color:white
 
-#### Initialize
+    %% Interface Layer
+    subgraph Interface
+        GUI["GUI Interface"]:::interface
+        CLI["CLI Interface"]:::interface
+        API["Python API"]:::interface
+    end
+
+    %% Core Layer
+    subgraph Core
+        Wrapper["SAP2000 Wrapper"]:::core
+        Auth["Authentication"]:::core
+    end
+
+    %% SAP2000 API
+    SAP["SAP2000 API"]:::api
+
+    %% Functional Modules Layer
+    subgraph Modules
+        direction TB
+        ModelMgmt["Model Management"]:::module
+        LoadMgmt["Load Management"]:::module
+        ObjMgmt["Object Management"]:::module
+        ResultProc["Results Processing"]:::module
+        MatMgmt["Material Management"]:::module
+        DBOps["Database Operations"]:::module
+        Analysis["Analysis Operations"]:::module
+    end
+
+    %% Modal Analysis Submodules
+    subgraph ModalAnalysis
+        direction TB
+        Modal["Modal Analysis"]:::module
+        Eigen["Eigen Analysis"]:::module
+        Ritz["Ritz Analysis"]:::module
+    end
+
+    %% Relationships
+    GUI & CLI & API --> Wrapper
+    Wrapper --> SAP
+    Auth --> Wrapper
+    
+    ModelMgmt & LoadMgmt & ObjMgmt & ResultProc & MatMgmt & DBOps & Analysis <--> Wrapper
+    LoadMgmt --> Modal
+    Modal --> Eigen & Ritz
+
+    %% Click events for component mapping
+    click GUI "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/gui/"
+    click CLI "https://github.com/rpakishore/ak_sap/blob/main/src/ak_sap/cli/cli_app.py"
+    click Wrapper "https://github.com/rpakishore/ak_sap/blob/main/src/ak_sap/wrapper.py"
+    click Auth "https://github.com/rpakishore/ak_sap/blob/main/src/ak_sap/utils/credentials.py"
+    click ModelMgmt "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Model/"
+    click LoadMgmt "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Loads/"
+    click ObjMgmt "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Object/"
+    click ResultProc "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Results/"
+    click MatMgmt "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Material/"
+    click DBOps "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Database/"
+    click Analysis "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Analyze/"
+    click Modal "https://github.com/rpakishore/ak_sap/tree/main/src/ak_sap/Loads/Modal/"
+    click Eigen "https://github.com/rpakishore/ak_sap/blob/main/src/ak_sap/Loads/Modal/Eigen/main.py"
+    click Ritz "https://github.com/rpakishore/ak_sap/blob/main/src/ak_sap/Loads/Modal/Ritz/main.py"
+
+    %% Legend
+    subgraph Legend
+        L1["User Interface"]:::interface
+        L2["Core Component"]:::core
+        L3["Module"]:::module
+        L4["Processing"]:::processing
+        L5["Utility"]:::utility
+        L6["External API"]:::api
+    end
+```
+### Initialize
 
 Usage Examples:
 
@@ -140,7 +270,7 @@ sap = Sap2000Wrapper(attach_to_exist=False)     #Create new blank model from lat
 sap = Sap2000Wrapper(attach_to_exist=False, program_path=r'Path\to\SAP2000.exe')
 ```
 
-#### Parent Level
+### Parent Level
 
 Usage Examples:
 
@@ -155,8 +285,8 @@ sap.exit(save=False)                        #Exit the application
 sap.save(r'\Path\to\save\file.sdb')
 ```
 
-#### Sub-Modules
-##### Model
+### Sub-Modules
+#### Model
 
 Collection of methods and attributes that control changes to the model as a whole
 
@@ -184,7 +314,7 @@ sap.Model.logs                              #Retrieve user comments and logs
 sap.Model.set_logs('Add this comment')      #Adds user comments/logs
 ```
 
-##### Element
+#### Element
 
 Collection of methods and attributes that apply changes to elements in the model
 
@@ -202,7 +332,7 @@ p2 = Coord(x=10, y=30, z=0)
 object.mirror(plane='Z', coord1=pt1, coord2=pt2)    #Mirror replicate selected obj.
 ```
 
-###### Point
+##### Point
 
 Manipulate Point Elements
 
@@ -236,7 +366,7 @@ points.merge(tolerance=2)                   #Merge points that are within tol
 points.change_coord(name='1', x=0, y=0, z=0)#Change point coordinate
 ```
 
-###### Frame
+##### Frame
 
 Manipulate Frame Elements
 
@@ -276,7 +406,7 @@ frames.Prop.rename(old_name="FSEC1", new_name="MySection")  #Rename frame proper
 frames.Prop.total()                         #Total # of defined frame properties
 ```
 
-##### Database
+#### Database
 
 Control the database values
 
@@ -295,7 +425,7 @@ df.iloc[0,0] = 'New Value'
 tables.update(TableKey='Material Properties 01 - General', data=df, apply=True)
 ```
 
-##### Select
+#### Select
 
 Usage Examples:
 
@@ -326,10 +456,10 @@ select.property(type='Solid', name='SOLID1', reverse=True)
 select.property(type='Tendon', name='TEN1')
 ```
 
-##### Loads
+#### Loads
 
 Control the definition and assignments of loads.
-###### Load Patterns
+##### Load Patterns
 
 Usage Examples:
 
@@ -351,7 +481,7 @@ pattern.add(name='Custom Live', pattern_type='LIVE',
             selfwt_multiplier=1.15, add_case=True)
 ```
 
-###### Load Cases
+##### Load Cases
 
 Usage Examples:
 
@@ -365,7 +495,7 @@ cases.case_info(name='DEAD')    #Get the Case type information
 cases.set_type(name='DEAD', casetype='LINEAR_STATIC')   #Change the case type of existing load case
 ```
 
-###### Modal
+##### Modal
 
 `sap.Load.Modal`
 
@@ -413,7 +543,7 @@ ritz.set_number_modes(case_name='LCASE1', max=10, min=5)   #set number of modes
 ritz.get_number_modes(case_name='LCASE1')                  #get number of modes
 ```
 
-##### Analyze
+#### Analyze
 
 Usage Examples:
 
@@ -435,7 +565,7 @@ analyze.set_solver(
 )                    
 ```
 
-##### Results
+#### Results
 
 Manipulate Results from SAP2000
 
@@ -462,7 +592,7 @@ results.delete('MODAL')                     #Delete results of `MODAL` case
 results.delete('All')                       #Delete results of all cases
 ```
 
-##### Material
+#### Material
 
 Usage Examples:
 
@@ -478,7 +608,7 @@ material.set_isotropic(name='Steel', E=29500, poisson=0.25, thermal_coeff=6e-06)
 material.set_density(name='Steel', mass_per_vol=0.00029)    #set density
 ```
 
-###### Rebar
+##### Rebar
 
 Usage Examples:
 
@@ -508,11 +638,11 @@ rebar.get_prop(name='MyRebar2')                 #Get rebar property
 <!-- License -->
 ## License
 
-See [LICENSE](https://github.com/rpakishore/ak_sap/blob/main/LICENSE) for more information.
+This project is licensed under the Mozilla Public License Version 2.0. For more details, see the [LICENSE](./LICENSE) file.
 
 <!-- Contact -->
 ## Contact
 
-Arun Kishore - [@rpakishore](mailto:pypi@rpakishore.co.in)
+For any inquiries, feature requests, or bug reports, feel free to contact **Arun Kishore** at [pypi@rpakishore.co.in](mailto:pypi@rpakishore.co.in).
 
 Project Link: [https://github.com/rpakishore/ak_sap](https://github.com/rpakishore/ak_sap)
