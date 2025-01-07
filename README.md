@@ -1,26 +1,18 @@
 <!--- Heading --->
 <div align="center">
-  <h1>ak_sap</h1>
+  <h1>Ak_SAP</h1>
   <p>
-    Python wrapper for SAP2000. 
-    Generate/Analyze/Extract complex structural models using python. 
-  </p>
-<h4>
-    <a href="https://github.com/rpakishore/ak_sap/blob/main/documentation/Usage/GUI.md">GUI</a>
-  <span> · </span>
-    <a href="https://github.com/rpakishore/ak_sap/tree/main?tab=readme-ov-file#2-getting-started">Getting Started</a>
-  <span> · </span>
-    <a href="https://github.com/rpakishore/ak_sap/blob/main/documentation/Layout.md">Layout Documentation</a>
-  <span> · </span>
-    <a href="https://github.com/rpakishore/ak_sap/issues/">Report Bug/Request Feature</a>
+    <h2>Python wrapper for SAP2000. </h2>
 
-  </h4>
-</div>
-<br />
+    Generate, analyze, and extract complex structural models using Python.
+  </p>
+
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rpakishore/ak_sap)
 ![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/ak_sap)
 [![tests](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml)
+</div>
+<br />
 
 <!-- Table of Contents -->
 <h2>Table of Contents</h2>
