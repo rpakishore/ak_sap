@@ -165,7 +165,6 @@ For comprehensive details about each module and their methods, please check the 
 <!-- Layout START -->
 ### Layout Map
 
-<!-- Layout START -->[MindMap](./documentation/assets/mindmap.svg)
 ```mermaid
 graph TB
     %% Styles and classes
