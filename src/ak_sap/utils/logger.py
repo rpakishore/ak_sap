@@ -17,7 +17,7 @@ class Log(object):
         self.logger.addHandler(streamhandler)
         log_dir: Path = Path(__file__).parent.parent.parent / "logs"
         log_dir.mkdir(exist_ok=True)
-        logfile = log_dir / f'{user}{time.strftime("-%Y-%b")}.log'
+        logfile = log_dir / f"{user}{time.strftime('-%Y-%b')}.log"
         self.logfile = logfile
         filehandler = logging.FileHandler(logfile, encoding="utf-8")
         filehandler.setFormatter(formatter)

@@ -1,6 +1,5 @@
 from typing import Literal
 
-from ak_sap.utils import log
 from ak_sap.utils.decorators import smooth_sap_do
 
 from .helper import MasterObj

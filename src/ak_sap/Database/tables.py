@@ -197,9 +197,9 @@ def _array_to_pandas(headers: tuple, array: tuple) -> pd.DataFrame:
     """Given the table headers as tuple and table data as a single tuple;
     Returns table as a dataframe."""
     num_fields = len(headers)
-    assert (
-        len(array) % num_fields == 0
-    ), f"Array length ({len(array)}) is not divisible by header length ({num_fields})"
+    assert len(array) % num_fields == 0, (
+        f"Array length ({len(array)}) is not divisible by header length ({num_fields})"
+    )
 
     df_data: dict[str, list] = {header: [] for header in headers}
     for array_idx, value in enumerate(array):
@@ -212,9 +212,9 @@ def _array_to_list_of_dicts(headers: tuple, array: tuple) -> list[dict[str, Any]
     """Given the table headers as tuple and table data as a single tuple;
     Returns table as a list of dictionaries."""
     num_fields = len(headers)
-    assert (
-        len(array) % num_fields == 0
-    ), f"Array length ({len(array)}) is not divisible by header length ({num_fields})"
+    assert len(array) % num_fields == 0, (
+        f"Array length ({len(array)}) is not divisible by header length ({num_fields})"
+    )
 
     list_of_dicts = []
     for i in range(len(array) // num_fields):

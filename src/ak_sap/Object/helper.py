@@ -55,9 +55,9 @@ class MasterObj:
 
     def check_obj_legal(self, name: str):
         """Confirms specified element exists in the model"""
-        assert (
-            name in self.all()
-        ), f"`{name}` not found in the current list of elements: {self.all()}"
+        assert name in self.all(), (
+            f"`{name}` not found in the current list of elements: {self.all()}"
+        )
 
     @smooth_sap_do
     def delete(self, name: str):
