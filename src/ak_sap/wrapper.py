@@ -2,6 +2,8 @@ import sys
 from pathlib import Path
 
 import comtypes.client
+import pythoncom
+
 
 from ak_sap.Analyze import Analyze
 from ak_sap.Database import Table
@@ -13,11 +15,14 @@ from ak_sap.Results import Results
 from ak_sap.Select import Select
 from ak_sap.utils.logger import log
 
+# Initialize COM
+
 
 class Sap2000Wrapper:
     def __init__(
         self, attach_to_exist: bool = True, program_path: str | Path | None = None
     ) -> None:
+        pythoncom.CoInitialize()
         self.attach_to_exist: bool = attach_to_exist
         self.program_path: str | None = (
             str(Path(str(program_path)).absolute()) if program_path else None
@@ -54,6 +59,7 @@ class Sap2000Wrapper:
             # assert self.mySapObject.ApplicationExit(False) == 0
             self.SapModel = None
             self.mySapObject = None
+            pythoncom.CoInitialize()
         except Exception as e:
             log.error(e.__str__())
 
