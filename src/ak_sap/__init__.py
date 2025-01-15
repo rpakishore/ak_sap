@@ -1,6 +1,6 @@
-from ak_sap.misc import Coord
+from ak_sap.misc import Coord as Coord
 from ak_sap.utils.logger import log
-from ak_sap.wrapper import Sap2000Wrapper
+from ak_sap.wrapper import Sap2000Wrapper as Sap2000Wrapper
 
 
 def debug(status=False):

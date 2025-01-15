@@ -1,11 +1,14 @@
 import streamlit as st
 
-import ak_sap
 from ak_sap import Sap2000Wrapper
 from ak_sap.gui.streamlit import st_initialize
+from pathlib import Path
+import tomllib
 
 st.markdown("## SAP Aid")
-st.caption(f"Current Version: {ak_sap.__version__}")
+with open(Path(__file__).parent / "pyproject.toml", "r") as f:
+    config = tomllib.loads(f.read())
+st.caption(f"Current Version: {config['project']['version']}")
 _disclaimer = """
 ℹ **Important Information**   
 - Features of this GUI is **heavily limited** compared to the base package.

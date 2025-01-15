@@ -1,1 +1,1 @@
-from .obj import Object
+from .obj import Object as Object

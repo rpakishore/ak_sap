@@ -152,7 +152,7 @@ def model(
                 program_path = (
                     Path(r"C:\Program Files").glob("**/SAP2000.exe").__next__()
                 )
-            except:
+            except Exception:
                 _error = r"Could not locate `SAP2000.exe` in C:\Program Files"
                 log.error(_error)
                 raise Exception(_error + "\nTry specifying the path to SAP2000.exe")

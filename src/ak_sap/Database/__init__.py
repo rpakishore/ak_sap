@@ -1,1 +1,1 @@
-from .tables import Table
+from .tables import Table as Table

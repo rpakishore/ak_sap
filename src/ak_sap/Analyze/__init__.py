@@ -1,1 +1,1 @@
-from .main import Analyze
+from .main import Analyze as Analyze
