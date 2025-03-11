@@ -1,7 +1,8 @@
 from typing import Literal
 
-from ak_sap.utils.decorators import smooth_sap_do
 import pandas as pd
+
+from ak_sap.utils.decorators import smooth_sap_do
 
 from .helper import MasterObj
 

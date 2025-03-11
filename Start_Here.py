@@ -1,9 +1,10 @@
+from pathlib import Path
+
 import streamlit as st
+import tomllib
 
 from ak_sap import Sap2000Wrapper
 from ak_sap.gui.streamlit import st_initialize
-from pathlib import Path
-import tomllib
 
 st.markdown("## SAP Aid")
 with open(Path(__file__).parent / "pyproject.toml", "r") as f:

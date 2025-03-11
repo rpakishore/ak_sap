@@ -1,6 +1,6 @@
 """Initialize the utils module.
 
-This module includes various utility functions and classes that support 
+This module includes various utility functions and classes that support
 the main functionality of the ak_sap package.
 """
 

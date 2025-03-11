@@ -4,7 +4,6 @@ from pathlib import Path
 import comtypes.client
 import pythoncom
 
-
 from ak_sap.Analyze import Analyze
 from ak_sap.Database import Table
 from ak_sap.Loads import Load
