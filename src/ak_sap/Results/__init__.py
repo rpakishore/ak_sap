@@ -1,1 +1,1 @@
-from .main import Results
+from .main import Results as Results

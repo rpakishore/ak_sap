@@ -60,7 +60,6 @@ def test_array_to_list_of_dicts_invalid_length():
 
 
 class TestFlattenDataFrame(unittest.TestCase):
-
     def test_flatten_empty_dataframe(self):
         df = pd.DataFrame()
         result = flatten_dataframe(df)

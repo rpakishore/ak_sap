@@ -1,6 +1,6 @@
 import pytest
 
-from ak_sap.Analyze.main import case_status, get_run_flag, get_solver
+from ak_sap.Analyze import case_status, get_run_flag, get_solver
 
 
 def test_case_status():

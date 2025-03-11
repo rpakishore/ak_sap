@@ -1,6 +1,6 @@
 import typing
 
-from ak_sap.utils import MasterClass, log
+from ak_sap.utils import MasterClass
 from ak_sap.utils.decorators import smooth_sap_do
 
 from .constants import MaterialTypesStr, SymmetryTypeStr

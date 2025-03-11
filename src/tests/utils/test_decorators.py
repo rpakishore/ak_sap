@@ -2,7 +2,6 @@ from ak_sap.utils.decorators import smooth_sap_do
 
 
 def test_smooth_sap_do():
-
     @smooth_sap_do
     def return_failed_list():
         return [1, 2, 3, 1]

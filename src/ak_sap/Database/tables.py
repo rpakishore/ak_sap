@@ -10,7 +10,24 @@ from .table_structured_data import DatabaseTable, FieldData
 
 
 class Table:
+    """Class to interface with various database tables in SAP2000.
+
+    This class provides methods to list, get, and update tables in the
+    SAP2000 database.
+
+    Attributes:
+        mySapObject: The main SAP2000 object.
+        SapModel: The SAP2000 model object.
+        DatabaseTables: The SAP2000 database tables interface.
+    """
+
     def __init__(self, mySapObject, Model) -> None:
+        """Initializes the Table class.
+
+        Args:
+            mySapObject: The main SAP2000 object to interface with.
+            Model: The model interface for the SAP2000 instance.
+        """
         self.mySapObject = mySapObject
         self.SapModel = self.mySapObject.SapModel
         self.Model = Model
@@ -30,8 +47,11 @@ class Table:
             )
 
     def list_all(self) -> list[DatabaseTable]:
-        """Returns all of the tables along with their import type and
-        indicates if any data is available in the model to fill the table."""
+        """Lists all of the tables along with their import type and emptiness status.
+
+        Returns:
+            list[DatabaseTable]: A list of all database tables in the model.
+        """
         log.debug("Getting a list of all Tables")
         _table_data = []
         tables = []
@@ -54,7 +74,11 @@ class Table:
         return tables
 
     def list_available(self) -> list[DatabaseTable]:
-        """Returns all available tables along with their import type."""
+        """Lists all available tables along with their import type.
+
+        Returns:
+            list[DatabaseTable]: A list of available database tables in the model.
+        """
         log.debug("Getting a list of all available Tables")
         tables = []
         _table_data = []
@@ -77,7 +101,14 @@ class Table:
         return tables
 
     def get_table_fields(self, TableKey: str) -> list[FieldData]:
-        """Returns the available fields in a specified table."""
+        """Retrieves the available fields in a specified table.
+
+        Args:
+            TableKey (str): The key identifier for the table.
+
+        Returns:
+            list[FieldData]: A list of field data in the specified table.
+        """
         log.debug(f"Extracting available fields in `TableKey`: {TableKey}")
         _table_data, tables = [], []
         try:
@@ -102,9 +133,16 @@ class Table:
     def get(
         self, TableKey: str, dataframe: bool = True
     ) -> pd.DataFrame | list[dict[str, Any]]:
-        """Extract Table Data.
-        See `.list_available()` for `TableKey`s.
-        See `.get_table_fields()` for info on fields."""
+        """Extracts data from a specified table.
+
+        Args:
+            TableKey (str): The key identifier for the table.
+            dataframe (bool): If True, returns data as a DataFrame.
+                             If False, returns data as a list of dictionaries.
+
+        Returns:
+            pd.DataFrame | list[dict[str, Any]]: Extracted data from the table.
+        """
         log.debug(f"Extracting data for TableKey: {TableKey}")
         _data: list = []
         _current_units = self.Model.units
@@ -130,7 +168,13 @@ class Table:
                 return []
 
     def update(self, TableKey: str, data: pd.DataFrame, apply: bool = True):
-        """Update the database table value"""
+        """Updates values in the specified database table.
+
+        Args:
+            TableKey (str): The key identifier for the table.
+            data (pd.DataFrame): The DataFrame containing data to update.
+            apply (bool): If True, apply the changes immediately.
+        """
         log.info(f"Updating the values for TableKey: {TableKey}")
         TableVersion: int = 1
         *_, ret = self.DatabaseTables.SetTableForEditingArray(
@@ -149,10 +193,10 @@ class Table:
             self.apply()
 
     def apply(self):
-        """Instructs the program to interactively import all of the tables stored
-        in the table list using the `SetTableForEditing` functions.
-        If the model is locked at the time this command is called then only tables
-        that can be interactively imported when the model is locked will be imported.
+        """Applies changes made to the database tables.
+
+        Instructs the program to interactively import all of the tables stored
+        in the table list.
         """
         log.info("Applying table changes to database")
         NumFatalErrors, NumErrorMsgs, NumWarnMsgs, NumInfoMsgs, ImportLog, ret = (

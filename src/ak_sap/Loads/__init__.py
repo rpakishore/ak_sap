@@ -1,1 +1,1 @@
-from .main import Load
+from .main import Load as Load

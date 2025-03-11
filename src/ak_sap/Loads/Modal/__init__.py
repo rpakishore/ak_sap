@@ -1,1 +1,1 @@
-from .main import Modal
+from .main import Modal as Modal

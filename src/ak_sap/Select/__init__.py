@@ -1,1 +1,1 @@
-from .main import Select
+from .main import Select as Select

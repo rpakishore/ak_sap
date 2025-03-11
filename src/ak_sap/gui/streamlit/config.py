@@ -1,5 +1,4 @@
 import streamlit as st
-
 from ak_sap import Sap2000Wrapper, debug, log
 
 DEFAULT_SESSION_STATES = {"attached": False, "debug_mode": False, "SAP": None}

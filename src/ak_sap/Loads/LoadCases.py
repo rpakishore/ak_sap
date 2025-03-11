@@ -1,6 +1,6 @@
 import typing
 
-from ak_sap.utils import MasterClass, log
+from ak_sap.utils import MasterClass
 from ak_sap.utils.decorators import smooth_sap_do
 
 from .constants import LoadCaseType, LoadPatternType
@@ -33,9 +33,9 @@ class LoadCase(MasterClass):
     @smooth_sap_do
     def rename(self, old_name: str, new_name: str):
         """changes the name of an existing load case."""
-        assert (
-            old_name in self.list_all()
-        ), f'"{old_name}" is not in list of defined load cases {self.list_all()}'
+        assert old_name in self.list_all(), (
+            f'"{old_name}" is not in list of defined load cases {self.list_all()}'
+        )
         return self.__LoadCases.ChangeName(old_name, new_name)
 
     @smooth_sap_do
@@ -46,9 +46,9 @@ class LoadCase(MasterClass):
 
     @smooth_sap_do
     def delete(self, name: str):
-        assert (
-            name in self.list_all()
-        ), f'"{name}" is not in list of defined load cases {self.list_all()}'
+        assert name in self.list_all(), (
+            f'"{name}" is not in list of defined load cases {self.list_all()}'
+        )
         return self.__LoadCases.Delete(name)
 
     @smooth_sap_do
@@ -73,8 +73,8 @@ class LoadCase(MasterClass):
 
     @smooth_sap_do
     def set_type(self, name: str, casetype: LoadCaseType):
-        assert (
-            name in self.list_all()
-        ), f'"{name}" is not in list of defined load cases {self.list_all()}'
+        assert name in self.list_all(), (
+            f'"{name}" is not in list of defined load cases {self.list_all()}'
+        )
         _value = typing.get_args(LoadCaseType).index(casetype) + 1
         return self.__LoadCases.SetDesignType(name, 1, _value)
