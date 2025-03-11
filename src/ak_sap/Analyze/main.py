@@ -5,58 +5,80 @@ from ak_sap.utils.decorators import smooth_sap_do
 
 
 class Analyze(MasterClass):
+    """Class to perform analysis operations on a SAP2000 model.
+
+    This class encapsulates methods for creating models, running analyses,
+    and retrieving analysis results.
+
+    Attributes:
+        __Analyze: The SAP2000 analyze object.
+    """
+
     def __init__(self, mySapObject) -> None:
+        """Initializes the Analyze class.
+
+        Args:
+            mySapObject: The main SAP2000 object to interface with.
+        """
         super().__init__(mySapObject=mySapObject)
         self.__Analyze = mySapObject.SapModel.Analyze
 
     @smooth_sap_do
     def create_model(self) -> bool:
-        """creates the analysis model.
-        If the analysis model is already created and current, nothing is done.
+        """Creates the analysis model.
+
+        If the analysis model already exists and is current, nothing is done.
+
+        Returns:
+            bool: True if the model was successfully created, False otherwise.
         """
         return self.__Analyze.CreateAnalyzeModel()
 
     @smooth_sap_do
     def run(self):
-        """runs the analysis.
+        """Runs the analysis.
+
         The analysis model is automatically created as part of this function.
+
+        Returns:
+            The result from the RunAnalysis function.
         """
         return self.__Analyze.RunAnalysis()
 
     @smooth_sap_do
     def case_status(self) -> dict:
-        """retrieves the status for all load cases.
+        """Retrieves the status for all load cases.
 
         Returns:
-            list[dict]: Cases and their current status.
+            dict: A dictionary containing cases and their current status.
         """
         return case_status(ret=self.__Analyze.GetCaseStatus()), 0  # type: ignore
 
     @smooth_sap_do
     def get_run_flag(self) -> dict:
-        """retrieves the run flags for all analysis cases.
+        """Retrieves the run flags for all analysis cases.
 
         Returns:
-            dict: Loadcases and their run flags
+            dict: A dictionary of load cases and their run flags.
         """
         return get_run_flag(ret=self.__Analyze.GetRunCaseFlag()), 0  # type: ignore
 
     @smooth_sap_do
     def set_run_flag(self, case: str, status: bool):
-        """sets the run flag for load cases
+        """Sets the run flag for load cases.
 
         Args:
-            case (str): name of an existing load case
-            status (bool): If this item is True, the specified load case is to be run
+            case (str): The name of an existing load case.
+            status (bool): If True, the specified load case is to be run.
         """
         return self.__Analyze.SetRunCaseFlag(case, status)
 
     @smooth_sap_do
     def get_solver(self) -> dict:
-        """retrieves the model solver options
+        """Retrieves the model solver options.
 
         Returns:
-            dict: Solver Info
+            dict: A dictionary containing solver information.
         """
         return get_solver(ret=self.__Analyze.GetSolverOption_3()), 0  # type: ignore
 
@@ -68,13 +90,17 @@ class Analyze(MasterClass):
         NumberParallelRuns: Literal[0, 1, 2, 3, 4, 5, 6, 7, 8],
         StiffCase: str = "",
     ) -> bool:
-        """sets the model solver options
+        """Sets the model solver options.
 
         Args:
-            SolverType (Literal['Standard', 'Advanced', 'Multi-threaded']): indicats the solver type.
-            SolverProcessType (Literal['Auto', 'GUI', 'Separate']): indicats the process the analysis is run
-            NumberParallelRuns (Literal[0,1,2,3,4,5,6,7,8]): Number of parallel runs
-            StiffCase (str, optional): name of the load case used when outputting the mass and stiffness matrices to text files. Defaults to ''.
+            SolverType (Literal['Standard', 'Advanced', 'Multi-threaded']): Indicates the solver type.
+            SolverProcessType (Literal['Auto', 'GUI', 'Separate']): Indicates the process the analysis is run.
+            NumberParallelRuns (Literal[0-8]): Number of parallel runs.
+            StiffCase (str, optional): Name of the load case used when outputting the mass and stiffness
+                                         matrices to text files. Defaults to ''.
+
+        Returns:
+            bool: True if solver options were successfully set, False otherwise.
         """
         return self.__Analyze.SetSolverOption_3(
             ["Standard", "Advanced", "Multi-threaded"].index(SolverType),
@@ -87,6 +113,17 @@ class Analyze(MasterClass):
 
 
 def get_solver(ret: list) -> dict:
+    """Parses the solver information retrieved from SAP2000.
+
+    Args:
+        ret (list): The return value from SAP2000 containing solver options.
+
+    Returns:
+        dict: A dictionary of solver information.
+
+    Raises:
+        AssertionError: If the return status indicates an error.
+    """
     assert ret[-1] == 0
     return {
         "SolverType": ["Standard", "Advanced", "Multi-threaded"][ret[0]],
@@ -97,6 +134,17 @@ def get_solver(ret: list) -> dict:
 
 
 def get_run_flag(ret: list) -> dict:
+    """Parses the run flags retrieved from SAP2000.
+
+    Args:
+        ret (list): The return value from SAP2000 containing run flags.
+
+    Returns:
+        dict: A dictionary of load cases and their run flags.
+
+    Raises:
+        AssertionError: If the return status indicates an error.
+    """
     assert ret[-1] == 0
     status: dict = {}
 
@@ -111,6 +159,17 @@ def get_run_flag(ret: list) -> dict:
 
 
 def case_status(ret: list) -> dict:
+    """Parses the case status retrieved from SAP2000.
+
+    Args:
+        ret (list): The return value from SAP2000 containing case status.
+
+    Returns:
+        dict: A dictionary of cases and their statuses.
+
+    Raises:
+        AssertionError: If the return status indicates an error.
+    """
     assert ret[-1] == 0
     status: dict = {}
     _status_exp = ["Not run", "Could not start", "Not finished", "Finished"]

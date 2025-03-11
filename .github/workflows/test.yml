@@ -19,9 +19,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: 🦾 Install the project
-        run: |
-          uv sync --group test
+        run: uv sync --group test
 
       - name: 🧪 Test
-        run: |
-          uv run pytest .
+        run: uv run pytest .

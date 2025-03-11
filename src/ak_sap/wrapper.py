@@ -19,9 +19,36 @@ from ak_sap.utils.logger import log
 
 
 class Sap2000Wrapper:
+    """Wrapper for SAP2000 API.
+
+    This class provides an interface to interact with the SAP2000 program
+    through its API, allowing easy manipulation of models, materials,
+    loads, results, and more.
+
+    Attributes:
+        attach_to_exist (bool): Indicator of whether to attach to an existing instance.
+        program_path (str | Path | None): Path to the SAP2000 executable.
+        mySapObject: The main SAP2000 object.
+        SapModel: The SAP2000 model object.
+        Analyze (Analyze): Module for analysis-related functions.
+        Model (Model): Module for model-related functions.
+        Object (Object): Module for object-related functions.
+        Table (Table): Module for database table-related functions.
+        Load (Load): Module for load management.
+        Results (Results): Module for accessing results.
+        Material (Material): Module for managing materials.
+        Select (Select): Module for selection functions.
+    """
+
     def __init__(
         self, attach_to_exist: bool = True, program_path: str | Path | None = None
     ) -> None:
+        """Initializes the Sap2000Wrapper.
+
+        Args:
+            attach_to_exist (bool): If True, attach to an existing instance of SAP2000.
+            program_path (str | Path | None): Optional path to the SAP2000 executable.
+        """
         pythoncom.CoInitialize()
         self.attach_to_exist: bool = attach_to_exist
         self.program_path: str | None = (
@@ -33,18 +60,23 @@ class Sap2000Wrapper:
         self.SapModel = self.mySapObject.SapModel
 
         # Attach submodules and functions
-        self.Analyze = Analyze(mySapObject=self.mySapObject)
-        self.Model = Model(mySapObject=self.mySapObject)
-        self.Object = Object(mySapObject=self.mySapObject)
-        self.Table = Table(mySapObject=self.mySapObject, Model=self.Model)
-        self.Load = Load(mySapObject=self.mySapObject)
-        self.Results = Results(mySapObject=self.mySapObject)
-        self.Material = Material(mySapObject=self.mySapObject)
-        self.Select = Select(mySapObject=self.mySapObject)
+        self.Analyze: Analyze = Analyze(mySapObject=self.mySapObject)
+        self.Model: Model = Model(mySapObject=self.mySapObject)
+        self.Object: Object = Object(mySapObject=self.mySapObject)
+        self.Table: Table = Table(mySapObject=self.mySapObject, Model=self.Model)
+        self.Load: Load = Load(mySapObject=self.mySapObject)
+        self.Results: Results = Results(mySapObject=self.mySapObject)
+        self.Material: Material = Material(mySapObject=self.mySapObject)
+        self.Select: Select = Select(mySapObject=self.mySapObject)
 
         log.info("Sap2000Wrapper Initialized")
 
     def __str__(self) -> str:
+        """Returns a string representation of the Sap2000Wrapper instance.
+
+        Returns:
+            str: Description of the wrapper instance and model type.
+        """
         _attachment_str = (
             "Attached to existing Model" if self.attach_to_exist else "New Model"
         )
@@ -55,6 +87,10 @@ class Sap2000Wrapper:
         return f"Sap2000Wrapper({attach_to_exist=})"
 
     def __del__(self) -> None:
+        """@public Destructor for Sap2000Wrapper.
+
+        Cleans up the SAP2000 object and logs any errors encountered.
+        """
         try:
             # assert self.mySapObject.ApplicationExit(False) == 0
             self.SapModel = None
@@ -64,8 +100,13 @@ class Sap2000Wrapper:
             log.error(e.__str__())
 
     def save(self, savepath: str | Path | None = None) -> bool:
-        """Saves SAP model to the `savepath`.
-        If no save path is provided, saves to the default path
+        """Saves the SAP model to the specified path.
+
+        Args:
+            savepath (str | Path | None): Path to save the model. If None, uses the default save location.
+
+        Returns:
+            bool: True if save was successful, False otherwise.
         """
         try:
             if savepath:
@@ -81,12 +122,18 @@ class Sap2000Wrapper:
 
     @property
     def api_version(self) -> str:
-        """Retrieves the API version implemented by SAP2000."""
+        """Retrieves the API version implemented by SAP2000.
+
+        Returns:
+            str: The API version string.
+        """
         return self.mySapObject.GetOAPIVersionNumber()
 
     def hide(self) -> bool:
-        """Hides the Sap2000 application.
-        When hidden it is not visible on the screen or on the Windows task bar.
+        """Hides the SAP2000 application from view.
+
+        Returns:
+            bool: True if the application was successfully hidden, False otherwise.
         """
         try:
             self.mySapObject.Hide()
@@ -96,8 +143,10 @@ class Sap2000Wrapper:
             return False
 
     def unhide(self) -> bool:
-        """Unhides the Sap2000 application.
-        When hidden it is not visible on the screen or on the Windows task bar.
+        """Unhides the SAP2000 application, making it visible again.
+
+        Returns:
+            bool: True if the application was successfully unhidden, False otherwise.
         """
         try:
             self.mySapObject.Unhide()
@@ -108,13 +157,28 @@ class Sap2000Wrapper:
 
     @property
     def ishidden(self) -> bool:
+        """Checks if the SAP2000 application is currently hidden.
+
+        Returns:
+            bool: True if hidden, False otherwise.
+        """
         return self.mySapObject.Visible()
 
     @property
     def version(self) -> str:
+        """Retrieves the version of the currently opened SAP model.
+
+        Returns:
+            str: The version of the SAP model.
+        """
         return self.SapModel.GetVersion()[0]
 
     def exit(self, save: bool = False):
+        """Exits the SAP2000 application.
+
+        Args:
+            save (bool): If True, saves the model before exiting.
+        """
         self.mySapObject.ApplicationExit(False)
 
 
@@ -122,10 +186,18 @@ def model(
     attach_to_instance: bool,
     program_path: str | Path | None = None,
 ):
-    """Returns SapObject.
-    If `attach_to_instance` is True, returns the current opened model
-    If `program_path` is NOT set, Creates a model from latest installed version of SAP2000
-    `program_path`, allows lauch of older versions of SAP2000"""
+    """Creates or attaches to a SAP2000 instance.
+
+    Args:
+        attach_to_instance (bool): If True, attach to a currently running instance.
+        program_path (str | Path | None): Optional specific path to SAP2000 executable.
+
+    Returns:
+        Any: The SAP2000 object.
+
+    Raises:
+        Exception: Raises an exception if the SAP2000 instance cannot be created or attached.
+    """
     # create API helper object
     helper = comtypes.client.CreateObject("SAP2000v1.Helper")
     helper = helper.QueryInterface(comtypes.gen.SAP2000v1.cHelper)

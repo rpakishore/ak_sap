@@ -7,9 +7,8 @@
     Generate, analyze, and extract complex structural models using Python.
   </p>
 
+<img src="https://img.shields.io/github/last-commit/rpakishore/ak_sap"><img src="https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg?branch=main">
 
-![GitHub last commit](https://img.shields.io/github/last-commit/rpakishore/ak_sap)
-[![tests](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/rpakishore/ak_sap/actions/workflows/test.yml)
 </div>
 <br />
 
@@ -354,6 +353,15 @@ points.extrude(
 )
 points.merge(tolerance=2)                   #Merge points that are within tol
 points.change_coord(name='1', x=0, y=0, z=0)#Change point coordinate
+
+
+# Assign Loads
+points.setLoadForce(name="1", loadpattern="DEAD", f1=5, replace=True, coord_sys="Global")
+points.setLoadDisplacement(name="1", loadpattern="Settlement", u1=5, replace=True, coord_sys="Global")
+
+# Get Loads and Displacement Assigns
+points.getLoadDisplacement(name="3")
+points.getLoadForce(name="pt1")
 ```
 
 ##### Frame
@@ -620,7 +628,7 @@ rebar.get_prop(name='MyRebar2')                 #Get rebar property
 - [x] Generate Load Patterns
 - [x] Generate Load Cases
 - [ ] Apply Loads
-  - [ ] Points
+  - [x] Points
   - [ ] Area
   - [ ] Line
 - [x] Export joint reactions to Hilti-Profis file

@@ -42,6 +42,7 @@ dev = [
     "ipykernel>=6.29.5",
     "ipywidgets>=8.1.5",
     "line-profiler>=4.2.0",
+    "pdoc>=15.0.1",
     "ruff>=0.9.1",
 ]
 gui = [

@@ -4,9 +4,17 @@ from ak_sap import log
 
 
 def smooth_sap_do(func):
-    """Wrapper for running SAP OAPI calls.
-    Will check for return response from SAP.
-    If not '0' will log and exit gracefully."""
+    """Decorator for running SAP API calls smoothly.
+
+    This wrapper checks for the return response from SAP. If it does
+    not return '0', it logs the error and exits gracefully.
+
+    Args:
+        func (callable): The function being decorated.
+
+    Returns:
+        callable: The wrapped function with error handling.
+    """
 
     @wraps(func)
     def wrapper(*args, **kwargs):
