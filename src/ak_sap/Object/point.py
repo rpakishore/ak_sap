@@ -18,13 +18,13 @@ class Point(MasterObj):
         self,
         point: tuple[float, float, float],
         name: str = "",
-        coord_sys: str = "Global",
+        coord_sys: Literal["Local", "GLOBAL"] = "GLOBAL",
     ) -> str:
         """Adds point to the model
         Args:
             point (tuple[float, float, float]): x, y, z coordinates
             name (str, optional): Custom name for point. Defaults to ''.
-            coord_sys (str, optional): Name of coordinate system. Defaults to 'Global'.
+            coord_sys (str, optional): Name of coordinate system. Defaults to 'GLOBAL'.
         """
         return self.__PointObj.AddCartesian(*point, "", name, coord_sys)
 
@@ -122,7 +122,7 @@ class Point(MasterObj):
         m2: float = 0,
         m3: float = 0,
         replace: bool = True,
-        coord_sys: Literal["Local", "Global"] = "Local",
+        coord_sys: Literal["Local", "GLOBAL"] = "Local",
     ):
         """makes point load assignments to point objects."""
         return self.__PointObj.SetLoadForce(
@@ -141,7 +141,7 @@ class Point(MasterObj):
         r2: float = 0,
         r3: float = 0,
         replace: bool = True,
-        coord_sys: Literal["Local", "Global"] = "Local",
+        coord_sys: Literal["Local", "GLOBAL"] = "Local",
     ):
         """makes ground displacement load assignments to point objects."""
         return self.__PointObj.SetLoadDispl(
@@ -270,7 +270,7 @@ class Point(MasterObj):
         R1: float,
         R2: float,
         R3: float,
-        coord_sys: Literal["Local", "Global"] = "Local",
+        coord_sys: Literal["Local", "GLOBAL"] = "Local",
         replace: bool = True,
     ):
         """assigns coupled springs to a point object
@@ -283,7 +283,7 @@ class Point(MasterObj):
             R1 (float): Spring Constant for R1
             R2 (float): Spring Constant for R2
             R3 (float): Spring Constant for R3
-            coord_sys (Literal["Local", "Global"], optional): Coordinate System. Defaults to "Local".
+            coord_sys (Literal["Local", "GLOBAL"], optional): Coordinate System. Defaults to "Local".
             replace (bool, optional): replace existing assignment. Defaults to True.
         """
         return self.__PointObj.SetSpring(
