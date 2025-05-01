@@ -1,7 +1,8 @@
 from ak_sap._api.General_Functions.Helper import Helper
+import enum
 
 
-class eUnits:
+class eUnits(enum.Enum):
     lb_in_F = 1
     lb_ft_F = 2
     kip_in_F = 3
@@ -25,24 +26,21 @@ class SapObject:
     Python wrapper for the SAP2000 OAPI SapObject interface.
     """
 
-    def __init__(self, prog_id="CSI.SAP2000.API.SapObject"):
+    def __init__(self, prog_id="CSI.SAP2000.API.SapObject", attach_to_existing=True):
         """
         Initializes the SapObject wrapper.
 
         Args:
             prog_id (str): The Program ID for the SAP2000 COM object.
                         Defaults to "CSI.SAP2000.API.SapObject".
+            attach_to_existing (bool): If True, attaches to existing open SAP2000 instance
         """
         self._helper_instance: Helper = Helper()
-        self._SapObject = self._helper_instance.createObjectProgID(progID=prog_id)
-
-        try:
-            self.SapModel = self._SapObject.SapModel
-        except AttributeError:
-            print(
-                "Warning: SapModel attribute not immediately available after initialization."
-            )
-            self.SapModel = None
+        if attach_to_existing:
+            self._SapObject = self._helper_instance.getObject(progID=prog_id)
+        else:
+            self._SapObject = self._helper_instance.createObjectProgID(progID=prog_id)
+            self.application_start()
 
     def application_exit(self, file_save: bool) -> int:
         """
@@ -60,13 +58,15 @@ class SapObject:
             after calling this function to ensure proper cleanup.
         """
         result = self._SapObject.ApplicationExit(file_save)
-        self.SapModel = None
         self._helper_instance = None
         print("Application exited. COM objects released.")
         return result
 
     def application_start(
-        self, units: int = eUnits.kip_in_F, visible: bool = True, file_name: str = ""
+        self,
+        units: int = eUnits.kN_m_C.value,
+        visible: bool = True,
+        file_name: str = "",
     ) -> int:
         """
         Starts the Sap2000 application.
@@ -83,20 +83,8 @@ class SapObject:
 
         Returns:
             int: 0 if the application successfully starts, non-zero if it fails.
-
-        Remarks:
-            When hidden, the application doesn't appear on screen or in the taskbar.
-            If no filename is specified, you can open/create a model later via the API.
-            After starting, the SapModel object should become available.
         """
         result = self._SapObject.ApplicationStart(units, visible, file_name)
-        if result == 0 and self.SapModel is None:
-            try:
-                self.SapModel = self._SapObject.SapModel
-            except AttributeError:
-                print(
-                    "Warning: SapModel attribute not available even after ApplicationStart."
-                )
         return result
 
     def get_oapi_version_number(self) -> float:
