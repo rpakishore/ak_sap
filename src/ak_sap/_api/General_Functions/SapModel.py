@@ -1,4 +1,5 @@
-from ak_sap._api.General_Functions.SapObject import SapObject, eUnits
+from ak_sap._api.General_Functions.SapObject import SapObject
+from .misc import eUnits
 
 
 class SapModel:

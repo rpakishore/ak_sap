@@ -1,7 +1,6 @@
 import comtypes.client
 import comtypes.gen.SAP2000v1
 import pythoncom
-from typing import Optional
 
 SAP2000_PROG_ID = "CSI.SAP2000.API.SapObject"
 CSIBRIDGE_PROG_ID = "CSI.CSiBridge.API.SapObject"
@@ -49,7 +48,7 @@ class Helper:
             print(f"An unexpected error occurred during Helper initialization: {e}")
             self.myHelper = None
 
-    def createObject(self, fullPath: str) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    def createObject(self, fullPath: str) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Starts SAP2000 at the given path and returns an instance of SapObject (cOAPI).
 
@@ -74,7 +73,7 @@ class Helper:
 
     def createObjectHost(
         self, hostName: str, fullPath: str
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Starts SAP2000 on a specified host computer and returns an instance of SapObject (cOAPI).
 
@@ -111,7 +110,7 @@ class Helper:
 
     def createObjectHostPort(
         self, hostName: str, portNumber: int, fullPath: str
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Starts SAP2000 on a specified host computer using a specific TCP port
         and returns an instance of SapObject (cOAPI).
@@ -151,7 +150,7 @@ class Helper:
             )
             return None
 
-    def createObjectProgID(self, progID: str) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    def createObjectProgID(self, progID: str) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Starts the application associated with the ProgID locally and returns an instance of SapObject (cOAPI).
 
@@ -182,7 +181,7 @@ class Helper:
 
     def createObjectProgIDHost(
         self, hostName: str, progID: str
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Starts the application associated with the ProgID on a specified host computer
         using the default TCP port and returns an instance of SapObject (cOAPI).
@@ -216,7 +215,7 @@ class Helper:
 
     def createObjectProgIDHostPort(
         self, hostName: str, portNumber: int, progID: str
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Starts the application associated with the ProgID on a specified host computer
         using a specific TCP port and returns an instance of SapObject (cOAPI).
@@ -253,7 +252,7 @@ class Helper:
             )
             return None
 
-    def getObject(self, progID: str) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    def getObject(self, progID: str) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Attaches to an active running instance of the application associated with the ProgID locally.
 
@@ -287,7 +286,7 @@ class Helper:
 
     def getObjectHost(
         self, hostName: str, progID: str
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Attaches to an active running instance on a specified host computer using the default TCP port.
 
@@ -322,7 +321,7 @@ class Helper:
 
     def getObjectHostPort(
         self, hostName: str, portNumber: int, progID: str
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Attaches to an active running instance on a specified host computer using a specific TCP port.
 
@@ -358,7 +357,7 @@ class Helper:
 
     def getObjectProcess(
         self, progID: str, pid: int
-    ) -> Optional[comtypes.gen.SAP2000v1.cOAPI]:
+    ) -> comtypes.gen.SAP2000v1.cOAPI | None:
         """
         Attaches to the running instance of the program with the given process ID (PID) locally.
 
@@ -388,7 +387,7 @@ class Helper:
             )
             return None
 
-    def getOAPIVersionNumber(self) -> Optional[float]:
+    def getOAPIVersionNumber(self) -> float | None:
         """
         Retrieves the API version number associated with this Helper instance (client API version).
 
