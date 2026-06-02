@@ -32,40 +32,17 @@ def attach_to_model():
 
     def fail_msg(e):
         st.error(
-            "Error attaching to SAP2000 instance. Maybe try setting path to `SAP2000.exe` below?"
+            "Error attaching to SAP2000 instance. Make sure SAP2000 (v17 or newer) is running with a model open."
         )
         st.error(e)
         st.session_state["attached"] = False
 
     try:
-        if (
-            st.session_state.get("sap_path") is not None
-            and st.session_state["sap_path"].strip() != ""
-        ):
-            st.session_state["SAP"] = Sap2000Wrapper(
-                attach_to_exist=True, program_path=st.session_state["sap_path"]
-            )
-            success_msg()
-        else:
-            st.session_state["SAP"] = Sap2000Wrapper(attach_to_exist=True)
-            success_msg()
+        st.session_state["SAP"] = Sap2000Wrapper(attach_to_exist=True)
+        success_msg()
     except Exception as e:
         fail_msg(e.__str__())
 
-
-# <!-----Set custom SAP2000.exe Path-------->
-_custom_path = st.checkbox(
-    label="Set path to SAP2000.exe?",
-    help="Use this if you get error when linking to a SAP2000 Instance.",
-    disabled=st.session_state["attached"],
-)
-if _custom_path:
-    st.text_input(
-        label="Path to SAP2000.exe",
-        key="sap_path",
-        placeholder=r"C:\Program Files\Computers and Structures\SAP2000 24\SAP2000.exe",
-        disabled=st.session_state["attached"],
-    )
 
 # <!-----Attach to SAP button-------->
 st.button(

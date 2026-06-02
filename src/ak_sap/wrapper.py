@@ -195,8 +195,16 @@ def model(
         Any: The SAP2000 object.
 
     Raises:
+        ValueError: If `program_path` is supplied alongside `attach_to_instance=True`.
         Exception: Raises an exception if the SAP2000 instance cannot be created or attached.
     """
+    if attach_to_instance and program_path is not None:
+        raise ValueError(
+            "program_path has no effect when attach_to_instance=True; "
+            "attaching connects to the running SAP2000 process via COM. "
+            "Pass program_path only when attach_to_instance=False."
+        )
+
     # create API helper object
     helper = comtypes.client.CreateObject("SAP2000v1.Helper")
     helper = helper.QueryInterface(comtypes.gen.SAP2000v1.cHelper)
